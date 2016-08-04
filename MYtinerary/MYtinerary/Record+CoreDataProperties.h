@@ -10,6 +10,7 @@
 //
 
 #import "Record.h"
+#import "Itinerary.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
