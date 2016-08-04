@@ -16,9 +16,9 @@
 		141B0E451D53EB15008CE05B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141B0E431D53EB15008CE05B /* LaunchScreen.storyboard */; };
 		141B0E591D53EDC6008CE05B /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E531D53EDC6008CE05B /* Record.m */; };
 		141B0E5B1D53EDC6008CE05B /* Itinerary.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E571D53EDC6008CE05B /* Itinerary.m */; };
-		141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E641D53F3D9008CE05B /* Itinerary+CoreDataProperties.m */; };
-		141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */; };
 		141B0E6A1D53F505008CE05B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141B0E691D53F505008CE05B /* MapKit.framework */; };
+		141B0E741D53F99F008CE05B /* Itinerary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E6D1D53F99F008CE05B /* Itinerary+CoreDataProperties.m */; };
+		141B0E761D53F99F008CE05B /* Record+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E711D53F99F008CE05B /* Record+CoreDataProperties.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,11 +37,11 @@
 		141B0E531D53EDC6008CE05B /* Record.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Record.m; sourceTree = "<group>"; };
 		141B0E561D53EDC6008CE05B /* Itinerary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Itinerary.h; sourceTree = "<group>"; };
 		141B0E571D53EDC6008CE05B /* Itinerary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Itinerary.m; sourceTree = "<group>"; };
-		141B0E631D53F3D9008CE05B /* Itinerary+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Itinerary+CoreDataProperties.h"; sourceTree = "<group>"; };
-		141B0E641D53F3D9008CE05B /* Itinerary+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Itinerary+CoreDataProperties.m"; sourceTree = "<group>"; };
-		141B0E651D53F3D9008CE05B /* Record+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Record+CoreDataProperties.h"; sourceTree = "<group>"; };
-		141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Record+CoreDataProperties.m"; sourceTree = "<group>"; };
 		141B0E691D53F505008CE05B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		141B0E6C1D53F99F008CE05B /* Itinerary+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Itinerary+CoreDataProperties.h"; path = "../Itinerary+CoreDataProperties.h"; sourceTree = "<group>"; };
+		141B0E6D1D53F99F008CE05B /* Itinerary+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Itinerary+CoreDataProperties.m"; path = "../Itinerary+CoreDataProperties.m"; sourceTree = "<group>"; };
+		141B0E701D53F99F008CE05B /* Record+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Record+CoreDataProperties.h"; path = "../Record+CoreDataProperties.h"; sourceTree = "<group>"; };
+		141B0E711D53F99F008CE05B /* Record+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Record+CoreDataProperties.m"; path = "../Record+CoreDataProperties.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,10 +137,10 @@
 		141B0E5C1D53EDD0008CE05B /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				141B0E631D53F3D9008CE05B /* Itinerary+CoreDataProperties.h */,
-				141B0E641D53F3D9008CE05B /* Itinerary+CoreDataProperties.m */,
-				141B0E651D53F3D9008CE05B /* Record+CoreDataProperties.h */,
-				141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */,
+				141B0E6C1D53F99F008CE05B /* Itinerary+CoreDataProperties.h */,
+				141B0E6D1D53F99F008CE05B /* Itinerary+CoreDataProperties.m */,
+				141B0E701D53F99F008CE05B /* Record+CoreDataProperties.h */,
+				141B0E711D53F99F008CE05B /* Record+CoreDataProperties.m */,
 				141B0E3E1D53EB15008CE05B /* MYtinerary.xcdatamodeld */,
 			);
 			name = Entities;
@@ -224,12 +224,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */,
+				141B0E761D53F99F008CE05B /* Record+CoreDataProperties.m in Sources */,
 				141B0E3A1D53EB14008CE05B /* ViewController.m in Sources */,
 				141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */,
 				141B0E341D53EB14008CE05B /* main.m in Sources */,
 				141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */,
-				141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */,
+				141B0E741D53F99F008CE05B /* Itinerary+CoreDataProperties.m in Sources */,
 				141B0E5B1D53EDC6008CE05B /* Itinerary.m in Sources */,
 				141B0E591D53EDC6008CE05B /* Record.m in Sources */,
 			);
