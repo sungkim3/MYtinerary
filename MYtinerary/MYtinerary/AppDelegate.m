@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 
-
 @interface AppDelegate ()
 
 @end
@@ -18,7 +17,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+//    NSLog(@"Client Key: %@", kClientKey);
+    
     return YES;
 }
 
