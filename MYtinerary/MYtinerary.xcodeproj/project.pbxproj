@@ -19,6 +19,8 @@
 		141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E641D53F3D9008CE05B /* Itinerary+CoreDataProperties.m */; };
 		141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */; };
 		141B0E6A1D53F505008CE05B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141B0E691D53F505008CE05B /* MapKit.framework */; };
+		637F66CB1D553CBC00A1B20B /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CA1D553CBC00A1B20B /* Parse.framework */; };
+		637F66CD1D553CDB00A1B20B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CC1D553CDB00A1B20B /* Bolts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		141B0E651D53F3D9008CE05B /* Record+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Record+CoreDataProperties.h"; sourceTree = "<group>"; };
 		141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Record+CoreDataProperties.m"; sourceTree = "<group>"; };
 		141B0E691D53F505008CE05B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		637F66CA1D553CBC00A1B20B /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../Carthage/Build/iOS/Parse.framework; sourceTree = "<group>"; };
+		637F66CC1D553CDB00A1B20B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Carthage/Build/iOS/Bolts.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				637F66CD1D553CDB00A1B20B /* Bolts.framework in Frameworks */,
+				637F66CB1D553CBC00A1B20B /* Parse.framework in Frameworks */,
 				141B0E6A1D53F505008CE05B /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,6 +65,8 @@
 		141B0E261D53EB14008CE05B = {
 			isa = PBXGroup;
 			children = (
+				637F66CC1D553CDB00A1B20B /* Bolts.framework */,
+				637F66CA1D553CBC00A1B20B /* Parse.framework */,
 				141B0E311D53EB14008CE05B /* MYtinerary */,
 				141B0E301D53EB14008CE05B /* Products */,
 			);
@@ -382,6 +390,7 @@
 				141B0E4B1D53EB15008CE05B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
