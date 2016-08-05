@@ -19,12 +19,12 @@
 		141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E641D53F3D9008CE05B /* Itinerary+CoreDataProperties.m */; };
 		141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */; };
 		141B0E6A1D53F505008CE05B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141B0E691D53F505008CE05B /* MapKit.framework */; };
-		637F66CB1D553CBC00A1B20B /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CA1D553CBC00A1B20B /* Parse.framework */; };
-		637F66CD1D553CDB00A1B20B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CC1D553CDB00A1B20B /* Bolts.framework */; };
+		637DE5481D55444C001547FB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637DE5471D55444C001547FB /* Bolts.framework */; };
+		637DE54A1D554462001547FB /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637DE5491D554462001547FB /* Parse.framework */; };
+		637DE54B1D55448B001547FB /* Bolts.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637DE5471D55444C001547FB /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		637DE54C1D55448B001547FB /* Parse.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637DE5491D554462001547FB /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		637F66CF1D553E5B00A1B20B /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; };
 		637F66D11D553E8800A1B20B /* ParseUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		637F66D21D553E8E00A1B20B /* Bolts.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637F66CC1D553CDB00A1B20B /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		637F66D31D553E9200A1B20B /* Parse.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637F66CA1D553CBC00A1B20B /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,8 +34,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				637F66D31D553E9200A1B20B /* Parse.framework in CopyFiles */,
-				637F66D21D553E8E00A1B20B /* Bolts.framework in CopyFiles */,
+				637DE54B1D55448B001547FB /* Bolts.framework in CopyFiles */,
+				637DE54C1D55448B001547FB /* Parse.framework in CopyFiles */,
 				637F66D11D553E8800A1B20B /* ParseUI.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,8 +63,8 @@
 		141B0E651D53F3D9008CE05B /* Record+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Record+CoreDataProperties.h"; sourceTree = "<group>"; };
 		141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Record+CoreDataProperties.m"; sourceTree = "<group>"; };
 		141B0E691D53F505008CE05B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		637F66CA1D553CBC00A1B20B /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../Carthage/Build/iOS/Parse.framework; sourceTree = "<group>"; };
-		637F66CC1D553CDB00A1B20B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Carthage/Build/iOS/Bolts.framework; sourceTree = "<group>"; };
+		637DE5471D55444C001547FB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		637DE5491D554462001547FB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		637F66CE1D553E5B00A1B20B /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,9 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				637F66CD1D553CDB00A1B20B /* Bolts.framework in Frameworks */,
-				637F66CB1D553CBC00A1B20B /* Parse.framework in Frameworks */,
+				637DE5481D55444C001547FB /* Bolts.framework in Frameworks */,
 				637F66CF1D553E5B00A1B20B /* ParseUI.framework in Frameworks */,
+				637DE54A1D554462001547FB /* Parse.framework in Frameworks */,
 				141B0E6A1D53F505008CE05B /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,11 +86,11 @@
 		141B0E261D53EB14008CE05B = {
 			isa = PBXGroup;
 			children = (
+				637DE5471D55444C001547FB /* Bolts.framework */,
 				637F66CE1D553E5B00A1B20B /* ParseUI.framework */,
-				637F66CC1D553CDB00A1B20B /* Bolts.framework */,
-				637F66CA1D553CBC00A1B20B /* Parse.framework */,
 				141B0E311D53EB14008CE05B /* MYtinerary */,
 				141B0E301D53EB14008CE05B /* Products */,
+				637DE5491D554462001547FB /* Parse.framework */,
 			);
 			sourceTree = "<group>";
 		};
