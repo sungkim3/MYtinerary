@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0FC1EA1D5522940059DA17 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC1E91D5522940059DA17 /* Constants.m */; };
+		0E0FC1F11D5529EE0059DA17 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC1F01D5529EE0059DA17 /* MapViewController.m */; };
+		0E0FC1F41D5530090059DA17 /* NSManagedObject+ManagedContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC1F31D5530090059DA17 /* NSManagedObject+ManagedContext.m */; };
+		0E0FC1FA1D554CE50059DA17 /* CustomPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */; };
 		141B0E341D53EB14008CE05B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E331D53EB14008CE05B /* main.m */; };
 		141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E361D53EB14008CE05B /* AppDelegate.m */; };
-		141B0E3A1D53EB14008CE05B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E391D53EB14008CE05B /* ViewController.m */; };
 		141B0E3D1D53EB15008CE05B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141B0E3B1D53EB15008CE05B /* Main.storyboard */; };
 		141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E3E1D53EB15008CE05B /* MYtinerary.xcdatamodeld */; };
 		141B0E421D53EB15008CE05B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 141B0E411D53EB15008CE05B /* Assets.xcassets */; };
@@ -22,12 +25,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E0FC1E81D5522940059DA17 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		0E0FC1E91D5522940059DA17 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		0E0FC1EF1D5529EE0059DA17 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = ../MapViewController.h; sourceTree = "<group>"; };
+		0E0FC1F01D5529EE0059DA17 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = ../MapViewController.m; sourceTree = "<group>"; };
+		0E0FC1F21D5530090059DA17 /* NSManagedObject+ManagedContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+ManagedContext.h"; sourceTree = "<group>"; };
+		0E0FC1F31D5530090059DA17 /* NSManagedObject+ManagedContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+ManagedContext.m"; sourceTree = "<group>"; };
+		0E0FC1F81D554CE50059DA17 /* CustomPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPointAnnotation.h; sourceTree = "<group>"; };
+		0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPointAnnotation.m; sourceTree = "<group>"; };
 		141B0E2F1D53EB14008CE05B /* MYtinerary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYtinerary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141B0E331D53EB14008CE05B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		141B0E351D53EB14008CE05B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		141B0E361D53EB14008CE05B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		141B0E381D53EB14008CE05B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		141B0E391D53EB14008CE05B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		141B0E3C1D53EB15008CE05B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		141B0E3F1D53EB15008CE05B /* MYtinerary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MYtinerary.xcdatamodel; sourceTree = "<group>"; };
 		141B0E411D53EB15008CE05B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,6 +65,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E0FC1EB1D55229B0059DA17 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				0E0FC1E81D5522940059DA17 /* Constants.h */,
+				0E0FC1E91D5522940059DA17 /* Constants.m */,
+				0E0FC1F21D5530090059DA17 /* NSManagedObject+ManagedContext.h */,
+				0E0FC1F31D5530090059DA17 /* NSManagedObject+ManagedContext.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		141B0E261D53EB14008CE05B = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +98,7 @@
 				141B0E4C1D53ED67008CE05B /* App Global */,
 				141B0E4D1D53ED6F008CE05B /* Controllers */,
 				141B0E4E1D53ED78008CE05B /* Views */,
+				0E0FC1EB1D55229B0059DA17 /* Utilities */,
 				141B0E4F1D53EDA0008CE05B /* Models */,
 				141B0E6B1D53F51B008CE05B /* Frameworks */,
 				141B0E321D53EB14008CE05B /* Supporting Files */,
@@ -106,8 +127,8 @@
 		141B0E4D1D53ED6F008CE05B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				141B0E381D53EB14008CE05B /* ViewController.h */,
-				141B0E391D53EB14008CE05B /* ViewController.m */,
+				0E0FC1EF1D5529EE0059DA17 /* MapViewController.h */,
+				0E0FC1F01D5529EE0059DA17 /* MapViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -115,6 +136,8 @@
 		141B0E4E1D53ED78008CE05B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0E0FC1F81D554CE50059DA17 /* CustomPointAnnotation.h */,
+				0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */,
 				141B0E3B1D53EB15008CE05B /* Main.storyboard */,
 				141B0E411D53EB15008CE05B /* Assets.xcassets */,
 				141B0E431D53EB15008CE05B /* LaunchScreen.storyboard */,
@@ -225,13 +248,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */,
-				141B0E3A1D53EB14008CE05B /* ViewController.m in Sources */,
 				141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */,
 				141B0E341D53EB14008CE05B /* main.m in Sources */,
+				0E0FC1F11D5529EE0059DA17 /* MapViewController.m in Sources */,
 				141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */,
 				141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */,
 				141B0E5B1D53EDC6008CE05B /* Itinerary.m in Sources */,
 				141B0E591D53EDC6008CE05B /* Record.m in Sources */,
+				0E0FC1F41D5530090059DA17 /* NSManagedObject+ManagedContext.m in Sources */,
+				0E0FC1FA1D554CE50059DA17 /* CustomPointAnnotation.m in Sources */,
+				0E0FC1EA1D5522940059DA17 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +408,7 @@
 				141B0E4B1D53EB15008CE05B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
