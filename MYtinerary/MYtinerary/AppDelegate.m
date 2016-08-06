@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import "Credentials.h"
 
 @interface AppDelegate ()
 
@@ -18,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    NSLog(@"Client Key: %@", kClientKey);
+    NSLog(@"Client Key: %@", kClientKey);
     
     return YES;
 }
