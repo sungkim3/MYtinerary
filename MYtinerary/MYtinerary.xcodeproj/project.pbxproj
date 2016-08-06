@@ -63,6 +63,7 @@
 		141B0E651D53F3D9008CE05B /* Record+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Record+CoreDataProperties.h"; sourceTree = "<group>"; };
 		141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Record+CoreDataProperties.m"; sourceTree = "<group>"; };
 		141B0E691D53F505008CE05B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6302BD161D566F7D00EB8926 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
 		637DE5471D55444C001547FB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		637DE5491D554462001547FB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		637F66CE1D553E5B00A1B20B /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
@@ -87,10 +88,10 @@
 			isa = PBXGroup;
 			children = (
 				637DE5471D55444C001547FB /* Bolts.framework */,
+				637DE5491D554462001547FB /* Parse.framework */,
 				637F66CE1D553E5B00A1B20B /* ParseUI.framework */,
 				141B0E311D53EB14008CE05B /* MYtinerary */,
 				141B0E301D53EB14008CE05B /* Products */,
-				637DE5491D554462001547FB /* Parse.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +129,7 @@
 			children = (
 				141B0E351D53EB14008CE05B /* AppDelegate.h */,
 				141B0E361D53EB14008CE05B /* AppDelegate.m */,
+				6302BD161D566F7D00EB8926 /* Credentials.h */,
 				141B0E461D53EB15008CE05B /* Info.plist */,
 			);
 			name = "App Global";
