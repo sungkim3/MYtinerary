@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Itinerary.h"
+#import "Record.h"
 
 @interface MapViewController : UIViewController
+@property (strong, nonatomic) Itinerary *itinerary;
+@property (strong, nonatomic) NSMutableArray *assets;
+@property (strong, nonatomic) NSMutableArray *thumbnails;
+
 
 @end
