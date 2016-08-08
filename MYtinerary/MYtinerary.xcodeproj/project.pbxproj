@@ -30,7 +30,7 @@
 		637DE54C1D55448B001547FB /* Parse.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637DE5491D554462001547FB /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		637F66CF1D553E5B00A1B20B /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; };
 		637F66D11D553E8800A1B20B /* ParseUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D946C4031D58F4D9002A4830 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D946C4021D58F4D9002A4830 /* ViewController.m */; };
+		D946C4061D590C15002A4830 /* ParseDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D946C4051D590C15002A4830 /* ParseDataController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,8 +83,8 @@
 		637DE5491D554462001547FB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../Parse.framework; sourceTree = "<group>"; };
 		637F66CE1D553E5B00A1B20B /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = ../ParseUI.framework; sourceTree = "<group>"; };
 		D946C3FF1D58F204002A4830 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
-		D946C4011D58F4D9002A4830 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D946C4021D58F4D9002A4830 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D946C4041D590C15002A4830 /* ParseDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseDataController.h; sourceTree = "<group>"; };
+		D946C4051D590C15002A4830 /* ParseDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseDataController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,8 +171,8 @@
 				636B4E5A1D57AC7B00781B7F /* CustomLoginViewController.m */,
 				0E0FC1EF1D5529EE0059DA17 /* MapViewController.h */,
 				0E0FC1F01D5529EE0059DA17 /* MapViewController.m */,
-				D946C4011D58F4D9002A4830 /* ViewController.h */,
-				D946C4021D58F4D9002A4830 /* ViewController.m */,
+				D946C4041D590C15002A4830 /* ParseDataController.h */,
+				D946C4051D590C15002A4830 /* ParseDataController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -299,10 +299,10 @@
 				141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */,
 				141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */,
 				141B0E341D53EB14008CE05B /* main.m in Sources */,
+				D946C4061D590C15002A4830 /* ParseDataController.m in Sources */,
 				0E0FC1F11D5529EE0059DA17 /* MapViewController.m in Sources */,
 				141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */,
 				141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */,
-				D946C4031D58F4D9002A4830 /* ViewController.m in Sources */,
 				636B4E5B1D57AC7B00781B7F /* CustomLoginViewController.m in Sources */,
 				141B0E5B1D53EDC6008CE05B /* Itinerary.m in Sources */,
 				141B0E591D53EDC6008CE05B /* Record.m in Sources */,

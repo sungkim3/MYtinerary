@@ -33,6 +33,7 @@ typedef void(^imageCompletion)(UIImage *image);//, BOOL success);
 
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 
 @end
 
@@ -246,14 +247,18 @@ typedef void(^imageCompletion)(UIImage *image);//, BOOL success);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//#pragma mark - PFSignUpViewControllerDelegate
-//
-//- (void)signUpViewController:(CustomSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//}
+#pragma mark - PFSignUpViewControllerDelegate
+
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender {
+}
+
+- (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender {
+    [self logout];
 }
 
 @end

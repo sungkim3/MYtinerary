@@ -92,9 +92,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rDx-6x-jHh">
-                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="kkr-ae-NI2">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="kkr-ae-NI2">
                             <connections>
-                                <action selector="libraryButtonPressed:" destination="bc2-2s-IlQ" id="ZON-Ky-SPj"/>
+                                <action selector="logoutButtonSelected:" destination="bc2-2s-IlQ" id="1tj-hp-Vxg"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="4wC-o1-PtL">
