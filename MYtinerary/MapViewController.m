@@ -11,13 +11,17 @@
 #import "NSManagedObject+ManagedContext.h"
 #import "Constants.h"
 #import "CustomPointAnnotation.h"
+#import "CustomLoginViewController.h"
 @import Photos;
 @import MapKit;
 @import CoreLocation;
+@import Parse;
+@import ParseUI;
+
 
 typedef void(^imageCompletion)(UIImage *image);//, BOOL success);
 
-@interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -36,6 +40,7 @@ typedef void(^imageCompletion)(UIImage *image);//, BOOL success);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self login];
     self.imagePicker = [[UIImagePickerController alloc]init];
     self.imagePicker.delegate = self;
     self.mapView.delegate = self;
@@ -218,6 +223,34 @@ typedef void(^imageCompletion)(UIImage *image);//, BOOL success);
     polylineRenderer.alpha = kPolylineAlpha;
     return polylineRenderer;
 }
+- (void)login {
+    if (![PFUser currentUser]) {
+        CustomLoginViewController *loginViewController = [[CustomLoginViewController alloc]init];
+        
+        loginViewController.delegate = self;
+        loginViewController.signUpController.delegate = self;
+        [self presentViewController:loginViewController animated:YES completion:nil];
+    } else {
+        NSLog(@"already logged in");
+    }
+}
+
+- (void)logout {
+    [PFUser logOut];
+    [self login];
+}
+
+#pragma mark - PFLogInViewControllerDelegate
+
+- (void)logInViewController:(CustomLoginViewController *)logInController didLogInUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+//#pragma mark - PFSignUpViewControllerDelegate
+//
+//- (void)signUpViewController:(CustomSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender {
