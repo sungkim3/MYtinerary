@@ -7,13 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import "Credentials.h"
+@import Parse;
 
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return YES;
