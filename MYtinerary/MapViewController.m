@@ -116,23 +116,29 @@ typedef void(^imageCompletion)(UIImage *image);//, BOOL success);
 
 -(void)convertToImageFrom:(NSString *)urlString withCompletion:(imageCompletion)completion {
     self.completion = completion;
-    __weak typeof(self) weakSelf = self;
-    NSOperationQueue *imageQ = [[NSOperationQueue alloc]init];
-    [imageQ addOperationWithBlock:^{
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        UIImage *image = [[UIImage alloc]initWithData:data];
-        NSLog(@"Image before completion: %@", image);
-        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            strongSelf.completion(image);
-        }];
-    }];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsWithALAssetURLs:@[url]
+                                                                   options:nil];
+    assert(assets.count == 1);
+    PHAsset *asset = assets.firstObject;
+    
+    [[PHImageManager defaultManager] requestImageForAsset:asset
+                                               targetSize:CGSizeMake(800, 800)
+                                              contentMode:PHImageContentModeDefault
+                                                  options:nil
+                                            resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info)
+     {
+         self.completion(result);
+     }];
 }
+
+
 
 - (UIImage *)createThumbnailFrom:(NSString *)urlString toRect:(CGRect)rect
 {
     __block UIImage * roundedImg;
+    
     [self convertToImageFrom:urlString withCompletion:^(UIImage *image) {
         //resize image
         NSLog(@"ThumbnailUmage: %@", image);
@@ -156,8 +162,6 @@ typedef void(^imageCompletion)(UIImage *image);//, BOOL success);
         [imageLayer renderInContext:UIGraphicsGetCurrentContext()];
         roundedImg = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        
-        
     }];
     return roundedImg;
     
