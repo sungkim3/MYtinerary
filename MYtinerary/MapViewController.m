@@ -16,17 +16,10 @@
 @import CoreLocation;
 
 typedef void(^imageCompletion)(UIImage *image);
-typedef void(^urlCompletion)(NSURL *url);
-typedef void(^recordCompletion)(Record *record);
 
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) UIImagePickerController *imagePicker;
-@property (strong, nonatomic) NSMutableArray *records;
-
-- (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
-- (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender;
 
 @end
 
@@ -37,66 +30,34 @@ typedef void(^recordCompletion)(Record *record);
     
     self.mapView.delegate = self;
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
-    NSError *error;
-    NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
-    if (error) {
-        NSLog(@"Error with fetching itineraryies");
-    } else {
-        if (results.count > 0) {
-            self.itinerary = results.firstObject;
-        }
-    }
-    self.records = [[NSMutableArray alloc]init];
-    for (Record* record in self.itinerary.records) {
-        [self.records addObject:record];
-    }
-    NSLog(@"Itinerary records: %@", self.records);
+//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
+//    NSError *error;
+//    NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
+//    if (error) {
+//        NSLog(@"Error with fetching itineraryies");
+//    } else {
+//        if (results.count > 0) {
+//            self.itinerary = results.firstObject;
+//        }
+//    }
+//    self.records = [[NSMutableArray alloc]init];
+//    for (Record* record in self.itinerary.records) {
+//        [self.records addObject:record];
+//    }
+//    NSLog(@"Itinerary records: %@", self.records);
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (self.itinerary) {
         for (PHAsset *asset in self.assets) {
-            NSLog(@"Asset for record: %@", asset);
-            [self recordFrom:asset withCompletion:^(Record *record) {
-                [self.records addObject:record];
-                [self sortRecordsByDate];
-                [self addPolylineToMap];
-                 [self createAnnotationForRecord:asset];
-            }];
+            [self createAnnotationForRecord:asset];
         }
+        [self sortRecordsByDate];
+        [self addPolylineToMap];
     }
 }
 
--(void)recordFrom:(PHAsset *)asset withCompletion:(recordCompletion)completion {
-    Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
-    
-    record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
-    record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
-    record.date = asset.creationDate;
-    record.itinerary = self.itinerary;
-    [self getURLFor:asset withCompletion:^(NSURL *url) {
-        record.localImageURL = [NSString stringWithFormat:@"%@", url];
-        NSLog(@"Longitude: %f, latitude: %f\n ImageURL: %@", record.longitude.doubleValue, record.latitude.doubleValue, record.localImageURL);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(record);
-           
-
-        });
-    }];
-    
-}
-
--(void)getURLFor:(PHAsset *)asset withCompletion: (urlCompletion) completion {
-    
-    [asset requestContentEditingInputWithOptions:[PHContentEditingInputRequestOptions new] completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
-        //dispatch_async(dispatch_get_main_queue(), ^{
-            completion(contentEditingInput.fullSizeImageURL);
-        //});
-        
-    }];
-}
 
 -(void)sortRecordsByDate {
     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
@@ -104,14 +65,8 @@ typedef void(^recordCompletion)(Record *record);
     self.records = [[self.records sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
 }
 
-- (IBAction)composeButtonPressed:(UIBarButtonItem *)sender {
-    
-    self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentViewController:self.imagePicker animated:YES completion:nil];
-}
-
 -(void)convertToImageFrom:(PHAsset *)asset withCompletion:(imageCompletion)completion {
-  
+    
     [[PHImageManager defaultManager] requestImageForAsset:asset
                                                targetSize:CGSizeMake(800, 800)
                                               contentMode:PHImageContentModeDefault
@@ -121,8 +76,6 @@ typedef void(^recordCompletion)(Record *record);
          completion(result);
      }];
 }
-
-
 
 - (UIImage *)createThumbnailFrom:(PHAsset *)asset toRect:(CGRect)rect
 {
@@ -206,8 +159,8 @@ typedef void(^recordCompletion)(Record *record);
     return polylineRenderer;
 }
 
-
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender {
+    
 }
 
 @end

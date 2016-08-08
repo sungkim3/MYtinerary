@@ -93,11 +93,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rDx-6x-jHh">
-                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="kkr-ae-NI2">
-                            <connections>
-                                <action selector="libraryButtonPressed:" destination="bc2-2s-IlQ" id="ZON-Ky-SPj"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="kkr-ae-NI2"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="4wC-o1-PtL">
                             <connections>
                                 <segue destination="7wg-cm-Bhh" kind="show" id="nHm-jo-6SK"/>

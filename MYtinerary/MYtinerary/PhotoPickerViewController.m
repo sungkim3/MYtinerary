@@ -14,6 +14,9 @@
 @import Photos;
 @import UIKit;
 
+typedef void(^urlCompletion)(NSURL *url);
+typedef void(^recordCompletion)(NSOrderedSet *records);
+
 NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 @interface PhotoPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -23,13 +26,14 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 @property (strong, nonatomic) PHImageRequestOptions *requestOptions;
 @property (strong, nonatomic) PHImageManager *manager;
-@property (strong, nonatomic) NSMutableArray *assets;
 
-@property (strong, nonatomic) NSMutableArray *thumbnails;
+@property (strong, nonatomic) NSMutableArray *assets; //all photos on device
 @property (strong, nonatomic) NSMutableArray *selectedAssets;
 @property (strong, nonatomic) NSMutableArray *selectedIndexPaths;
 
 @property (strong, nonatomic) Itinerary *itinerary;
+@property (strong, nonatomic) NSOrderedSet *records;
+
 
 @property (nonatomic) CGFloat cellWidth;
 
@@ -51,7 +55,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 }
 
 -(void)fetchPhotosFromPhotoLibrary {
-    self.thumbnails = [[NSMutableArray alloc]init];
     self.assets = [[NSMutableArray alloc]init];
     
     self.manager = [PHImageManager defaultManager];
@@ -72,35 +75,77 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 }
 
 -(void)doneButtonPressed {
-    [self createItineraryWith:self.titleTextField.text];
-    MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
-    if (!mapVC.assets) {
-        mapVC.assets = [[NSMutableArray alloc]initWithArray:self.selectedAssets];
+    if (!self.itinerary) {
+        [self createItinerary];
+    } else {
+        //update existing itinerary
     }
-//    for (PHAsset *asset in self.assets) {
-//        if ([asset isKindOfClass:[PHAsset class]]) {
-//            [mapVC.assets addObject:asset];
-//        }
-//    }
-    mapVC.itinerary = self.itinerary;
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    
+    
 }
 
--(void)createItineraryWith:(NSString *)title {
+-(void)createItinerary {
     Itinerary *itinerary = [NSEntityDescription insertNewObjectForEntityForName:@"Itinerary" inManagedObjectContext:[NSManagedObject managedContext]];
-    itinerary.records = [[NSOrderedSet alloc]init];
-    itinerary.title = title;
-    itinerary.author = @"Author";
-    self.itinerary = itinerary;
     
-    NSError *saveError;
-    BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
-    if(isSaved) {
-        NSLog(@"Itinerary with records successfully saved");
-    } else {
-        NSLog(@"Unsuccessful saving Itinerary with records: %@", saveError.localizedDescription);
+    [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
+        itinerary.records = records;
+        itinerary.title = self.titleTextField.text;
+        itinerary.author = @"Author";
+        self.itinerary = itinerary;
+        self.records = records;
+        
+        //save context
+        NSError *saveError;
+        BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
+        if(isSaved) {
+            NSLog(@"Itinerary with records successfully saved");
+        } else {
+            NSLog(@"Unsuccessful saving Itinerary with records: %@", saveError.localizedDescription);
+        }
+        
+        //pass data to MapVC
+        MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
+        if (!mapVC.assets) {
+            mapVC.assets = [[NSMutableArray alloc]initWithArray:self.selectedAssets];
+        }
+        mapVC.itinerary = self.itinerary;
+        mapVC.records = self.records;
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+
+        
+    }];
+}
+
+-(void)recordsFrom:(NSArray *)assets withCompletion:(recordCompletion)completion {
+    NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]init];
+    for (PHAsset * asset in assets) {
+        
+        Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
+        
+        record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
+        record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
+        record.date = asset.creationDate;
+        record.itinerary = self.itinerary;
+        
+        [self getURLFor:asset withCompletion:^(NSURL *url) {
+            record.localImageURL = [NSString stringWithFormat:@"%@", url];
+            [mutableRecords addObject:record];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(mutableRecords);
+            });
+        }];
     }
 }
+
+-(void)getURLFor:(PHAsset *)asset withCompletion: (urlCompletion) completion {
+    
+    [asset requestContentEditingInputWithOptions:[PHContentEditingInputRequestOptions new] completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
+        completion(contentEditingInput.fullSizeImageURL);
+    }];
+}
+
 
 #pragma - CollectionView DataSource Methods
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -127,7 +172,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
                                           options:self.requestOptions
                                     resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                                         if (result) {
-                                            [self.thumbnails addObject:result];
                                             cell.photo = result;
                                         }
                                     }];

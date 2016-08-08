@@ -12,8 +12,7 @@
 
 @interface MapViewController : UIViewController
 @property (strong, nonatomic) Itinerary *itinerary;
+@property (strong, nonatomic) NSOrderedSet *records;
 @property (strong, nonatomic) NSMutableArray *assets;
-@property (strong, nonatomic) NSMutableArray *thumbnails;
-
 
 @end
