@@ -42,14 +42,14 @@
 
 #pragma mark - PFLogInViewControllerDelegate
 
-- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+- (void)logInViewController:(CustomLoginViewController *)logInController didLogInUser:(PFUser *)user {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - PFSignUpViewControllerDelegate
-
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+//#pragma mark - PFSignUpViewControllerDelegate
+//
+//- (void)signUpViewController:(CustomSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 @end
