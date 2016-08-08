@@ -17,8 +17,38 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    NSLog(@"Client Key: %@", kClientKey);
+    
+    // initialize parse
+    [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration>  _Nonnull configuration) {
+        configuration.applicationId = @"nHUkqVzD";
+        configuration.clientKey = kClientKey;
+        configuration.server = @"https://mytinerary-parse-server.herokuapp.com/parse";
+    }]];
+    
+//     test object
+        PFObject *testObject = [PFObject objectWithClassName:@"PFQueryTestObject"];
+    
+        testObject[@"foo"] = @"bar";
+    
+        [testObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            NSLog(@"Succeeded: %i, Error: %@", succeeded, error);
+        }];
+    
+        PFQuery *query = [PFQuery queryWithClassName:@"TPFQuerytestObject"];
+    
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            if (!error) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    NSLog(@"Objects: %@", objects);
+                }];
+            }
+        }];
+
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 
