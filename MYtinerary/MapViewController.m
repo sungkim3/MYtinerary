@@ -35,6 +35,7 @@ typedef void(^imageCompletion)(UIImage *image);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     
     self.mapView.delegate = self;
     
@@ -57,6 +58,7 @@ typedef void(^imageCompletion)(UIImage *image);
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self login];
     if (self.itinerary) {
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
