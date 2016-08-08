@@ -11,6 +11,8 @@
 		0E0FC1F11D5529EE0059DA17 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC1F01D5529EE0059DA17 /* MapViewController.m */; };
 		0E0FC1F41D5530090059DA17 /* NSManagedObject+ManagedContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC1F31D5530090059DA17 /* NSManagedObject+ManagedContext.m */; };
 		0E0FC1FA1D554CE50059DA17 /* CustomPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */; };
+		0E0FC20B1D582E330059DA17 /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC20A1D582E330059DA17 /* PhotoPickerViewController.m */; };
+		0E0FC20E1D582E9C0059DA17 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC20D1D582E9C0059DA17 /* PhotoCollectionViewCell.m */; };
 		141B0E341D53EB14008CE05B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E331D53EB14008CE05B /* main.m */; };
 		141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E361D53EB14008CE05B /* AppDelegate.m */; };
 		141B0E3D1D53EB15008CE05B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141B0E3B1D53EB15008CE05B /* Main.storyboard */; };
@@ -57,6 +59,10 @@
 		0E0FC1F31D5530090059DA17 /* NSManagedObject+ManagedContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+ManagedContext.m"; sourceTree = "<group>"; };
 		0E0FC1F81D554CE50059DA17 /* CustomPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPointAnnotation.h; sourceTree = "<group>"; };
 		0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPointAnnotation.m; sourceTree = "<group>"; };
+		0E0FC2091D582E330059DA17 /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
+		0E0FC20A1D582E330059DA17 /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
+		0E0FC20C1D582E9C0059DA17 /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		0E0FC20D1D582E9C0059DA17 /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		141B0E2F1D53EB14008CE05B /* MYtinerary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYtinerary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141B0E331D53EB14008CE05B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		141B0E351D53EB14008CE05B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -180,9 +186,11 @@
 		141B0E4E1D53ED78008CE05B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				141B0E3B1D53EB15008CE05B /* Main.storyboard */,
 				0E0FC1F81D554CE50059DA17 /* CustomPointAnnotation.h */,
 				0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */,
-				141B0E3B1D53EB15008CE05B /* Main.storyboard */,
+				0E0FC20C1D582E9C0059DA17 /* PhotoCollectionViewCell.h */,
+				0E0FC20D1D582E9C0059DA17 /* PhotoCollectionViewCell.m */,
 				141B0E411D53EB15008CE05B /* Assets.xcassets */,
 				141B0E431D53EB15008CE05B /* LaunchScreen.storyboard */,
 			);
@@ -297,6 +305,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */,
+				0E0FC20E1D582E9C0059DA17 /* PhotoCollectionViewCell.m in Sources */,
+				0E0FC20B1D582E330059DA17 /* PhotoPickerViewController.m in Sources */,
 				141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */,
 				141B0E341D53EB14008CE05B /* main.m in Sources */,
 				D946C4061D590C15002A4830 /* ParseDataController.m in Sources */,
