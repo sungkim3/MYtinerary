@@ -45,7 +45,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     [super viewDidLoad];
     self.collectionView.allowsMultipleSelection = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed)];
-    [self fetchPhotosFromPhotoLibrary];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -54,9 +53,15 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     self.cellWidth = side;
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        [self fetchPhotosFromPhotoLibrary];
+    }];
+}
+
 -(void)fetchPhotosFromPhotoLibrary {
     self.assets = [[NSMutableArray alloc]init];
-    
     self.manager = [PHImageManager defaultManager];
     PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc]init];
     self.requestOptions = [[PHImageRequestOptions alloc] init];
@@ -66,12 +71,22 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     
     PHFetchResult *allPhotosResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:allPhotosOptions];
+    
+//    for (PHAsset *asset in allPhotosResult) {
+//        [self.assets addObject:asset];
+//    }
+
+
     [allPhotosResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
         if (asset) {
             [self.assets addObject:asset];
         }
+        if (idx == allPhotosResult.count - 1) {
+            [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+                [self.collectionView reloadData];
+            }];
+        }
     }];
-    
 }
 
 -(void)doneButtonPressed {
@@ -80,9 +95,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     } else {
         //update existing itinerary
     }
-    
-    
-    
 }
 
 -(void)createItinerary {

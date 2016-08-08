@@ -81,14 +81,13 @@
 		141B0E651D53F3D9008CE05B /* Record+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Record+CoreDataProperties.h"; sourceTree = "<group>"; };
 		141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Record+CoreDataProperties.m"; sourceTree = "<group>"; };
 		141B0E691D53F505008CE05B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		6302BD161D566F7D00EB8926 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
+		147E196E1D5938C0006B6A50 /* Credentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
 		6302BD191D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "meet-the-pug-pug-6.jpg"; sourceTree = "<group>"; };
 		636B4E591D57AC7B00781B7F /* CustomLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLoginViewController.h; sourceTree = "<group>"; };
 		636B4E5A1D57AC7B00781B7F /* CustomLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLoginViewController.m; sourceTree = "<group>"; };
 		637DE5471D55444C001547FB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Bolts.framework; sourceTree = "<group>"; };
 		637DE5491D554462001547FB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../Parse.framework; sourceTree = "<group>"; };
 		637F66CE1D553E5B00A1B20B /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = ../ParseUI.framework; sourceTree = "<group>"; };
-		D946C3FF1D58F204002A4830 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
 		D946C4041D590C15002A4830 /* ParseDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseDataController.h; sourceTree = "<group>"; };
 		D946C4051D590C15002A4830 /* ParseDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseDataController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,8 +162,7 @@
 			children = (
 				141B0E351D53EB14008CE05B /* AppDelegate.h */,
 				141B0E361D53EB14008CE05B /* AppDelegate.m */,
-				D946C3FF1D58F204002A4830 /* Credentials.h */,
-				6302BD161D566F7D00EB8926 /* Credentials.h */,
+				147E196E1D5938C0006B6A50 /* Credentials.h */,
 				141B0E461D53EB15008CE05B /* Info.plist */,
 			);
 			name = "App Global";
