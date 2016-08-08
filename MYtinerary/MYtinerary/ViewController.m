@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "CustomLoginViewController.h"
+@import Parse;
+@import ParseUI;
 
-@interface ViewController ()
+@interface ViewController ()<PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @end
 
@@ -16,12 +19,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    [self login];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)login {
+    if (![PFUser currentUser]) {
+        CustomLoginViewController *loginViewController = [[CustomLoginViewController alloc]init];
+        
+        loginViewController.delegate = self;
+        loginViewController.signUpController.delegate = self;
+        [self presentViewController:loginViewController animated:YES completion:nil];
+    } else {
+        NSLog(@"already logged in");
+    }
 }
+
+- (void)logout {
+    [PFUser logOut];
+    [self login];
+}
+
+#pragma mark - PFLogInViewControllerDelegate
+
+- (void)logInViewController:(CustomLoginViewController *)logInController didLogInUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+//#pragma mark - PFSignUpViewControllerDelegate
+//
+//- (void)signUpViewController:(CustomSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 @end

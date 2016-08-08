@@ -19,7 +19,30 @@
 		141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E641D53F3D9008CE05B /* Itinerary+CoreDataProperties.m */; };
 		141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */; };
 		141B0E6A1D53F505008CE05B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141B0E691D53F505008CE05B /* MapKit.framework */; };
+		6302BD1A1D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6302BD191D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg */; };
+		636B4E5B1D57AC7B00781B7F /* CustomLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 636B4E5A1D57AC7B00781B7F /* CustomLoginViewController.m */; };
+		637DE5481D55444C001547FB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637DE5471D55444C001547FB /* Bolts.framework */; };
+		637DE54A1D554462001547FB /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637DE5491D554462001547FB /* Parse.framework */; };
+		637DE54B1D55448B001547FB /* Bolts.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637DE5471D55444C001547FB /* Bolts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		637DE54C1D55448B001547FB /* Parse.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637DE5491D554462001547FB /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		637F66CF1D553E5B00A1B20B /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; };
+		637F66D11D553E8800A1B20B /* ParseUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		637F66D01D553E7800A1B20B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				637DE54B1D55448B001547FB /* Bolts.framework in CopyFiles */,
+				637DE54C1D55448B001547FB /* Parse.framework in CopyFiles */,
+				637F66D11D553E8800A1B20B /* ParseUI.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		141B0E2F1D53EB14008CE05B /* MYtinerary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYtinerary.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +65,13 @@
 		141B0E651D53F3D9008CE05B /* Record+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Record+CoreDataProperties.h"; sourceTree = "<group>"; };
 		141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Record+CoreDataProperties.m"; sourceTree = "<group>"; };
 		141B0E691D53F505008CE05B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6302BD161D566F7D00EB8926 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
+		6302BD191D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "meet-the-pug-pug-6.jpg"; sourceTree = "<group>"; };
+		636B4E591D57AC7B00781B7F /* CustomLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLoginViewController.h; sourceTree = "<group>"; };
+		636B4E5A1D57AC7B00781B7F /* CustomLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLoginViewController.m; sourceTree = "<group>"; };
+		637DE5471D55444C001547FB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Bolts.framework; sourceTree = "<group>"; };
+		637DE5491D554462001547FB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../Parse.framework; sourceTree = "<group>"; };
+		637F66CE1D553E5B00A1B20B /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = ../ParseUI.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +79,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				637DE5481D55444C001547FB /* Bolts.framework in Frameworks */,
+				637F66CF1D553E5B00A1B20B /* ParseUI.framework in Frameworks */,
+				637DE54A1D554462001547FB /* Parse.framework in Frameworks */,
 				141B0E6A1D53F505008CE05B /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,6 +92,7 @@
 		141B0E261D53EB14008CE05B = {
 			isa = PBXGroup;
 			children = (
+				6302BD191D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg */,
 				141B0E311D53EB14008CE05B /* MYtinerary */,
 				141B0E301D53EB14008CE05B /* Products */,
 			);
@@ -98,6 +132,7 @@
 			children = (
 				141B0E351D53EB14008CE05B /* AppDelegate.h */,
 				141B0E361D53EB14008CE05B /* AppDelegate.m */,
+				6302BD161D566F7D00EB8926 /* Credentials.h */,
 				141B0E461D53EB15008CE05B /* Info.plist */,
 			);
 			name = "App Global";
@@ -108,6 +143,8 @@
 			children = (
 				141B0E381D53EB14008CE05B /* ViewController.h */,
 				141B0E391D53EB14008CE05B /* ViewController.m */,
+				636B4E591D57AC7B00781B7F /* CustomLoginViewController.h */,
+				636B4E5A1D57AC7B00781B7F /* CustomLoginViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -149,6 +186,9 @@
 		141B0E6B1D53F51B008CE05B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				637DE5471D55444C001547FB /* Bolts.framework */,
+				637DE5491D554462001547FB /* Parse.framework */,
+				637F66CE1D553E5B00A1B20B /* ParseUI.framework */,
 				141B0E691D53F505008CE05B /* MapKit.framework */,
 			);
 			name = Frameworks;
@@ -164,6 +204,7 @@
 				141B0E2B1D53EB14008CE05B /* Sources */,
 				141B0E2C1D53EB14008CE05B /* Frameworks */,
 				141B0E2D1D53EB14008CE05B /* Resources */,
+				637F66D01D553E7800A1B20B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -214,6 +255,7 @@
 				141B0E451D53EB15008CE05B /* LaunchScreen.storyboard in Resources */,
 				141B0E421D53EB15008CE05B /* Assets.xcassets in Resources */,
 				141B0E3D1D53EB15008CE05B /* Main.storyboard in Resources */,
+				6302BD1A1D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +272,7 @@
 				141B0E341D53EB14008CE05B /* main.m in Sources */,
 				141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */,
 				141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */,
+				636B4E5B1D57AC7B00781B7F /* CustomLoginViewController.m in Sources */,
 				141B0E5B1D53EDC6008CE05B /* Itinerary.m in Sources */,
 				141B0E591D53EDC6008CE05B /* Record.m in Sources */,
 			);
@@ -345,6 +388,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MYtinerary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Sung-Kim.MYtinerary";
@@ -356,6 +403,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MYtinerary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Sung-Kim.MYtinerary";
@@ -382,6 +433,7 @@
 				141B0E4B1D53EB15008CE05B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
