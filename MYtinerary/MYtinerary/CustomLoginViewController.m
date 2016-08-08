@@ -21,9 +21,7 @@
     UIImageView *logo = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"meet-the-pug-pug-6.jpg"]];
     
     self.logInView.logo = logo;
-    NSLayoutConstraint *logoHeight = [NSLayoutConstraint constraintWithItem:self.logInView.logo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.logInView.logo attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
-    
-    logo.activeHeight = YES;
+//    NSLayoutConstraint *logoHeight = [NSLayoutConstraint constraintWithItem:self.logInView.logo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.logInView.logo attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
 
     self.view.backgroundColor = [UIColor whiteColor];
     
