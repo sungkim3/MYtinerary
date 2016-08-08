@@ -18,16 +18,11 @@
 @import Parse;
 @import ParseUI;
 
-
 typedef void(^imageCompletion)(UIImage *image);
 
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) UIImagePickerController *imagePicker;
-@property (strong, nonatomic) NSMutableArray *records;
-@property (strong, nonatomic) Itinerary *itinerary;
-@property (copy, nonatomic) imageCompletion completion;
 
 
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
@@ -40,9 +35,7 @@ typedef void(^imageCompletion)(UIImage *image);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self login];
-    self.imagePicker = [[UIImagePickerController alloc]init];
-    self.imagePicker.delegate = self;
+    
     self.mapView.delegate = self;
     
 //    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
@@ -201,6 +194,7 @@ typedef void(^imageCompletion)(UIImage *image);
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender {
     

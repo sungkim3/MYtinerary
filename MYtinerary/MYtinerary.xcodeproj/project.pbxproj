@@ -175,6 +175,8 @@
 			children = (
 				636B4E591D57AC7B00781B7F /* CustomLoginViewController.h */,
 				636B4E5A1D57AC7B00781B7F /* CustomLoginViewController.m */,
+				0E0FC2091D582E330059DA17 /* PhotoPickerViewController.h */,
+				0E0FC20A1D582E330059DA17 /* PhotoPickerViewController.m */,
 				0E0FC1EF1D5529EE0059DA17 /* MapViewController.h */,
 				0E0FC1F01D5529EE0059DA17 /* MapViewController.m */,
 				D946C4041D590C15002A4830 /* ParseDataController.h */,
