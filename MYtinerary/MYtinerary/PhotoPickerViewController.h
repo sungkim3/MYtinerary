@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Itinerary.h"
+#import "Record.h"
 
 @interface PhotoPickerViewController : UIViewController
 
