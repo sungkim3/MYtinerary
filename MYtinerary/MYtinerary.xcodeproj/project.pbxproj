@@ -33,6 +33,7 @@
 		637F66CF1D553E5B00A1B20B /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; };
 		637F66D11D553E8800A1B20B /* ParseUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D946C4061D590C15002A4830 /* ParseDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D946C4051D590C15002A4830 /* ParseDataController.m */; };
+		D946C4091D5A5DE4002A4830 /* RecordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D946C4081D5A5DE4002A4830 /* RecordsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -90,6 +91,8 @@
 		637F66CE1D553E5B00A1B20B /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = ../ParseUI.framework; sourceTree = "<group>"; };
 		D946C4041D590C15002A4830 /* ParseDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseDataController.h; sourceTree = "<group>"; };
 		D946C4051D590C15002A4830 /* ParseDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseDataController.m; sourceTree = "<group>"; };
+		D946C4071D5A5DE4002A4830 /* RecordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordsViewController.h; sourceTree = "<group>"; };
+		D946C4081D5A5DE4002A4830 /* RecordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +182,8 @@
 				0E0FC1F01D5529EE0059DA17 /* MapViewController.m */,
 				D946C4041D590C15002A4830 /* ParseDataController.h */,
 				D946C4051D590C15002A4830 /* ParseDataController.m */,
+				D946C4071D5A5DE4002A4830 /* RecordsViewController.h */,
+				D946C4081D5A5DE4002A4830 /* RecordsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 				141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */,
 				0E0FC20E1D582E9C0059DA17 /* PhotoCollectionViewCell.m in Sources */,
 				0E0FC20B1D582E330059DA17 /* PhotoPickerViewController.m in Sources */,
+				D946C4091D5A5DE4002A4830 /* RecordsViewController.m in Sources */,
 				141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */,
 				141B0E341D53EB14008CE05B /* main.m in Sources */,
 				D946C4061D590C15002A4830 /* ParseDataController.m in Sources */,

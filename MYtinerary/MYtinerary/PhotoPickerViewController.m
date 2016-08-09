@@ -99,7 +99,22 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(void)doneButtonPressed {
     if (!self.itinerary) {
+        if ([_titleTextField.text isEqual: @""]) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert!" message:@"Please enter a Name for this Itinerary" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSLog(@"OK pressed");
+            }];
+            
+            [alert addAction:ok];
+            
+            
+            [self presentViewController:alert animated:YES completion:Nil];
+            return;
+                                 
+        }
         [self createItinerary];
+        
+        
         
     } else {
         //update existing itinerary
@@ -107,7 +122,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             NSMutableArray *updatedRecords = [self.records mutableCopy];
             for (Record *record in records) {
                 [updatedRecords addObject:record];
-            }
+                            }
             self.records = (NSOrderedSet *)updatedRecords;
             
             //update Core Data Objects
@@ -142,6 +157,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(void)createItinerary {
     Itinerary *itinerary = [NSEntityDescription insertNewObjectForEntityForName:@"Itinerary" inManagedObjectContext:[NSManagedObject managedContext]];
+    
+    
+    
     
     [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
         itinerary.records = records;
