@@ -172,22 +172,28 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(void)recordsFrom:(NSArray *)assets withCompletion:(recordCompletion)completion {
     NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]init];
+    
     for (PHAsset * asset in assets) {
-        
         Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
         
         record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
         record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
         record.date = asset.creationDate;
         record.itinerary = self.itinerary;
+        record.localImageURL = asset.localIdentifier;
+        [mutableRecords addObject:record];
         
-        [self getURLFor:asset withCompletion:^(NSURL *url) {
-            record.localImageURL = [NSString stringWithFormat:@"%@", url];
-            [mutableRecords addObject:record];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(mutableRecords);
-            });
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(mutableRecords);
+        });
+        
+//        [self getURLFor:asset withCompletion:^(NSURL *url) {
+//            record.localImageURL = [NSString stringWithFormat:@"%@", url];
+//            [mutableRecords addObject:record];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                completion(mutableRecords);
+//            });
+//        }];
     }
 }
 
