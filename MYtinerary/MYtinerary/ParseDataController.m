@@ -21,13 +21,6 @@
     return shared;
 }
 
-//- (void)test:(NSString *)title {
-//    NSString *username = [[PFUser currentUser] username];
-//    
-//    NSLog(@"testing ParseDataController for %@ by %@", title, username);
-//}
-
-//saving itinerary
 - (void)saveItinerary:(NSString *)itineraryTitle {
     NSString *author = [[PFUser currentUser] username];
     
@@ -48,6 +41,9 @@
 
 - (void)saveRecords:(NSString *)itineraryTitle
 {
+    
+    
+    
     NSString *comments;
     NSDate *date;
     NSNumber *latitude;

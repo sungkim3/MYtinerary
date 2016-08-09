@@ -168,6 +168,15 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     }];
     
     [[ParseDataController shared]saveItinerary: self.titleTextField.text];
+    
+    // pull records from core data, send them to ParseDataController for sync
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)",self.titleTextField.text]];
+    
+    NSError *error;
+    NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
+
 //    [[ParseDataController shared]saveRecords: self.titleTextField.text];
     
 }
