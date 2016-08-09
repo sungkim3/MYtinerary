@@ -26,11 +26,11 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NCm-bF-eRP" id="bq9-kf-28r">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zJs-E5-XV3">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -79,19 +79,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DId-xg-s2j">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <connections>
                                     <outlet property="delegate" destination="bc2-2s-IlQ" id="3SG-Ge-mHr"/>
                                 </connections>
                             </mapView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="DId-xg-s2j" firstAttribute="bottom" secondItem="eqo-g6-FTV" secondAttribute="top" id="5ze-pt-lE6"/>
-                            <constraint firstAttribute="trailing" secondItem="DId-xg-s2j" secondAttribute="trailing" id="8fA-AB-779"/>
-                            <constraint firstItem="DId-xg-s2j" firstAttribute="top" secondItem="940-VT-3V1" secondAttribute="top" id="FHe-5u-THI"/>
-                            <constraint firstItem="DId-xg-s2j" firstAttribute="leading" secondItem="940-VT-3V1" secondAttribute="leading" id="VFc-FE-BM0"/>
+                            <constraint firstItem="DId-xg-s2j" firstAttribute="top" secondItem="940-VT-3V1" secondAttribute="top" id="1ds-gP-5AN"/>
+                            <constraint firstItem="DId-xg-s2j" firstAttribute="bottom" secondItem="eqo-g6-FTV" secondAttribute="top" id="6eE-RV-oBe"/>
+                            <constraint firstItem="DId-xg-s2j" firstAttribute="leading" secondItem="940-VT-3V1" secondAttribute="leading" id="DYy-lU-bhb"/>
+                            <constraint firstAttribute="trailing" secondItem="DId-xg-s2j" secondAttribute="trailing" id="oUM-5W-Pw0"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem systemItem="edit" id="1DI-ql-z86">
+                            <connections>
+                                <action selector="editButtonPressed:" destination="bc2-2s-IlQ" id="rg3-dE-qcf"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="rDx-6x-jHh">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="kkr-ae-NI2">
                             <connections>
@@ -104,8 +111,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="DId-xg-s2j" id="05t-qW-pcc"/>
+                        <segue destination="7wg-cm-Bhh" kind="show" identifier="EditItinerary" id="AVw-NC-swc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vek-fG-wZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -127,11 +136,12 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick Memories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eV3-18-Z7G">
                                 <rect key="frame" x="247" y="110" width="113" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TqG-Xo-hMf">
                                 <rect key="frame" x="0.0" y="139" width="600" height="417"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="k8J-Cn-HPV">
                                     <size key="itemSize" width="274" height="202"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -217,4 +227,7 @@
             <point key="canvasLocation" x="606" y="-463"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="AVw-NC-swc"/>
+    </inferredMetricsTieBreakers>
 </document>

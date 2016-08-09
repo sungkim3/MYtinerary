@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "Credentials.h"
+#import "PhotoPickerViewController.h"
 @import Parse;
+@import Photos;
 
 @interface AppDelegate ()
 
