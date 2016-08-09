@@ -32,10 +32,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 @property (strong, nonatomic) NSMutableArray *selectedIndexPaths;
 @property (strong, nonatomic) NSMutableArray *selectedAssetsForEditing;
 
-
-
-
-
 @property (nonatomic) CGFloat cellWidth;
 
 @end
@@ -159,11 +155,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         } else {
             NSLog(@"Unsuccessful saving Itinerary with records: %@", saveError.localizedDescription);
         }
-        
-        //test Parse controllers
-        [[ParseDataController shared] test: itinerary.title];
-        
-        
+
         //pass data to MapVC
         MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
         if (!mapVC.assets) {
@@ -173,9 +165,11 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         mapVC.records = self.records;
         
         [self.navigationController popToRootViewControllerAnimated:YES];
-        
-        
     }];
+    
+    [[ParseDataController shared]saveItinerary: self.titleTextField.text]; //running once for each record
+    
+//    [[ParseDataController shared]saveRecords: self.titleTextField.text];
 }
 
 -(void)recordsFrom:(NSArray *)assets withCompletion:(recordCompletion)completion {

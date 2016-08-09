@@ -13,8 +13,8 @@
 @property void *itineraryTitle;
 
 +(ParseDataController *)shared;
--(void)test:(NSString *)title;
--(void)saveItinerary;
--(void)saveRecords;
+//-(void)test:(NSString *)title;
+-(void)saveItinerary:(NSString *)itineraryTitle;
+-(void)saveRecords:(NSString *)itineraryTitle;
 
 @end

@@ -21,24 +21,19 @@
     return shared;
 }
 
-- (void)test:(NSString *)title {
-//    PFQuery *query= [PFUser query];
+//- (void)test:(NSString *)title {
+//    NSString *username = [[PFUser currentUser] username];
 //    
-//    [query whereKey:@"username" equalTo:[[PFUser currentUser]username]];
-    NSString *username = [[PFUser currentUser] username];
-    
-    NSLog(@"testing ParseDataController for %@ by %@", title, username);
-}
+//    NSLog(@"testing ParseDataController for %@ by %@", title, username);
+//}
 
 //saving itinerary
-- (void)saveItinerary
-{
-    NSString *author;
-    NSString *title;
+- (void)saveItinerary:(NSString *)itineraryTitle {
+    NSString *author = [[PFUser currentUser] username];
     
     PFObject *itinerary = [PFObject objectWithClassName:@"Itinerary"];
     itinerary[@"author"] = author; //USER name from PFuser
-    itinerary[@"title"] = title; //text fields.text in photo picker view controller
+    itinerary[@"title"] = itineraryTitle; //text fields.text in photo picker view controller
     
     [itinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded)
@@ -51,7 +46,7 @@
     }];
 }
 
-- (void)saveRecords
+- (void)saveRecords:(NSString *)itineraryTitle
 {
     NSString *comments;
     NSDate *date;
