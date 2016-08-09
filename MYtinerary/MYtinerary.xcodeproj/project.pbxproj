@@ -185,6 +185,8 @@
 				0E0FC1F01D5529EE0059DA17 /* MapViewController.m */,
 				D946C4041D590C15002A4830 /* ParseDataController.h */,
 				D946C4051D590C15002A4830 /* ParseDataController.m */,
+				D946C4071D5A5DE4002A4830 /* RecordsViewController.h */,
+				D946C4081D5A5DE4002A4830 /* RecordsViewController.m */,
 				147E196F1D597844006B6A50 /* ItinerariesViewController.h */,
 				147E19701D597844006B6A50 /* ItinerariesViewController.m */,
 			);
