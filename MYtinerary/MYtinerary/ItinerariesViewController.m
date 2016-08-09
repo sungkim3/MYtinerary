@@ -9,11 +9,17 @@
 #import "ItinerariesViewController.h"
 #import "AppDelegate.h"
 #import "Itinerary.h"
+#import "Record.h"
+#import "MapViewController.h"
+@import Photos;
 
-@interface ItinerariesViewController () <UITableViewDataSource>
+@interface ItinerariesViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *itineraries;
+@property (strong, nonatomic) NSOrderedSet *records;
+@property (strong, nonatomic) NSMutableArray *assets;
+@property (strong, nonatomic) Itinerary *itinerary;
 
 @end
 
@@ -51,8 +57,50 @@
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Itinerary *itinerary = [self.itineraries objectAtIndex:indexPath.row];
+    self.itinerary = itinerary;
+
+    NSMutableArray *assetIds = [[NSMutableArray alloc]init];
+    NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
+    for (Record *record in itinerary.records) {
+        [mutableRecords addObject:record];
+        [assetIds addObject:record.localImageURL];
+    }
+    self.records = (NSOrderedSet *)mutableRecords;
+    self.assets = [[NSMutableArray alloc]init];
+    
+    PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc]init];
+    allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    
+    PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:assetIds options:allPhotosOptions];
+    
+    [assets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[PHAsset class]]) {
+            [self.assets addObject:(PHAsset *)obj];
+        }
+        if (idx == assets.count - 1) {
+            [self performSegueWithIdentifier:@"displayItineraryOnMapVC" sender:self];
+        }
+    }];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"displayItineraryOnMapVC"]) {
+        if ([segue.destinationViewController isKindOfClass:[MapViewController class]]) {
+            MapViewController *mapVC = (MapViewController *)segue.destinationViewController;
+            mapVC.records = self.records;
+            mapVC.assets = self.assets;
+            mapVC.itinerary = self.itinerary;
+        }
+    }
+}
+
 //TODO
-//set up segue (bookmark button selected into ItinerariesViewController
+
 //determine if itineraries will be populated from Core Data or Parse
 //ensure textfield in photopickerviewcontroller is mandatory for itinerary.title
 //create didselectatindexpath delegate to move into mapviewcontroller and pass off necessary data to populate the local store there

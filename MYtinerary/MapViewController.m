@@ -31,6 +31,7 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
 
 @end
 
@@ -43,7 +44,7 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
     self.mapView.delegate = self;
     [self.navigationController setToolbarHidden:NO animated:NO];
     
-    [self login];
+//    [self login];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -211,6 +212,11 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
     [self.mapView removeAnnotations:self.mapView.annotations];
 
     [self performSegueWithIdentifier:createSegueIdentifier sender:self];
+}
+
+- (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"ShowItineraries" sender:self];
+    
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
