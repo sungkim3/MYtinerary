@@ -32,9 +32,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 @property (strong, nonatomic) NSMutableArray *selectedAssetsForEditing;
 
 
-
-
-
 @property (nonatomic) CGFloat cellWidth;
 
 @end
@@ -103,8 +100,8 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         
     } else {
         //update existing itinerary
-        [self recordsFrom:self.selectedAssetsForEditing withCompletion:^(NSOrderedSet *records) {
-            NSMutableArray *updatedRecords = [self.records mutableCopy];
+        [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
+            NSMutableArray *updatedRecords = [NSMutableArray new];//[self.records mutableCopy];
             for (Record *record in records) {
                 [updatedRecords addObject:record];
             }
@@ -132,7 +129,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
             mapVC.records = self.records;
             NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
-            [updatedAssets addObjectsFromArray:self.selectedAssetsForEditing];
+            [updatedAssets addObjectsFromArray:self.selectedAssets];
             mapVC.assets = updatedAssets;
             
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -256,15 +253,8 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         self.selectedIndexPaths = [[NSMutableArray alloc]init];
     }
     [self.selectedIndexPaths addObject:indexPath];
+    [self.selectedAssets addObject:self.assets[indexPath.row]];
     
-    if (!self.itinerary) {
-        [self.selectedAssets addObject:self.assets[indexPath.row]];
-    } else {
-        if (!self.selectedAssetsForEditing) {
-            self.selectedAssetsForEditing = [[NSMutableArray alloc]init];
-        }
-        [self.selectedAssetsForEditing addObject:self.assets[indexPath.row]];
-    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
