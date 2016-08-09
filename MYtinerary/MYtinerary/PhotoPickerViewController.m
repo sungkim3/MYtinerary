@@ -32,6 +32,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 @property (strong, nonatomic) NSMutableArray *selectedIndexPaths;
 @property (strong, nonatomic) NSMutableArray *selectedAssetsForEditing;
 
+
 @property (nonatomic) CGFloat cellWidth;
 
 @end
