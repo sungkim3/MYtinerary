@@ -11,6 +11,7 @@
 #import "MapViewController.h"
 #import "Itinerary.h"
 #import "NSManagedObject+ManagedContext.h"
+#import "ParseDataController.h"
 @import Photos;
 @import UIKit;
 
@@ -77,11 +78,11 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     
     PHFetchResult *allPhotosResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:allPhotosOptions];
     
-//    for (PHAsset *asset in allPhotosResult) {
-//        [self.assets addObject:asset];
-//    }
-
-
+    //    for (PHAsset *asset in allPhotosResult) {
+    //        [self.assets addObject:asset];
+    //    }
+    
+    
     [allPhotosResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
         if (asset) {
             [self.assets addObject:asset];
@@ -102,6 +103,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         //update existing itinerary
         [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
             NSMutableArray *updatedRecords = [NSMutableArray new];//[self.records mutableCopy];
+            
+            
+            
             for (Record *record in records) {
                 [updatedRecords addObject:record];
             }
@@ -115,7 +119,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
             assert(results.count == 1);
             ((Itinerary *)results.firstObject).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
-
+            
             //save context
             NSError *saveError;
             BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
@@ -167,9 +171,10 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         mapVC.assets = self.selectedAssets;
         
         [self.navigationController popToRootViewControllerAnimated:YES];
-        
-        
     }];
+    
+    [[ParseDataController shared]saveItinerary: self.titleTextField.text];
+    
 }
 
 -(void)recordsFrom:(NSArray *)assets withCompletion:(recordCompletion)completion {
@@ -185,17 +190,19 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         record.localImageURL = asset.localIdentifier;
         [mutableRecords addObject:record];
         
+//        [[ParseDataController shared]saveRecords:record.itinerary.title localImageURL:record.localImageURL parseImageURL:@"bleh" parseThumbnailURL:@"bleh" latitude:record.latitude longitude:record.longitude date:record.date title:record.title comments:record.comments];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             completion(mutableRecords);
         });
         
-//        [self getURLFor:asset withCompletion:^(NSURL *url) {
-//            record.localImageURL = [NSString stringWithFormat:@"%@", url];
-//            [mutableRecords addObject:record];
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                completion(mutableRecords);
-//            });
-//        }];
+        //        [self getURLFor:asset withCompletion:^(NSURL *url) {
+        //            record.localImageURL = [NSString stringWithFormat:@"%@", url];
+        //            [mutableRecords addObject:record];
+        //            dispatch_async(dispatch_get_main_queue(), ^{
+        //                completion(mutableRecords);
+        //            });
+        //        }];
     }
 }
 

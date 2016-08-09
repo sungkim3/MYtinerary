@@ -9,19 +9,24 @@
 #import "ParseDataController.h"
 @import Parse;
 
-
-
 @implementation ParseDataController
 
-//saving itinerary
-- (void)saveItinerary
-{
-    NSString *author;
-    NSString *title;
++ (ParseDataController *)shared {
+    static ParseDataController *shared = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shared = [[self alloc]init];
+    });
+    
+    return shared;
+}
+
+- (void)saveItinerary:(NSString *)itineraryTitle {
+    NSString *author = [[PFUser currentUser] username];
     
     PFObject *itinerary = [PFObject objectWithClassName:@"Itinerary"];
     itinerary[@"author"] = author; //USER name from PFuser
-    itinerary[@"title"] = title; //text fields.text in photo picker view controller
+    itinerary[@"title"] = itineraryTitle; //text fields.text in photo picker view controller
     
     [itinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded)
@@ -34,36 +39,27 @@
     }];
 }
 
-- (void)saveRecords
-{
-    NSString *comments;
-    NSDate *date;
-    NSNumber *latitude;
-    NSNumber *longitude;
-    NSString *localImageURL;
-    NSString *parseImageURL;
-    NSString *parseThumbnailURL;
-    NSString *title;
-    
-    PFObject *records = [PFObject objectWithClassName:@"Record"];
-    records[@"comments"] = comments; //likely from details view controller
-    records[@"date"] =  date; //photo picker view controller metadata asset
-    records[@"latitude"] =  latitude; //same
-    records[@"longitude"] = longitude; //same
-    records[@"localImageURL"] = localImageURL; //same
-    records[@"parseImageURL"] =  parseImageURL; //TBD
-    records[@"parseThumbnailURL"] = parseThumbnailURL; //TBD
-    records[@"title "] = title; //detail vc
-    
-    [records saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (succeeded)
-        {
-            NSLog(@"Object has been saved");
-        } else
-        {
-            NSLog(@"Handle error");
-        }
-    }];
-}
+//- (void)saveRecords:(NSString *)itineraryTitle localImageURL:(NSString *)localImageURL parseImageURL:(NSString *)parseImageURL parseThumbnailURL:(NSString *)parseThumbnailURL latitude:(NSNumber *)latitude longitude:(NSNumber *)longitude date:(NSDate *)date title:(NSString *)title comments:(NSString *)comments {
+//
+//    PFObject *records = [PFObject objectWithClassName:@"Record"];
+//    records[@"comments"] = comments; //likely from details view controller
+//    records[@"date"] =  date; //photo picker view controller metadata asset
+//    records[@"latitude"] =  latitude; //same
+//    records[@"longitude"] = longitude; //same
+//    records[@"localImageURL"] = localImageURL; //same
+//    records[@"parseImageURL"] =  parseImageURL; //TBD
+//    records[@"parseThumbnailURL"] = parseThumbnailURL; //TBD
+//    records[@"title "] = title; //detail vc
+//    
+//    [records saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+//        if (succeeded)
+//        {
+//            NSLog(@"Object has been saved");
+//        } else
+//        {
+//            NSLog(@"Handle error");
+//        }
+//    }];
+//}
 
 @end
