@@ -158,11 +158,13 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         
         //pass data to MapVC
         MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
-        if (!mapVC.assets) {
-            mapVC.assets = [[NSMutableArray alloc]initWithArray:self.selectedAssets];
-        }
+
+//        [mapVC.mapView removeAnnotations:mapVC.mapView.annotations];
+//        [mapVC.mapView removeOverlays:mapVC.mapView.overlays];
+        
         mapVC.itinerary = self.itinerary;
         mapVC.records = self.records;
+        mapVC.assets = self.selectedAssets;
         
         [self.navigationController popToRootViewControllerAnimated:YES];
         

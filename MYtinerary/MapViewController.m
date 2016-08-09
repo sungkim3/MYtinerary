@@ -25,8 +25,6 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
-
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
@@ -39,26 +37,31 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setupView];
     
     self.mapView.delegate = self;
     [self.navigationController setToolbarHidden:NO animated:NO];
     
-//    [self login];
+    [self login];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView removeOverlays:self.mapView.overlays];
     if (self.itinerary) {
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
         }
-        [self sortRecordsByDate];
-        [self addPolylineToMap];
     }
+    [self sortRecordsByDate];
+    [self addPolylineToMap];
 }
 
+-(void)setupView {
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setTintColor: nil];
+}
 
 -(void)sortRecordsByDate {
     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
@@ -192,7 +195,7 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender {
     [self.mapView removeOverlays:self.mapView.overlays];
     [self.mapView removeAnnotations:self.mapView.annotations];
-
+    
     [self performSegueWithIdentifier:editSegueIdentifier sender:self];
 }
 
@@ -210,7 +213,7 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
     self.records = nil;
     [self.mapView removeOverlays:self.mapView.overlays];
     [self.mapView removeAnnotations:self.mapView.annotations];
-
+    
     [self performSegueWithIdentifier:createSegueIdentifier sender:self];
 }
 
