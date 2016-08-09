@@ -27,11 +27,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupView];
     [self fetchItinerariesFromCoreData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+-(void)setupView {
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    [self.navigationItem.rightBarButtonItem setTintColor: [UIColor clearColor]];
 }
 
 - (void)fetchItinerariesFromCoreData {
@@ -64,7 +66,7 @@
     self.itinerary = itinerary;
 
     NSMutableArray *assetIds = [[NSMutableArray alloc]init];
-    NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
+    NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]initWithOrderedSet:self.records]; //[self.records mutableCopy];
     for (Record *record in itinerary.records) {
         [mutableRecords addObject:record];
         [assetIds addObject:record.localImageURL];
@@ -92,9 +94,9 @@
     if ([segue.identifier isEqualToString:@"displayItineraryOnMapVC"]) {
         if ([segue.destinationViewController isKindOfClass:[MapViewController class]]) {
             MapViewController *mapVC = (MapViewController *)segue.destinationViewController;
-            mapVC.records = self.records;
-            mapVC.assets = self.assets;
             mapVC.itinerary = self.itinerary;
+            mapVC.assets = self.assets;
+            mapVC.records = self.records;
         }
     }
 }
