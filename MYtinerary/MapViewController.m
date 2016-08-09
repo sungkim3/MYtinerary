@@ -46,7 +46,7 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self login];
+
     if (self.itinerary) {
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
