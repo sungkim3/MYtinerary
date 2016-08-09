@@ -10,4 +10,11 @@
 
 @interface ParseDataController : NSObject
 
+@property void *itineraryTitle;
+
++(ParseDataController *)shared;
+-(void)test:(NSString *)title;
+-(void)saveItinerary;
+-(void)saveRecords;
+
 @end

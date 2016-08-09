@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSLog(@"Client Key: %@", kClientKey);
+//    NSLog(@"Client Key: %@", kClientKey);
     
     // initialize parse
     [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration>  _Nonnull configuration) {
@@ -28,23 +28,23 @@
     }]];
     
 //     test object
-        PFObject *testObject = [PFObject objectWithClassName:@"PFQueryTestObject"];
-    
-        testObject[@"foo"] = @"bar";
-    
-        [testObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            NSLog(@"Succeeded: %i, Error: %@", succeeded, error);
-        }];
-    
-        PFQuery *query = [PFQuery queryWithClassName:@"TPFQuerytestObject"];
-    
-        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            if (!error) {
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    NSLog(@"Objects: %@", objects);
-                }];
-            }
-        }];
+//        PFObject *testObject = [PFObject objectWithClassName:@"PFQueryTestObject"];
+//    
+//        testObject[@"foo"] = @"bar";
+//    
+//        [testObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+//            NSLog(@"Succeeded: %i, Error: %@", succeeded, error);
+//        }];
+//    
+//        PFQuery *query = [PFQuery queryWithClassName:@"TPFQuerytestObject"];
+//    
+//        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//            if (!error) {
+//                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//                    NSLog(@"Objects: %@", objects);
+//                }];
+//            }
+//        }];
 
     return YES;
 }

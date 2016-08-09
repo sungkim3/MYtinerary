@@ -11,6 +11,7 @@
 #import "MapViewController.h"
 #import "Itinerary.h"
 #import "NSManagedObject+ManagedContext.h"
+#import "ParseDataController.h"
 @import Photos;
 @import UIKit;
 
@@ -103,6 +104,10 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         } else {
             NSLog(@"Unsuccessful saving Itinerary with records: %@", saveError.localizedDescription);
         }
+        
+        //test Parse controllers
+        [[ParseDataController shared] test: itinerary.title];
+        
         
         //pass data to MapVC
         MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;

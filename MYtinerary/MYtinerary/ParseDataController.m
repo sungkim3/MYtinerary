@@ -9,9 +9,26 @@
 #import "ParseDataController.h"
 @import Parse;
 
-
-
 @implementation ParseDataController
+
++ (ParseDataController *)shared {
+    static ParseDataController *shared = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shared = [[self alloc]init];
+    });
+    
+    return shared;
+}
+
+- (void)test:(NSString *)title {
+//    PFQuery *query= [PFUser query];
+//    
+//    [query whereKey:@"username" equalTo:[[PFUser currentUser]username]];
+    NSString *username = [[PFUser currentUser] username];
+    
+    NSLog(@"testing ParseDataController for %@ by %@", title, username);
+}
 
 //saving itinerary
 - (void)saveItinerary
