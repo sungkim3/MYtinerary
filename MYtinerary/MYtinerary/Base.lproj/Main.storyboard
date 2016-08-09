@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4De-9n-NzE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4De-9n-NzE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -26,11 +26,11 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NCm-bF-eRP" id="bq9-kf-28r">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zJs-E5-XV3">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,6 +40,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="jWj-Xi-ue4"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ejO-TN-i66"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -59,7 +63,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="composeButtonPressed" destination="QSS-kU-C9n" id="Rls-To-I3y"/>
-                        <outlet property="tableView" destination="ArB-SF-7lf" id="D2h-JN-aVM"/>
+                        <outlet property="tableView" destination="ArB-SF-7lf" id="pSR-ag-yHd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -79,19 +83,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DId-xg-s2j">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <connections>
                                     <outlet property="delegate" destination="bc2-2s-IlQ" id="3SG-Ge-mHr"/>
                                 </connections>
                             </mapView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="DId-xg-s2j" firstAttribute="bottom" secondItem="eqo-g6-FTV" secondAttribute="top" id="5ze-pt-lE6"/>
-                            <constraint firstAttribute="trailing" secondItem="DId-xg-s2j" secondAttribute="trailing" id="8fA-AB-779"/>
-                            <constraint firstItem="DId-xg-s2j" firstAttribute="top" secondItem="940-VT-3V1" secondAttribute="top" id="FHe-5u-THI"/>
-                            <constraint firstItem="DId-xg-s2j" firstAttribute="leading" secondItem="940-VT-3V1" secondAttribute="leading" id="VFc-FE-BM0"/>
+                            <constraint firstItem="DId-xg-s2j" firstAttribute="top" secondItem="940-VT-3V1" secondAttribute="top" id="1ds-gP-5AN"/>
+                            <constraint firstItem="DId-xg-s2j" firstAttribute="bottom" secondItem="eqo-g6-FTV" secondAttribute="top" id="6eE-RV-oBe"/>
+                            <constraint firstItem="DId-xg-s2j" firstAttribute="leading" secondItem="940-VT-3V1" secondAttribute="leading" id="DYy-lU-bhb"/>
+                            <constraint firstAttribute="trailing" secondItem="DId-xg-s2j" secondAttribute="trailing" id="oUM-5W-Pw0"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem systemItem="edit" id="1DI-ql-z86">
+                            <connections>
+                                <action selector="editButtonPressed:" destination="bc2-2s-IlQ" id="rg3-dE-qcf"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="rDx-6x-jHh">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="kkr-ae-NI2">
                             <connections>
@@ -100,12 +111,15 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="4wC-o1-PtL">
                             <connections>
-                                <segue destination="7wg-cm-Bhh" kind="show" id="nHm-jo-6SK"/>
+                                <action selector="composeButtonPressed:" destination="bc2-2s-IlQ" id="6Th-R8-6LQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="DId-xg-s2j" id="05t-qW-pcc"/>
+                        <segue destination="7wg-cm-Bhh" kind="show" identifier="EditItinerary" id="AVw-NC-swc"/>
+                        <segue destination="7wg-cm-Bhh" kind="show" identifier="CreateItinerary" id="nw0-QJ-8if"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vek-fG-wZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -127,11 +141,12 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick Memories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eV3-18-Z7G">
                                 <rect key="frame" x="247" y="110" width="113" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TqG-Xo-hMf">
                                 <rect key="frame" x="0.0" y="139" width="600" height="417"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="k8J-Cn-HPV">
                                     <size key="itemSize" width="274" height="202"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -196,7 +211,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Spe-wU-gNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1976" y="-440"/>
+            <point key="canvasLocation" x="2100" y="-377"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2VJ-hO-G9f">
@@ -217,4 +232,7 @@
             <point key="canvasLocation" x="606" y="-463"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="nw0-QJ-8if"/>
+    </inferredMetricsTieBreakers>
 </document>

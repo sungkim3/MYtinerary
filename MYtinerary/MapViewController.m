@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "CustomPointAnnotation.h"
 #import "CustomLoginViewController.h"
+#import "PhotoPickerViewController.h"
 @import Photos;
 @import MapKit;
 @import CoreLocation;
@@ -19,15 +20,17 @@
 @import ParseUI;
 
 typedef void(^imageCompletion)(UIImage *image);
+NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
+NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
-
-- (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)editButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
+- (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 
 @end
 
@@ -36,27 +39,16 @@ typedef void(^imageCompletion)(UIImage *image);
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.mapView.delegate = self;
     
-//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
-//    NSError *error;
-//    NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
-//    if (error) {
-//        NSLog(@"Error with fetching itineraryies");
-//    } else {
-//        if (results.count > 0) {
-//            self.itinerary = results.firstObject;
-//        }
-//    }
-//    self.records = [[NSMutableArray alloc]init];
-//    for (Record* record in self.itinerary.records) {
-//        [self.records addObject:record];
-//    }
-//    NSLog(@"Itinerary records: %@", self.records);
+    self.mapView.delegate = self;
+    [self.navigationController setToolbarHidden:NO animated:NO];
+    
+    [self login];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     if (self.itinerary) {
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
@@ -191,10 +183,17 @@ typedef void(^imageCompletion)(UIImage *image);
 
 #pragma mark - PFSignUpViewControllerDelegate
 
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+- (void)signUpViewController:(CustomLoginViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+- (IBAction)editButtonPressed:(UIBarButtonItem *)sender {
+    [self.mapView removeOverlays:self.mapView.overlays];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+
+    [self performSegueWithIdentifier:editSegueIdentifier sender:self];
+}
 
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender {
     
@@ -203,5 +202,28 @@ typedef void(^imageCompletion)(UIImage *image);
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender {
     [self logout];
 }
+
+- (IBAction)composeButtonPressed:(UIBarButtonItem *)sender {
+    self.assets = nil;
+    self.itinerary = nil;
+    self.records = nil;
+    [self.mapView removeOverlays:self.mapView.overlays];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+
+    [self performSegueWithIdentifier:createSegueIdentifier sender:self];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:editSegueIdentifier] || [segue.identifier isEqualToString:createSegueIdentifier]) {
+        if ([segue.destinationViewController isKindOfClass:[PhotoPickerViewController class]]) {
+            PhotoPickerViewController *photoPickerVC = (PhotoPickerViewController *) segue.destinationViewController;
+            photoPickerVC.records = self.records;
+            photoPickerVC.selectedAssets = self.assets;
+            photoPickerVC.itinerary = self.itinerary;
+        }
+    }
+    
+}
+
 
 @end

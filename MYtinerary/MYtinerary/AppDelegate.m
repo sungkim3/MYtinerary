@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "Credentials.h"
+#import "PhotoPickerViewController.h"
 @import Parse;
+@import Photos;
 
 @interface AppDelegate ()
 
@@ -17,7 +19,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+
     NSLog(@"Client Key: %@", kClientKey);
     
     // initialize parse
