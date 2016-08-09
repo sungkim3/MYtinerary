@@ -18,20 +18,36 @@
 }
 
 - (void)setupLoginUI {
-    UIImageView *logo = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"meet-the-pug-pug-6.jpg"]];
+    UIImage *logoImage = [UIImage imageNamed:@"icon"];
+    UIImageView *logoView = [[UIImageView alloc]initWithImage:logoImage];
     
-    self.logInView.logo = logo;
+    logoView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 500.0);
+    logoView.contentMode = UIViewContentModeScaleToFill;
+    logoView.clipsToBounds = YES;
+    
+    self.logInView.logo = logoView;
 //    NSLayoutConstraint *logoHeight = [NSLayoutConstraint constraintWithItem:self.logInView.logo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.logInView.logo attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
 
-    self.view.backgroundColor = [UIColor whiteColor];
     
 }
 
 - (void)setupSignUpUI {
-    UIImageView *logo = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"meet-the-pug-pug-6.jpg"]];
+//    UIImage *logoImage = [UIImage imageNamed:@"icon"];
+//    UIImageView *logoView = [[UIImageView alloc]initWithImage:logoImage];
+//    
+//    logoView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 500.0);
+//    logoView.contentMode = UIViewContentModeScaleToFill;
+//    logoView.clipsToBounds = YES;
+//    
+//    self.logInView.logo = logoView;
+//    
+    
+        UIImageView *logo = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon"]];
     
     self.signUpController.signUpView.logo = logo;
     self.signUpController.signUpView.backgroundColor =  [UIColor whiteColor];
 }
+
+
 
 @end
