@@ -193,7 +193,7 @@ typedef void(^imageCompletion)(UIImage *image);
 
 #pragma mark - PFSignUpViewControllerDelegate
 
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+- (void)signUpViewController:(CustomLoginViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
