@@ -167,9 +167,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
     
-    [[ParseDataController shared]saveItinerary: self.titleTextField.text]; //running once for each record
-    
+    [[ParseDataController shared]saveItinerary: self.titleTextField.text];
 //    [[ParseDataController shared]saveRecords: self.titleTextField.text];
+    
 }
 
 -(void)recordsFrom:(NSArray *)assets withCompletion:(recordCompletion)completion {
