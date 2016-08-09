@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Itinerary.h"
+#import "Record.h"
 
 @interface PhotoPickerViewController : UIViewController
+
+@property (strong, nonatomic) Itinerary *itinerary;
+@property (strong, nonatomic) NSOrderedSet *records;
+@property (strong, nonatomic) NSMutableArray *selectedAssets;
+
 
 @end
