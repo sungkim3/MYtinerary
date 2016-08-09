@@ -21,6 +21,7 @@
 
 typedef void(^imageCompletion)(UIImage *image);
 NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
+NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -29,6 +30,8 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
+- (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
 
 @end
 
@@ -36,17 +39,17 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     
     self.mapView.delegate = self;
     [self.navigationController setToolbarHidden:NO animated:NO];
-
-    [self login];
+    
+//    [self login];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    
     if (self.itinerary) {
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
@@ -187,6 +190,9 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
 
 
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender {
+    [self.mapView removeOverlays:self.mapView.overlays];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+
     [self performSegueWithIdentifier:editSegueIdentifier sender:self];
 }
 
@@ -198,8 +204,23 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
     [self logout];
 }
 
+- (IBAction)composeButtonPressed:(UIBarButtonItem *)sender {
+    self.assets = nil;
+    self.itinerary = nil;
+    self.records = nil;
+    [self.mapView removeOverlays:self.mapView.overlays];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+
+    [self performSegueWithIdentifier:createSegueIdentifier sender:self];
+}
+
+- (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"ShowItineraries" sender:self];
+    
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:editSegueIdentifier]) {
+    if ([segue.identifier isEqualToString:editSegueIdentifier] || [segue.identifier isEqualToString:createSegueIdentifier]) {
         if ([segue.destinationViewController isKindOfClass:[PhotoPickerViewController class]]) {
             PhotoPickerViewController *photoPickerVC = (PhotoPickerViewController *) segue.destinationViewController;
             photoPickerVC.records = self.records;
@@ -207,6 +228,7 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
             photoPickerVC.itinerary = self.itinerary;
         }
     }
+    
 }
 
 

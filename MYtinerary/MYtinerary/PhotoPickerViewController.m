@@ -100,8 +100,8 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         
     } else {
         //update existing itinerary
-        [self recordsFrom:self.selectedAssetsForEditing withCompletion:^(NSOrderedSet *records) {
-            NSMutableArray *updatedRecords = [self.records mutableCopy];
+        [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
+            NSMutableArray *updatedRecords = [NSMutableArray new];//[self.records mutableCopy];
             for (Record *record in records) {
                 [updatedRecords addObject:record];
             }
@@ -129,7 +129,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
             mapVC.records = self.records;
             NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
-            [updatedAssets addObjectsFromArray:self.selectedAssetsForEditing];
+            [updatedAssets addObjectsFromArray:self.selectedAssets];
             mapVC.assets = updatedAssets;
             
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -183,22 +183,28 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(void)recordsFrom:(NSArray *)assets withCompletion:(recordCompletion)completion {
     NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]init];
+    
     for (PHAsset * asset in assets) {
-        
         Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
         
         record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
         record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
         record.date = asset.creationDate;
         record.itinerary = self.itinerary;
+        record.localImageURL = asset.localIdentifier;
+        [mutableRecords addObject:record];
         
-        [self getURLFor:asset withCompletion:^(NSURL *url) {
-            record.localImageURL = [NSString stringWithFormat:@"%@", url];
-            [mutableRecords addObject:record];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(mutableRecords);
-            });
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(mutableRecords);
+        });
+        
+//        [self getURLFor:asset withCompletion:^(NSURL *url) {
+//            record.localImageURL = [NSString stringWithFormat:@"%@", url];
+//            [mutableRecords addObject:record];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                completion(mutableRecords);
+//            });
+//        }];
     }
 }
 
@@ -264,15 +270,8 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         self.selectedIndexPaths = [[NSMutableArray alloc]init];
     }
     [self.selectedIndexPaths addObject:indexPath];
+    [self.selectedAssets addObject:self.assets[indexPath.row]];
     
-    if (!self.itinerary) {
-        [self.selectedAssets addObject:self.assets[indexPath.row]];
-    } else {
-        if (!self.selectedAssetsForEditing) {
-            self.selectedAssetsForEditing = [[NSMutableArray alloc]init];
-        }
-        [self.selectedAssetsForEditing addObject:self.assets[indexPath.row]];
-    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
