@@ -9,6 +9,12 @@
 #import "ParseDataController.h"
 @import Parse;
 
+@interface ParseDataController ()
+
+@property(nonatomic) UIImage *downsizedImage;
+
+@end
+
 @implementation ParseDataController
 
 + (ParseDataController *)shared {
@@ -40,30 +46,28 @@
 }
 
 - (void)saveRecords:(NSString *)itineraryTitle
-                  latitude:(NSNumber *)latitude
-                 longitude:(NSNumber *)longitude
-                      date:(NSDate *)date
-                     title:(NSString *)title
-                  comments:(NSString *)comments
-             localImageURL:(NSString *)localImageURL
-                localImage:(PHAsset *)localImage
-    {
+           latitude:(NSNumber *)latitude
+          longitude:(NSNumber *)longitude
+               date:(NSDate *)date
+              title:(NSString *)title
+           comments:(NSString *)comments
+      localImageURL:(NSString *)localImageURL
+         localImage:(PHAsset *)localImage
+{
     
     PHImageManager *imageManager = [PHImageManager defaultManager];
-        UIImage *bbbImage;
     
-//        [imageManager requestImageForAsset:localImage
-//                                targetSize:CGSizeMake(1000, 1000)
-//                               contentMode:PHImageContentModeAspectFit
-//                                   options:nil
-//                             resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-//            bbbImage = result;
-//        }];
-        
     [imageManager requestImageForAsset:localImage targetSize:CGSizeMake(1000, 1000) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        bbbImage = result;
+        
+        self.downsizedImage = result;
+        
     }];
     
+    NSMutableData *imageData;
+    
+    [imageData setData:UIImageJPEGRepresentation(self.downsizedImage, .7)];
+    
+//    PFFile *parseImage = [PFFile fileWithData:imageData];
     PFObject *records = [PFObject objectWithClassName:@"Record"];
     
     records[@"latitude"] = latitude;
@@ -72,8 +76,7 @@
     records[@"title"] = title;
     records[@"comments"] = comments;
     records[@"localImageURL"] = localImageURL;
-    records[@"localImage"] = localImage;
-    // thumbnail
+//    records[@"localImage"] = parseImage;
     
     [records saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded)
@@ -85,10 +88,5 @@
         }
     }];
 }
-
-//- (void)PHAssetToJPG:(PHAsset *)localImage{
-//    
-//    
-//}
 
 @end
