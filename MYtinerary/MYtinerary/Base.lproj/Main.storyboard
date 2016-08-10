@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Itineraries View Controller-->
@@ -65,6 +66,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1277" y="341"/>
+        </scene>
+        <!--Presentation View Controller-->
+        <scene sceneID="Wk5-3Y-iG5">
+            <objects>
+                <viewController id="zNP-qt-nm1" customClass="PresentationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PhD-EK-LNb"/>
+                        <viewControllerLayoutGuide type="bottom" id="trf-gL-i3C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tiL-It-ai3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OtF-cN-jTD">
+                                <rect key="frame" x="276" y="570" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="zNP-qt-nm1" eventType="touchUpInside" id="tdU-SU-uXs"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s0W-Gn-CRs">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="562"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="s0W-Gn-CRs" firstAttribute="leading" secondItem="tiL-It-ai3" secondAttribute="leading" id="Q95-Uh-vcR"/>
+                            <constraint firstItem="trf-gL-i3C" firstAttribute="top" secondItem="OtF-cN-jTD" secondAttribute="bottom" id="V6v-Ko-llW"/>
+                            <constraint firstItem="s0W-Gn-CRs" firstAttribute="top" secondItem="tiL-It-ai3" secondAttribute="top" id="WH8-Rt-px8"/>
+                            <constraint firstItem="OtF-cN-jTD" firstAttribute="centerX" secondItem="tiL-It-ai3" secondAttribute="centerX" id="ZMw-bK-OVl"/>
+                            <constraint firstItem="OtF-cN-jTD" firstAttribute="top" secondItem="s0W-Gn-CRs" secondAttribute="bottom" constant="8" id="wvb-qa-acK"/>
+                            <constraint firstAttribute="trailing" secondItem="s0W-Gn-CRs" secondAttribute="trailing" id="zvr-Ds-jpg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="s0W-Gn-CRs" id="4vb-IN-yg7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yLP-m4-3pg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="550" y="306"/>
         </scene>
         <!--Records View Controller-->
         <scene sceneID="3Pm-B3-80j">
@@ -148,11 +190,22 @@
                                     <outlet property="delegate" destination="bc2-2s-IlQ" id="3SG-Ge-mHr"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsj-kA-mTR">
+                                <rect key="frame" x="180" y="518" width="240" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="bc2-2s-IlQ" eventType="touchUpInside" id="3hu-Ld-fEj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="DId-xg-s2j" firstAttribute="top" secondItem="940-VT-3V1" secondAttribute="top" id="1ds-gP-5AN"/>
                             <constraint firstItem="DId-xg-s2j" firstAttribute="bottom" secondItem="eqo-g6-FTV" secondAttribute="top" constant="5" id="6eE-RV-oBe"/>
                             <constraint firstItem="DId-xg-s2j" firstAttribute="leading" secondItem="940-VT-3V1" secondAttribute="leading" id="DYy-lU-bhb"/>
+                            <constraint firstItem="eqo-g6-FTV" firstAttribute="top" secondItem="zsj-kA-mTR" secondAttribute="bottom" constant="8" symbolic="YES" id="ZPP-cB-Tc9"/>
                             <constraint firstAttribute="trailing" secondItem="DId-xg-s2j" secondAttribute="trailing" id="oUM-5W-Pw0"/>
                         </constraints>
                     </view>
@@ -190,9 +243,11 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="DId-xg-s2j" id="TkQ-cQ-aAp"/>
+                        <outlet property="playButtonOutlet" destination="zsj-kA-mTR" id="2XS-8N-D08"/>
                         <segue destination="7wg-cm-Bhh" kind="show" identifier="EditItinerary" id="AVw-NC-swc"/>
                         <segue destination="7wg-cm-Bhh" kind="show" identifier="CreateItinerary" id="nw0-QJ-8if"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="ShowItineraries" id="MZm-Bp-2If"/>
+                        <segue destination="zNP-qt-nm1" kind="presentation" identifier="ShowPresentation" id="Rt7-JK-dcj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vek-fG-wZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
