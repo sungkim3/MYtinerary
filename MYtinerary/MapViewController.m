@@ -13,6 +13,8 @@
 #import "CustomPointAnnotation.h"
 #import "CustomLoginViewController.h"
 #import "PhotoPickerViewController.h"
+#include <math.h>
+
 @import Photos;
 @import MapKit;
 @import CoreLocation;
@@ -45,7 +47,7 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
     self.mapView.delegate = self;
     [self.navigationController setToolbarHidden:NO animated:NO];
     
-    [self login];
+    //[self login];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -56,6 +58,8 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
         }
+        [self setRegion];
+        
     }
     [self sortRecordsByDate];
     [self addPolylineToMap];
@@ -64,6 +68,51 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 -(void)setupView {
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
     [self.navigationItem.rightBarButtonItem setTintColor: nil];
+}
+
+-(void)setRegion {
+    NSMutableArray *latitudes = [[NSMutableArray alloc]initWithCapacity:self.records.count];
+    NSMutableArray *longitudes = [[NSMutableArray alloc]initWithCapacity:self.records.count];
+    
+    for (Record *record in self.records) {
+        [latitudes addObject:record.latitude];
+        [longitudes addObject:record.longitude];
+
+    }
+    
+    [latitudes sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        if ([(NSNumber *)obj1 doubleValue]  < [(NSNumber *)obj2 doubleValue])
+            return NSOrderedAscending;
+        else if ([(NSNumber *)obj1 doubleValue] > [(NSNumber *)obj2 doubleValue])
+            return NSOrderedDescending;
+        
+        return NSOrderedSame;
+    }];
+    
+    [longitudes sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        if ([(NSNumber *)obj1 doubleValue] < [(NSNumber *)obj2 doubleValue])
+            return NSOrderedAscending;
+        else if ([(NSNumber *)obj1 doubleValue] > [(NSNumber *)obj2 doubleValue])
+            return NSOrderedDescending;
+        
+        return NSOrderedSame;
+    }];
+    
+    
+    NSLog(@"Sorted latitudes: %@", latitudes);
+    NSLog(@"Sorted longitudes: %@", longitudes);
+    
+    double longitudeDifference = [longitudes.lastObject doubleValue] - [longitudes.firstObject doubleValue];
+    double latitudeDifference = [latitudes.lastObject doubleValue] - [latitudes.firstObject doubleValue];
+    MKCoordinateSpan span = MKCoordinateSpanMake(fabs(latitudeDifference * kSpanMultiplier), fabs(longitudeDifference * kSpanMultiplier));
+    
+    double centerLatitude = [latitudes.firstObject doubleValue] + latitudeDifference/2;
+    double centerLongitude = [longitudes.firstObject doubleValue] + longitudeDifference/2;
+    
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(centerLatitude, centerLongitude);
+    
+    MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
+    [self.mapView setRegion:region];
 }
 
 -(void)sortRecordsByDate {
