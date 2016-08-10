@@ -13,6 +13,8 @@
 		0E0FC1FA1D554CE50059DA17 /* CustomPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */; };
 		0E0FC20B1D582E330059DA17 /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC20A1D582E330059DA17 /* PhotoPickerViewController.m */; };
 		0E0FC20E1D582E9C0059DA17 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC20D1D582E9C0059DA17 /* PhotoCollectionViewCell.m */; };
+		0E0FC2131D5AB4F70059DA17 /* PresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC2121D5AB4F70059DA17 /* PresentationViewController.m */; };
+		0E0FC2161D5AB7D70059DA17 /* PresentationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC2151D5AB7D70059DA17 /* PresentationCollectionViewCell.m */; };
 		141B0E341D53EB14008CE05B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E331D53EB14008CE05B /* main.m */; };
 		141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E361D53EB14008CE05B /* AppDelegate.m */; };
 		141B0E3D1D53EB15008CE05B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141B0E3B1D53EB15008CE05B /* Main.storyboard */; };
@@ -65,6 +67,10 @@
 		0E0FC20A1D582E330059DA17 /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
 		0E0FC20C1D582E9C0059DA17 /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
 		0E0FC20D1D582E9C0059DA17 /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		0E0FC2111D5AB4F70059DA17 /* PresentationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationViewController.h; sourceTree = "<group>"; };
+		0E0FC2121D5AB4F70059DA17 /* PresentationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationViewController.m; sourceTree = "<group>"; };
+		0E0FC2141D5AB7D70059DA17 /* PresentationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationCollectionViewCell.h; sourceTree = "<group>"; };
+		0E0FC2151D5AB7D70059DA17 /* PresentationCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationCollectionViewCell.m; sourceTree = "<group>"; };
 		141B0E2F1D53EB14008CE05B /* MYtinerary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYtinerary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141B0E331D53EB14008CE05B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		141B0E351D53EB14008CE05B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -184,6 +190,8 @@
 				0E0FC1EF1D5529EE0059DA17 /* MapViewController.h */,
 				0E0FC1F01D5529EE0059DA17 /* MapViewController.m */,
 				D946C4041D590C15002A4830 /* ParseDataController.h */,
+				0E0FC2111D5AB4F70059DA17 /* PresentationViewController.h */,
+				0E0FC2121D5AB4F70059DA17 /* PresentationViewController.m */,
 				D946C4051D590C15002A4830 /* ParseDataController.m */,
 				D946C4071D5A5DE4002A4830 /* RecordsViewController.h */,
 				D946C4081D5A5DE4002A4830 /* RecordsViewController.m */,
@@ -199,6 +207,8 @@
 				141B0E3B1D53EB15008CE05B /* Main.storyboard */,
 				0E0FC1F81D554CE50059DA17 /* CustomPointAnnotation.h */,
 				0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */,
+				0E0FC2141D5AB7D70059DA17 /* PresentationCollectionViewCell.h */,
+				0E0FC2151D5AB7D70059DA17 /* PresentationCollectionViewCell.m */,
 				0E0FC20C1D582E9C0059DA17 /* PhotoCollectionViewCell.h */,
 				0E0FC20D1D582E9C0059DA17 /* PhotoCollectionViewCell.m */,
 				141B0E411D53EB15008CE05B /* Assets.xcassets */,
@@ -322,11 +332,13 @@
 				147E19711D597844006B6A50 /* ItinerariesViewController.m in Sources */,
 				141B0E341D53EB14008CE05B /* main.m in Sources */,
 				D946C4061D590C15002A4830 /* ParseDataController.m in Sources */,
+				0E0FC2131D5AB4F70059DA17 /* PresentationViewController.m in Sources */,
 				0E0FC1F11D5529EE0059DA17 /* MapViewController.m in Sources */,
 				141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */,
 				141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */,
 				636B4E5B1D57AC7B00781B7F /* CustomLoginViewController.m in Sources */,
 				141B0E5B1D53EDC6008CE05B /* Itinerary.m in Sources */,
+				0E0FC2161D5AB7D70059DA17 /* PresentationCollectionViewCell.m in Sources */,
 				141B0E591D53EDC6008CE05B /* Record.m in Sources */,
 				0E0FC1F41D5530090059DA17 /* NSManagedObject+ManagedContext.m in Sources */,
 				0E0FC1FA1D554CE50059DA17 /* CustomPointAnnotation.m in Sources */,

@@ -13,6 +13,7 @@
 #import "CustomPointAnnotation.h"
 #import "CustomLoginViewController.h"
 #import "PhotoPickerViewController.h"
+#import "PresentationViewController.h"
 #include <math.h>
 
 @import Photos;
@@ -24,6 +25,7 @@
 typedef void(^imageCompletion)(UIImage *image);
 NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
 NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
+NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -32,6 +34,10 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
+- (IBAction)playButtonPressed:(UIButton *)sender;
+
+
 
 @end
 
@@ -65,6 +71,7 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 -(void)setupView {
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
     [self.navigationItem.rightBarButtonItem setTintColor: nil];
+    [self.playButtonOutlet.layer setCornerRadius:5.0];
 }
 
 -(void)setRegion {
@@ -279,9 +286,18 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
             photoPickerVC.selectedAssets = self.assets;
             photoPickerVC.itinerary = self.itinerary;
         }
+    } else {
+        if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
+            if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
+                PresentationViewController *presentationVC = (PresentationViewController *)segue.destinationViewController;
+                presentationVC.records = self.records;
+            }
+        }
     }
     
 }
 
-
+- (IBAction)playButtonPressed:(UIButton *)sender {
+    [self performSegueWithIdentifier:presentstionSegueIdentifier sender:self];
+}
 @end
