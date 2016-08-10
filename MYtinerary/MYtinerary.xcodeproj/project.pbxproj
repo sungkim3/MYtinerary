@@ -16,7 +16,6 @@
 		0E0FC2131D5AB4F70059DA17 /* PresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0FC2121D5AB4F70059DA17 /* PresentationViewController.m */; };
 		141B0E341D53EB14008CE05B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E331D53EB14008CE05B /* main.m */; };
 		141B0E371D53EB14008CE05B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E361D53EB14008CE05B /* AppDelegate.m */; };
-		141B0E3D1D53EB15008CE05B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141B0E3B1D53EB15008CE05B /* Main.storyboard */; };
 		141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E3E1D53EB15008CE05B /* MYtinerary.xcdatamodeld */; };
 		141B0E421D53EB15008CE05B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 141B0E411D53EB15008CE05B /* Assets.xcassets */; };
 		141B0E451D53EB15008CE05B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141B0E431D53EB15008CE05B /* LaunchScreen.storyboard */; };
@@ -26,8 +25,6 @@
 		141B0E681D53F3D9008CE05B /* Record+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 141B0E661D53F3D9008CE05B /* Record+CoreDataProperties.m */; };
 		141B0E6A1D53F505008CE05B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141B0E691D53F505008CE05B /* MapKit.framework */; };
 		147E19711D597844006B6A50 /* ItinerariesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 147E19701D597844006B6A50 /* ItinerariesViewController.m */; };
-		14FB82F41D5AB03C009A4658 /* DetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FB82F31D5AB03C009A4658 /* DetailTableViewCell.m */; };
-		6302BD1A1D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6302BD191D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg */; };
 		636B4E5B1D57AC7B00781B7F /* CustomLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 636B4E5A1D57AC7B00781B7F /* CustomLoginViewController.m */; };
 		637DE5481D55444C001547FB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637DE5471D55444C001547FB /* Bolts.framework */; };
 		637DE54A1D554462001547FB /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637DE5491D554462001547FB /* Parse.framework */; };
@@ -35,6 +32,7 @@
 		637DE54C1D55448B001547FB /* Parse.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637DE5491D554462001547FB /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		637F66CF1D553E5B00A1B20B /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; };
 		637F66D11D553E8800A1B20B /* ParseUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		63EAC2A51D5BB6BC00372F6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63EAC2A41D5BB6BC00372F6B /* Main.storyboard */; };
 		D946C4061D590C15002A4830 /* ParseDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D946C4051D590C15002A4830 /* ParseDataController.m */; };
 		D946C4091D5A5DE4002A4830 /* RecordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D946C4081D5A5DE4002A4830 /* RecordsViewController.m */; };
 /* End PBXBuildFile section */
@@ -73,7 +71,6 @@
 		141B0E331D53EB14008CE05B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		141B0E351D53EB14008CE05B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		141B0E361D53EB14008CE05B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		141B0E3C1D53EB15008CE05B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		141B0E3F1D53EB15008CE05B /* MYtinerary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MYtinerary.xcdatamodel; sourceTree = "<group>"; };
 		141B0E411D53EB15008CE05B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		141B0E441D53EB15008CE05B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -90,14 +87,12 @@
 		147E196E1D5938C0006B6A50 /* Credentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
 		147E196F1D597844006B6A50 /* ItinerariesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItinerariesViewController.h; sourceTree = "<group>"; };
 		147E19701D597844006B6A50 /* ItinerariesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItinerariesViewController.m; sourceTree = "<group>"; };
-		14FB82F21D5AB03C009A4658 /* DetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTableViewCell.h; sourceTree = "<group>"; };
-		14FB82F31D5AB03C009A4658 /* DetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTableViewCell.m; sourceTree = "<group>"; };
-		6302BD191D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "meet-the-pug-pug-6.jpg"; sourceTree = "<group>"; };
 		636B4E591D57AC7B00781B7F /* CustomLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLoginViewController.h; sourceTree = "<group>"; };
 		636B4E5A1D57AC7B00781B7F /* CustomLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLoginViewController.m; sourceTree = "<group>"; };
 		637DE5471D55444C001547FB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Bolts.framework; sourceTree = "<group>"; };
 		637DE5491D554462001547FB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../Parse.framework; sourceTree = "<group>"; };
 		637F66CE1D553E5B00A1B20B /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = ../ParseUI.framework; sourceTree = "<group>"; };
+		63EAC2A41D5BB6BC00372F6B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D946C4041D590C15002A4830 /* ParseDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseDataController.h; sourceTree = "<group>"; };
 		D946C4051D590C15002A4830 /* ParseDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseDataController.m; sourceTree = "<group>"; };
 		D946C4071D5A5DE4002A4830 /* RecordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordsViewController.h; sourceTree = "<group>"; };
@@ -133,7 +128,6 @@
 		141B0E261D53EB14008CE05B = {
 			isa = PBXGroup;
 			children = (
-				6302BD191D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg */,
 				141B0E311D53EB14008CE05B /* MYtinerary */,
 				141B0E301D53EB14008CE05B /* Products */,
 			);
@@ -204,15 +198,13 @@
 		141B0E4E1D53ED78008CE05B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				141B0E3B1D53EB15008CE05B /* Main.storyboard */,
 				0E0FC1F81D554CE50059DA17 /* CustomPointAnnotation.h */,
 				0E0FC1F91D554CE50059DA17 /* CustomPointAnnotation.m */,
 				0E0FC20C1D582E9C0059DA17 /* PhotoCollectionViewCell.h */,
 				0E0FC20D1D582E9C0059DA17 /* PhotoCollectionViewCell.m */,
 				141B0E411D53EB15008CE05B /* Assets.xcassets */,
 				141B0E431D53EB15008CE05B /* LaunchScreen.storyboard */,
-				14FB82F21D5AB03C009A4658 /* DetailTableViewCell.h */,
-				14FB82F31D5AB03C009A4658 /* DetailTableViewCell.m */,
+				63EAC2A41D5BB6BC00372F6B /* Main.storyboard */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -310,10 +302,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63EAC2A51D5BB6BC00372F6B /* Main.storyboard in Resources */,
 				141B0E451D53EB15008CE05B /* LaunchScreen.storyboard in Resources */,
 				141B0E421D53EB15008CE05B /* Assets.xcassets in Resources */,
-				141B0E3D1D53EB15008CE05B /* Main.storyboard in Resources */,
-				6302BD1A1D56C3DF00EB8926 /* meet-the-pug-pug-6.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +328,6 @@
 				141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */,
 				141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */,
 				636B4E5B1D57AC7B00781B7F /* CustomLoginViewController.m in Sources */,
-				14FB82F41D5AB03C009A4658 /* DetailTableViewCell.m in Sources */,
 				141B0E5B1D53EDC6008CE05B /* Itinerary.m in Sources */,
 				141B0E591D53EDC6008CE05B /* Record.m in Sources */,
 				0E0FC1F41D5530090059DA17 /* NSManagedObject+ManagedContext.m in Sources */,
@@ -349,14 +339,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		141B0E3B1D53EB15008CE05B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				141B0E3C1D53EB15008CE05B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		141B0E431D53EB15008CE05B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -6,23 +6,31 @@
 //  Copyright © 2016 Sung Kim. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import UIKit;
+@import Photos;
 
 @interface ParseDataController : NSObject
 
 @property (nonnull, nonatomic) NSString *itineraryTitle;
-@property (nullable, nonatomic) NSString *localImageURL;
-@property (nullable, nonatomic) NSString *parseImageURL;
-@property (nullable, nonatomic) NSString *parseThumbnailURL;
-//parse image
 @property (nonnull, nonatomic) NSNumber *latitude;
 @property (nonnull, nonatomic) NSNumber *longitude;
 @property (nonnull, nonatomic) NSDate *date;
 @property (nullable, nonatomic) NSString *title;
 @property (nullable, nonatomic) NSString *comments;
+@property (nullable, nonatomic) NSString *localImageURL;
+@property (nonnull, nonatomic) PHAsset *localImage;
 
-+(ParseDataController *)shared;
--(void)saveItinerary:(NSString *)itineraryTitle;
-//-(void)saveRecords:(NSString *)itineraryTitle localImageURL:(NSString *)localImageURL parseImageURL:(NSString *)parseImageURL parseThumbnailURL:(NSString *)parseThumbnailURL latitude:(NSNumber *)latitude longitude:(NSNumber *)longitude date:(NSDate *)date title:(NSString *)title comments:(NSString *)comments;
+// thumbnail
+
++ (nonnull ParseDataController *)shared;
+- (void)saveItinerary:(nonnull NSString *)itineraryTitle;
+- (void)saveRecords:(nonnull NSString *)itineraryTitle
+          latitude:(nonnull NSNumber *)latitude
+         longitude:(nonnull NSNumber *)longitude
+              date:(nonnull NSDate *)date
+             title:(nullable NSString *)title
+          comments:(nullable NSString *)comments
+     localImageURL:(nullable NSString *)localImageURL
+         localImage:(nonnull PHAsset *)localImage;
 
 @end
