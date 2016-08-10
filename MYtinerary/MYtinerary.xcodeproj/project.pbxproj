@@ -33,6 +33,7 @@
 		637DE54C1D55448B001547FB /* Parse.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637DE5491D554462001547FB /* Parse.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		637F66CF1D553E5B00A1B20B /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; };
 		637F66D11D553E8800A1B20B /* ParseUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 637F66CE1D553E5B00A1B20B /* ParseUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		63EAC2A51D5BB6BC00372F6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63EAC2A41D5BB6BC00372F6B /* Main.storyboard */; };
 		D946C4061D590C15002A4830 /* ParseDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D946C4051D590C15002A4830 /* ParseDataController.m */; };
 		D946C4091D5A5DE4002A4830 /* RecordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D946C4081D5A5DE4002A4830 /* RecordsViewController.m */; };
 /* End PBXBuildFile section */
@@ -94,6 +95,7 @@
 		637DE5471D55444C001547FB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../Bolts.framework; sourceTree = "<group>"; };
 		637DE5491D554462001547FB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../Parse.framework; sourceTree = "<group>"; };
 		637F66CE1D553E5B00A1B20B /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = ../ParseUI.framework; sourceTree = "<group>"; };
+		63EAC2A41D5BB6BC00372F6B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D946C4041D590C15002A4830 /* ParseDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseDataController.h; sourceTree = "<group>"; };
 		D946C4051D590C15002A4830 /* ParseDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseDataController.m; sourceTree = "<group>"; };
 		D946C4071D5A5DE4002A4830 /* RecordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordsViewController.h; sourceTree = "<group>"; };
@@ -207,8 +209,7 @@
 				0E0FC20D1D582E9C0059DA17 /* PhotoCollectionViewCell.m */,
 				141B0E411D53EB15008CE05B /* Assets.xcassets */,
 				141B0E431D53EB15008CE05B /* LaunchScreen.storyboard */,
-				14FB82F21D5AB03C009A4658 /* DetailTableViewCell.h */,
-				14FB82F31D5AB03C009A4658 /* DetailTableViewCell.m */,
+				63EAC2A41D5BB6BC00372F6B /* Main.storyboard */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -306,6 +307,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63EAC2A51D5BB6BC00372F6B /* Main.storyboard in Resources */,
 				141B0E451D53EB15008CE05B /* LaunchScreen.storyboard in Resources */,
 				141B0E421D53EB15008CE05B /* Assets.xcassets in Resources */,
 			);
@@ -331,7 +333,6 @@
 				141B0E401D53EB15008CE05B /* MYtinerary.xcdatamodeld in Sources */,
 				141B0E671D53F3D9008CE05B /* Itinerary+CoreDataProperties.m in Sources */,
 				636B4E5B1D57AC7B00781B7F /* CustomLoginViewController.m in Sources */,
-				14FB82F41D5AB03C009A4658 /* DetailTableViewCell.m in Sources */,
 				141B0E5B1D53EDC6008CE05B /* Itinerary.m in Sources */,
 				0E0FC2161D5AB7D70059DA17 /* PresentationCollectionViewCell.m in Sources */,
 				141B0E591D53EDC6008CE05B /* Record.m in Sources */,
