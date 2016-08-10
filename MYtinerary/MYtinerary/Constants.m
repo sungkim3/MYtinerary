@@ -14,5 +14,7 @@ CGFloat const kThumbnailSize = 40.0;
 CGFloat const kCornerRadius = 3.0;
 CGFloat const kPolylineAlpha = 0.5;
 CGFloat const kPolylineWidth = 2.0;
+double const kSpanMultiplier = 2.5;
+
 
 @end

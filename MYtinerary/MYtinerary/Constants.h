@@ -14,5 +14,6 @@ extern CGFloat const kThumbnailSize;
 extern CGFloat const kCornerRadius;
 extern CGFloat const kPolylineAlpha;
 extern CGFloat const kPolylineWidth;
+extern double const kSpanMultiplier;
 
 @end
