@@ -173,7 +173,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         NSError *saveError;
         BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
         if(isSaved) {
-            NSLog(@"Itinerary with records successfully saved");
+            NSLog(@"Itinerary with records saved to Core Data");
         } else {
             NSLog(@"Unsuccessful saving Itinerary with records: %@", saveError.localizedDescription);
         }
@@ -208,7 +208,14 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         record.localImageURL = asset.localIdentifier;
         [mutableRecords addObject:record];
         
-//        [[ParseDataController shared]saveRecords:record.itinerary.title localImageURL:record.localImageURL parseImageURL:@"bleh" parseThumbnailURL:@"bleh" latitude:record.latitude longitude:record.longitude date:record.date title:record.title comments:record.comments];
+        [[ParseDataController shared]saveRecords:@"foo"
+                                        latitude:record.latitude
+                                       longitude:record.longitude
+                                            date:record.date
+                                           title:@"title placeholder"
+                                        comments:@"comment placeholder"
+                                   localImageURL:asset.localIdentifier
+                                      localImage:asset];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             completion(mutableRecords);

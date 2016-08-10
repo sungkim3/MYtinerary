@@ -31,35 +31,64 @@
     [itinerary saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded)
         {
-            NSLog(@"Object has been saved");
+            NSLog(@"Itinerary saved to Parse");
         } else
         {
-            NSLog(@"Handle error");
+            NSLog(@"!!!Error saving Itinerary to Parse");
         }
     }];
 }
 
-//- (void)saveRecords:(NSString *)itineraryTitle localImageURL:(NSString *)localImageURL parseImageURL:(NSString *)parseImageURL parseThumbnailURL:(NSString *)parseThumbnailURL latitude:(NSNumber *)latitude longitude:(NSNumber *)longitude date:(NSDate *)date title:(NSString *)title comments:(NSString *)comments {
-//
-//    PFObject *records = [PFObject objectWithClassName:@"Record"];
-//    records[@"comments"] = comments; //likely from details view controller
-//    records[@"date"] =  date; //photo picker view controller metadata asset
-//    records[@"latitude"] =  latitude; //same
-//    records[@"longitude"] = longitude; //same
-//    records[@"localImageURL"] = localImageURL; //same
-//    records[@"parseImageURL"] =  parseImageURL; //TBD
-//    records[@"parseThumbnailURL"] = parseThumbnailURL; //TBD
-//    records[@"title "] = title; //detail vc
+- (void)saveRecords:(NSString *)itineraryTitle
+                  latitude:(NSNumber *)latitude
+                 longitude:(NSNumber *)longitude
+                      date:(NSDate *)date
+                     title:(NSString *)title
+                  comments:(NSString *)comments
+             localImageURL:(NSString *)localImageURL
+                localImage:(PHAsset *)localImage
+    {
+    
+    PHImageManager *imageManager = [PHImageManager defaultManager];
+        UIImage *bbbImage;
+    
+//        [imageManager requestImageForAsset:localImage
+//                                targetSize:CGSizeMake(1000, 1000)
+//                               contentMode:PHImageContentModeAspectFit
+//                                   options:nil
+//                             resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+//            bbbImage = result;
+//        }];
+        
+    [imageManager requestImageForAsset:localImage targetSize:CGSizeMake(1000, 1000) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        bbbImage = result;
+    }];
+    
+    PFObject *records = [PFObject objectWithClassName:@"Record"];
+    
+    records[@"latitude"] = latitude;
+    records[@"longitude"] = longitude;
+    records[@"date"] = date;
+    records[@"title"] = title;
+    records[@"comments"] = comments;
+    records[@"localImageURL"] = localImageURL;
+    records[@"localImage"] = localImage;
+    // thumbnail
+    
+    [records saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded)
+        {
+            NSLog(@"Record saved to Parse");
+        } else
+        {
+            NSLog(@"!!!Error saving Record to Parse");
+        }
+    }];
+}
+
+//- (void)PHAssetToJPG:(PHAsset *)localImage{
 //    
-//    [records saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-//        if (succeeded)
-//        {
-//            NSLog(@"Object has been saved");
-//        } else
-//        {
-//            NSLog(@"Handle error");
-//        }
-//    }];
+//    
 //}
 
 @end
