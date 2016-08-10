@@ -20,7 +20,7 @@ typedef void(^recordCompletion)(NSOrderedSet *records);
 
 NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
-@interface PhotoPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface PhotoPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -49,13 +49,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     [super viewWillAppear:animated];
     CGFloat side = (MIN(self.view.frame.size.height , self.view.frame.size.width) / 3);
     self.cellWidth = side;
-    
-    //    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-    //        if (status == PHAuthorizationStatusAuthorized) {
-    //            [self.collectionView reloadData];
-    //        }
-    //    }];
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -78,11 +71,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     
     PHFetchResult *allPhotosResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:allPhotosOptions];
     
-    //    for (PHAsset *asset in allPhotosResult) {
-    //        [self.assets addObject:asset];
-    //    }
-    
-    
     [allPhotosResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger idx, BOOL *stop) {
         if (asset) {
             [self.assets addObject:asset];
@@ -97,7 +85,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(void)doneButtonPressed {
     if (!self.itinerary) {
-        if ([_titleTextField.text isEqual: @""]) {
+        if ([self.titleTextField.text isEqual: @""]) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert!" message:@"Please enter a Name for this Itinerary" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSLog(@"OK pressed");
@@ -108,7 +96,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             
             [self presentViewController:alert animated:YES completion:Nil];
             return;
-                                 
+            
         }
         [self createItinerary];
         
@@ -123,7 +111,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             
             for (Record *record in records) {
                 [updatedRecords addObject:record];
-                            }
+            }
             self.records = (NSOrderedSet *)updatedRecords;
             
             //update Core Data Objects
@@ -180,9 +168,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         
         //pass data to MapVC
         MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
-
-//        [mapVC.mapView removeAnnotations:mapVC.mapView.annotations];
-//        [mapVC.mapView removeOverlays:mapVC.mapView.overlays];
+        
+        //        [mapVC.mapView removeAnnotations:mapVC.mapView.annotations];
+        //        [mapVC.mapView removeOverlays:mapVC.mapView.overlays];
         
         mapVC.itinerary = self.itinerary;
         mapVC.records = self.records;
@@ -191,7 +179,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
     
-    [[ParseDataController shared]saveItinerary: self.titleTextField.text];
+    //[[ParseDataController shared]saveItinerary: self.titleTextField.text];
     
 }
 
@@ -305,6 +293,11 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     [self.selectedAssets removeObject:self.assets[indexPath.row]];
 }
 
+#pragma - UITextFieldDelegate Methods
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 
