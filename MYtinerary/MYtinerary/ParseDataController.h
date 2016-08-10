@@ -24,5 +24,7 @@
 +(ParseDataController *)shared;
 -(void)saveItinerary:(NSString *)itineraryTitle;
 //-(void)saveRecords:(NSString *)itineraryTitle localImageURL:(NSString *)localImageURL parseImageURL:(NSString *)parseImageURL parseThumbnailURL:(NSString *)parseThumbnailURL latitude:(NSNumber *)latitude longitude:(NSNumber *)longitude date:(NSDate *)date title:(NSString *)title comments:(NSString *)comments;
+- (void)retrieveItineraryFromParse;
+
 
 @end

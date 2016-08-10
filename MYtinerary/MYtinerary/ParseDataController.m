@@ -7,6 +7,8 @@
 //
 
 #import "ParseDataController.h"
+#import "PhotoPickerViewController.h"
+#import <Parse/Parse.h>
 @import Parse;
 
 @implementation ParseDataController
@@ -36,6 +38,26 @@
         {
             NSLog(@"Handle error");
         }
+    }];
+}
+
+- (void)retrieveItineraryFromParse
+{
+//    PFUser *currentUser = [PFUser currentUser];
+    PFQuery *query = [PFQuery queryWithClassName:@"Itinerary"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"No internet, call core data fetch");
+        }
+        else {
+            for (PFObject *object in objects) {
+                self.date = object[@"date"];
+                    NSLog(@"From parse: %@", self.date);
+                self.itineraryTitle = object[@"title"];
+                    NSLog(@"From Parse: %@", self.title);
+            }
+        }
+
     }];
 }
 

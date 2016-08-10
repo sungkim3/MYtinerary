@@ -30,6 +30,9 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)searchButtonPressed:(UIBarButtonItem *)sender;
+
+
 
 @end
 
@@ -220,6 +223,10 @@ NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender {
     [self performSegueWithIdentifier:@"ShowItineraries" sender:self];
     
+}
+
+- (IBAction)searchButtonPressed:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"recordsViewController" sender:self];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

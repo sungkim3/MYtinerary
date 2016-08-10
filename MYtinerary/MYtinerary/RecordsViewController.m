@@ -8,6 +8,7 @@
 
 #import "RecordsViewController.h"
 #import "NSManagedObject+ManagedContext.h"
+#import "ParseDataController.h"
 
 @interface RecordsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -23,6 +24,8 @@
 {
     [super viewDidLoad];
     [self setTitle:@"Details"];
+    
+    [[ParseDataController shared]retrieveItineraryFromParse];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
