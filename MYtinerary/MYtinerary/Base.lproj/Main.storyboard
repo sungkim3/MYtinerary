@@ -79,32 +79,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OtF-cN-jTD">
-                                <rect key="frame" x="276" y="570" width="48" height="30"/>
-                                <state key="normal" title="Cancel"/>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s0W-Gn-CRs">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <gestureRecognizers/>
                                 <connections>
-                                    <action selector="cancelButtonPressed:" destination="zNP-qt-nm1" eventType="touchUpInside" id="tdU-SU-uXs"/>
+                                    <outletCollection property="gestureRecognizers" destination="een-LZ-DVt" appends="YES" id="hCT-7y-0go"/>
                                 </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s0W-Gn-CRs">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="562"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="s0W-Gn-CRs" firstAttribute="leading" secondItem="tiL-It-ai3" secondAttribute="leading" id="Q95-Uh-vcR"/>
-                            <constraint firstItem="trf-gL-i3C" firstAttribute="top" secondItem="OtF-cN-jTD" secondAttribute="bottom" id="V6v-Ko-llW"/>
                             <constraint firstItem="s0W-Gn-CRs" firstAttribute="top" secondItem="tiL-It-ai3" secondAttribute="top" id="WH8-Rt-px8"/>
-                            <constraint firstItem="OtF-cN-jTD" firstAttribute="centerX" secondItem="tiL-It-ai3" secondAttribute="centerX" id="ZMw-bK-OVl"/>
-                            <constraint firstItem="OtF-cN-jTD" firstAttribute="top" secondItem="s0W-Gn-CRs" secondAttribute="bottom" constant="8" id="wvb-qa-acK"/>
+                            <constraint firstAttribute="bottom" secondItem="s0W-Gn-CRs" secondAttribute="bottom" id="Za4-IV-2xy"/>
                             <constraint firstAttribute="trailing" secondItem="s0W-Gn-CRs" secondAttribute="trailing" id="zvr-Ds-jpg"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="3EI-4r-xe6"/>
+                        <barButtonItem systemItem="refresh" id="vuu-x5-wNz">
+                            <connections>
+                                <action selector="refreshButtonPressed:" destination="zNP-qt-nm1" id="atD-th-edR"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="4Kw-jT-3hP"/>
+                        <barButtonItem systemItem="play" id="7FB-VU-AVl">
+                            <connections>
+                                <action selector="playButtonPressed:" destination="zNP-qt-nm1" id="9f7-iG-5C8"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="q0z-gQ-K43"/>
+                    </toolbarItems>
                     <connections>
                         <outlet property="imageView" destination="s0W-Gn-CRs" id="4vb-IN-yg7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yLP-m4-3pg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="een-LZ-DVt">
+                    <connections>
+                        <action selector="tapGestureRecognized:" destination="zNP-qt-nm1" id="S9V-9o-3rp"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="550" y="306"/>
         </scene>
@@ -252,7 +267,7 @@
                         <segue destination="7wg-cm-Bhh" kind="show" identifier="EditItinerary" id="AVw-NC-swc"/>
                         <segue destination="7wg-cm-Bhh" kind="show" identifier="CreateItinerary" id="nw0-QJ-8if"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="ShowItineraries" id="MZm-Bp-2If"/>
-                        <segue destination="zNP-qt-nm1" kind="presentation" identifier="ShowPresentation" id="Rt7-JK-dcj"/>
+                        <segue destination="zNP-qt-nm1" kind="show" identifier="ShowPresentation" id="KGU-eC-7d0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vek-fG-wZv" userLabel="First Responder" sceneMemberID="firstResponder"/>

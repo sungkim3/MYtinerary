@@ -14,10 +14,15 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 @interface PresentationViewController ()
 
-- (IBAction)cancelButtonPressed:(UIButton *)sender;
+- (IBAction)tapGestureRecognized:(UITapGestureRecognizer *)sender;
+- (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)playButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (strong, nonatomic) NSMutableArray *recordImages;
+@property (strong, nonatomic) NSTimer *timer;
+@property (nonatomic) int index;
+@property (strong, nonatomic) UIImage *image;
 
 @end
 
@@ -25,13 +30,27 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.hidesBackButton = YES;
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed:)];
+    self.navigationItem.leftBarButtonItem = newBackButton;
     [self getImagesWith:^(NSArray *images) {
-        [self setupPresentation:images];
+        [self setRecordImagesArray:images index:0];
     }];
 }
 
-- (IBAction)cancelButtonPressed:(UIButton *)sender {
-    [self.presentingViewController dismissViewControllerAnimated:self completion:nil];
+- (IBAction)tapGestureRecognized:(UITapGestureRecognizer *)sender {
+    [self.timer invalidate];
+    self.timer = nil;
+    NSLog(@"Image clicked index: %d", self.index);
+}
+
+- (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
+    [self setRecordImagesArray:self.recordImages index:0];
+}
+
+- (IBAction)playButtonPressed:(UIBarButtonItem *)sender {
+    [self setRecordImagesArray:self.recordImages index:self.index];
+    
 }
 
 -(void)getImagesWith:(imageConversionCompletion)completion {
@@ -52,6 +71,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc]init];
     imageRequestOptions.synchronous = YES;
+    imageRequestOptions.networkAccessAllowed = YES;
+    imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     
     for (PHAsset *asset in assets) {
         [manager requestImageForAsset:asset
@@ -59,38 +81,72 @@ typedef void(^imageConversionCompletion)(NSArray *images);
                           contentMode:PHImageContentModeDefault
                               options:imageRequestOptions
                         resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                            [self.recordImages addObject:result];
-                            [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-                                completion(self.recordImages);
-                            }];
+                            if (result) {
+                                [self.recordImages addObject:result];
+                            }
+                            if (self.recordImages.count == assets.count) {
+                                [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+                                    completion(self.recordImages);
+                                }];
+                            }
                         }];
     }
+
+    NSLog(@"Images: %@", self.recordImages);
 }
 
--(void)setupPresentation:(NSArray *)images {
-    self.imageView.animationImages = images;
-    self.imageView.animationDuration = (5.0*images.count);
-    self.imageView.animationRepeatCount =0 ;
-    [self.imageView startAnimating];
+//-(void)setupPresentation:(NSArray *)images {
+//    self.imageView.animationImages = images;
+//    self.imageView.animationDuration = (5.0*images.count);
+//    self.imageView.animationRepeatCount = 0 ;
+//    [self.imageView startAnimating];
+//
+//    self.timer = [NSTimer timerWithTimeInterval:5.0
+//                                             target:self
+//                                           selector:@selector(onTimer)
+//                                           userInfo:nil
+//                                            repeats:YES];
+//    
+//    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+//    [self.timer fire];
+//
+//}
 
-    NSTimer *timer = [NSTimer timerWithTimeInterval:5.0
-                                             target:self
-                                           selector:@selector(onTimer)
-                                           userInfo:nil
-                                            repeats:YES];
+//-(void)onTimer {
+//    [UIView animateWithDuration:4.0 animations:^{
+//        self.imageView.alpha = 0.0;
+//    }];
+//    [UIView animateWithDuration:1.0 animations:^{
+//        self.imageView.alpha = 1.0;
+//    }];
+//}
+
+-(void)setRecordImagesArray:(NSArray *)recordImagesArray index:(int)index {
+    [self.timer invalidate];
+    self.index = index;
+    self.image = [recordImagesArray objectAtIndex:self.index];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                  target:self
+                                                selector:@selector(displayNextImage)
+                                                userInfo:nil
+                                                 repeats:YES];
     
-    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-    [timer fire];
 }
 
--(void)onTimer {
-    [UIView animateWithDuration:4.0 animations:^{
-        self.imageView.alpha = 0.0;
-    }];
-    [UIView animateWithDuration:1.0 animations:^{
-        self.imageView.alpha = 1.0;
-    }];
+-(void)displayNextImage {
+    self.imageView.image = self.image;
+    self.index = (self.index + 1) % self.recordImages.count;
+    NSLog(@"Current Image Index %d", self.index);
+    self.image = [self.recordImages objectAtIndex:self.index];
 }
+
+-(void)backButtonPressed:(UIBarButtonItem *)sender {
+    [self.timer invalidate];
+    self.timer = nil;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 
 
 @end
