@@ -131,7 +131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mwC-o4-pSB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2126" y="396"/>
+            <point key="canvasLocation" x="2019" y="341"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="02v-Tr-x1A">
@@ -166,13 +166,12 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Cun-9i-bQC"/>
-                        <barButtonItem systemItem="search" id="0Rh-07-HcP">
+                        <barButtonItem title="Details" id="3O5-ih-0LG">
                             <connections>
-                                <action selector="searchButtonPressed:" destination="bc2-2s-IlQ" id="vcq-b1-Vo9"/>
-                                <segue destination="eQo-Pz-Ram" kind="show" identifier="recordsViewController" id="kzK-M0-VVx"/>
+                                <segue destination="eQo-Pz-Ram" kind="show" id="6hV-m8-hpV"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="juD-Pg-fTy"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="FGl-b8-Zer"/>
                         <barButtonItem systemItem="bookmarks" id="eim-yT-GzG">
                             <connections>
                                 <action selector="bookmarkButtonPressed:" destination="bc2-2s-IlQ" id="lj3-CP-QTA"/>
