@@ -11,6 +11,7 @@
 #import "Record.h"
 
 @interface RecordsViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIImageView *recordDetailsImage;
+
+
 
 @end
