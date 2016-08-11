@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4De-9n-NzE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4De-9n-NzE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ArB-SF-7lf">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="649"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="itineraryCell" textLabel="zJs-E5-XV3" style="IBUITableViewCellStyleDefault" id="NCm-bF-eRP">
@@ -79,19 +79,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s0W-Gn-CRs">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oA8-VZ-uki">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s0W-Gn-CRs">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="een-LZ-DVt" appends="YES" id="hCT-7y-0go"/>
-                                </connections>
                             </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SXS-ry-QlT">
+                                <rect key="frame" x="90" y="82" width="420" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Comments" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9OQ-Gh-tMR">
+                                <rect key="frame" x="90" y="518" width="420" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="oA8-VZ-uki" firstAttribute="trailing" secondItem="s0W-Gn-CRs" secondAttribute="trailing" id="0Ej-xp-Ig4"/>
+                            <constraint firstItem="9OQ-Gh-tMR" firstAttribute="centerX" secondItem="s0W-Gn-CRs" secondAttribute="centerX" id="ArK-Je-BU5"/>
+                            <constraint firstItem="s0W-Gn-CRs" firstAttribute="top" secondItem="SXS-ry-QlT" secondAttribute="bottom" constant="-102" id="FwK-pM-31J"/>
+                            <constraint firstItem="SXS-ry-QlT" firstAttribute="width" secondItem="9OQ-Gh-tMR" secondAttribute="width" id="GXs-kw-mhc"/>
+                            <constraint firstItem="oA8-VZ-uki" firstAttribute="leading" secondItem="s0W-Gn-CRs" secondAttribute="leading" id="Lof-sI-lWq"/>
                             <constraint firstItem="s0W-Gn-CRs" firstAttribute="leading" secondItem="tiL-It-ai3" secondAttribute="leading" id="Q95-Uh-vcR"/>
+                            <constraint firstItem="oA8-VZ-uki" firstAttribute="top" secondItem="s0W-Gn-CRs" secondAttribute="top" id="Qmw-df-x2T"/>
+                            <constraint firstItem="9OQ-Gh-tMR" firstAttribute="top" secondItem="s0W-Gn-CRs" secondAttribute="bottom" constant="-82" id="Txg-3x-mmv"/>
                             <constraint firstItem="s0W-Gn-CRs" firstAttribute="top" secondItem="tiL-It-ai3" secondAttribute="top" id="WH8-Rt-px8"/>
+                            <constraint firstItem="oA8-VZ-uki" firstAttribute="bottom" secondItem="s0W-Gn-CRs" secondAttribute="bottom" id="Wzn-8L-PNf"/>
                             <constraint firstAttribute="bottom" secondItem="s0W-Gn-CRs" secondAttribute="bottom" id="Za4-IV-2xy"/>
+                            <constraint firstItem="SXS-ry-QlT" firstAttribute="width" secondItem="s0W-Gn-CRs" secondAttribute="width" multiplier="0.7" id="wX7-6n-ITz"/>
+                            <constraint firstItem="SXS-ry-QlT" firstAttribute="centerX" secondItem="s0W-Gn-CRs" secondAttribute="centerX" id="zdA-TL-HBL"/>
                             <constraint firstAttribute="trailing" secondItem="s0W-Gn-CRs" secondAttribute="trailing" id="zvr-Ds-jpg"/>
                         </constraints>
                     </view>
@@ -112,14 +137,10 @@
                     </toolbarItems>
                     <connections>
                         <outlet property="imageView" destination="s0W-Gn-CRs" id="4vb-IN-yg7"/>
+                        <outlet property="imageView2" destination="oA8-VZ-uki" id="riY-eI-BSV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yLP-m4-3pg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="een-LZ-DVt">
-                    <connections>
-                        <action selector="tapGestureRecognized:" destination="zNP-qt-nm1" id="S9V-9o-3rp"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="550" y="306"/>
         </scene>
@@ -136,7 +157,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="99" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4us-zs-Lp4">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="detailCell" rowHeight="99" id="dkc-HI-nxa" customClass="DetailTableViewCell">
@@ -287,6 +308,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="editButtonOutlet" destination="1DI-ql-z86" id="FTh-GT-UaL"/>
                         <outlet property="detailButtonOutlet" destination="3O5-ih-0LG" id="lkQ-dY-zhO"/>
                         <outlet property="mapView" destination="DId-xg-s2j" id="TkQ-cQ-aAp"/>
                         <outlet property="playButtonOutlet" destination="zsj-kA-mTR" id="2XS-8N-D08"/>
