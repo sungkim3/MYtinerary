@@ -14,7 +14,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 @interface PresentationViewController ()
 
-//- (IBAction)tapGestureRecognized:(UITapGestureRecognizer *)sender;
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -43,15 +42,15 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     }];
     self.tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.view addGestureRecognizer:self.tapGesture];
-
+    
     [self prefersStatusBarHidden];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     self.navigationController.navigationBarHidden = YES;
     self.navigationController.toolbarHidden = YES;
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -128,63 +127,44 @@ typedef void(^imageConversionCompletion)(NSArray *images);
                             }
                         }];
     }
-    
     NSLog(@"Images: %@", self.recordImages);
 }
 
 -(void)setRecordImagesArray:(NSArray *)recordImagesArray index:(int)index {
     [self.timer invalidate];
     self.index = index;
-    //self.image = [recordImagesArray objectAtIndex:self.index];
     
-//    [UIView animateWithDuration:7.0 animations:^{
-//        [self onTimer];
-//    }];
-    [self onTimer];
+    [self displayNextImage];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:7.0
                                                   target:self
-                                                selector:@selector(onTimer)
+                                                selector:@selector(displayNextImage)
                                                 userInfo:nil
                                                  repeats:YES];
     
 }
 
 -(void)displayNextImage {
-    UIImageView *tempView = self.currentImageView;
-    self.currentImageView = self.nextImageView;
-    self.nextImageView = tempView;
-    self.currentImageView.image = self.image;
-    self.index = (self.index + 1) % self.recordImages.count;
-    NSLog(@"Current Image Index %d", self.index);
-    self.image = [self.recordImages objectAtIndex:self.index];
+    
+    self.currentImageView.image = [self.recordImages objectAtIndex:self.index];
     self.index = (self.index + 1) % self.recordImages.count;
     self.nextImageView.image = [self.recordImages objectAtIndex:self.index];
-}
-
--(void)backButtonPressed {
-    [self.timer invalidate];
-    self.timer = nil;
-}
-
--(void)onTimer {
     
     [UIView animateWithDuration:7.0 animations:^{
-        self.currentImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+        self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
         self.currentImageView.alpha = 0.0;
         self.nextImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
         self.nextImageView.alpha = 1.0;
         
     }];
-    [self displayNextImage];
+    
+    UIImageView *tempView = self.currentImageView;
+    self.currentImageView = self.nextImageView;
+    self.nextImageView = tempView;
+}
 
-    
-    [UIView animateWithDuration:3.0 animations:^{
-        self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        self.currentImageView.alpha = 1.0;
-        self.nextImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        self.nextImageView.alpha = 0.0;
-    }];
-    
+-(void)backButtonPressed {
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 
