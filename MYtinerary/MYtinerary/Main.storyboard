@@ -180,33 +180,34 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUI-YA-XAU">
-                                                    <rect key="frame" x="106" y="73" width="84" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PaU-AO-Nmq">
                                                     <rect key="frame" x="106" y="38" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Comments" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rWk-xg-8vo">
+                                                    <rect key="frame" x="106" y="60" width="486" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="rWk-xg-8vo" secondAttribute="bottom" constant="8.5" id="1er-Lk-b2p"/>
                                                 <constraint firstItem="SDz-XC-oHL" firstAttribute="leading" secondItem="ZMX-vl-cp4" secondAttribute="leading" constant="8" id="2h3-8Z-KP9"/>
+                                                <constraint firstAttribute="trailing" secondItem="rWk-xg-8vo" secondAttribute="trailing" constant="8" id="5Js-ua-vcm"/>
                                                 <constraint firstItem="PaU-AO-Nmq" firstAttribute="leading" secondItem="SDz-XC-oHL" secondAttribute="trailing" constant="8" id="6tG-0M-Rqa"/>
                                                 <constraint firstAttribute="bottom" secondItem="SDz-XC-oHL" secondAttribute="bottom" constant="4" id="Ee5-Ns-2rB"/>
                                                 <constraint firstItem="Wfu-f0-Wzp" firstAttribute="top" secondItem="ZMX-vl-cp4" secondAttribute="top" constant="4" id="IVJ-dR-wJN"/>
                                                 <constraint firstItem="SDz-XC-oHL" firstAttribute="top" secondItem="ZMX-vl-cp4" secondAttribute="top" constant="4" id="Uh4-ey-bJo"/>
-                                                <constraint firstItem="BUI-YA-XAU" firstAttribute="leading" secondItem="SDz-XC-oHL" secondAttribute="trailing" constant="8" id="bUZ-AD-IZh"/>
-                                                <constraint firstItem="BUI-YA-XAU" firstAttribute="top" secondItem="PaU-AO-Nmq" secondAttribute="bottom" constant="14" id="d5Z-tM-M6w"/>
+                                                <constraint firstItem="rWk-xg-8vo" firstAttribute="top" secondItem="PaU-AO-Nmq" secondAttribute="bottom" constant="1" id="VUY-6r-OSw"/>
+                                                <constraint firstItem="rWk-xg-8vo" firstAttribute="leading" secondItem="SDz-XC-oHL" secondAttribute="trailing" constant="8" id="Wp4-LW-yhN"/>
                                                 <constraint firstItem="PaU-AO-Nmq" firstAttribute="top" secondItem="Wfu-f0-Wzp" secondAttribute="bottom" constant="13" id="nLY-8y-nnS"/>
                                                 <constraint firstItem="Wfu-f0-Wzp" firstAttribute="leading" secondItem="SDz-XC-oHL" secondAttribute="trailing" constant="8" id="vSx-FQ-bp0"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="commentsLabel" destination="BUI-YA-XAU" id="TPD-AW-EXC"/>
+                                            <outlet property="commentTextField" destination="rWk-xg-8vo" id="6iO-Xu-P1V"/>
                                             <outlet property="dateLabel" destination="Wfu-f0-Wzp" id="6yY-UZ-CCu"/>
                                             <outlet property="imageView" destination="SDz-XC-oHL" id="IzU-hr-v7G"/>
                                             <outlet property="titleLabel" destination="PaU-AO-Nmq" id="pVy-Gw-Tps"/>
