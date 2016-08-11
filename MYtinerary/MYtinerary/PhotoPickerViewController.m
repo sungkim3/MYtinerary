@@ -93,7 +93,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             
             [alert addAction:ok];
             
-            
             [self presentViewController:alert animated:YES completion:Nil];
             return;
             
@@ -147,9 +146,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 -(void)createItinerary {
     Itinerary *itinerary = [NSEntityDescription insertNewObjectForEntityForName:@"Itinerary" inManagedObjectContext:[NSManagedObject managedContext]];
     
-    
-    
-    
     [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
         itinerary.records = records;
         itinerary.title = self.titleTextField.text;
@@ -187,35 +183,30 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]init];
     
     for (PHAsset * asset in assets) {
+        if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+
         Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
         
-        record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
-        record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
-        record.date = asset.creationDate;
-        record.itinerary = self.itinerary;
-        record.localImageURL = asset.localIdentifier;
-        [mutableRecords addObject:record];
-        
-//        [[ParseDataController shared]saveRecords:@"foo"
-//                                        latitude:record.latitude
-//                                       longitude:record.longitude
-//                                            date:record.date
-//                                           title:@"title placeholder"
-//                                        comments:@"comment placeholder"
-//                                   localImageURL:asset.localIdentifier
-//                                      localImage:asset];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(mutableRecords);
-        });
-        
-        //        [self getURLFor:asset withCompletion:^(NSURL *url) {
-        //            record.localImageURL = [NSString stringWithFormat:@"%@", url];
-        //            [mutableRecords addObject:record];
-        //            dispatch_async(dispatch_get_main_queue(), ^{
-        //                completion(mutableRecords);
-        //            });
-        //        }];
+            record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
+            record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
+            record.date = asset.creationDate;
+            record.itinerary = self.itinerary;
+            record.localImageURL = asset.localIdentifier;
+            [mutableRecords addObject:record];
+            
+            //        [[ParseDataController shared]saveRecords:@"foo"
+            //                                        latitude:record.latitude
+            //                                       longitude:record.longitude
+            //                                            date:record.date
+            //                                           title:@"title placeholder"
+            //                                        comments:@"comment placeholder"
+            //                                   localImageURL:asset.localIdentifier
+            //                                      localImage:asset];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(mutableRecords);
+            });
+        }
     }
 }
 
@@ -234,7 +225,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseID forIndexPath:indexPath];
-
+    
     if ([self.selectedAssets containsObject:self.assets[indexPath.row]]) {
         cell.backgroundColor = [UIColor blueColor];
     }
