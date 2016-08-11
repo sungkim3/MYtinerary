@@ -12,6 +12,7 @@
 
 @interface RecordsViewController : UIViewController
 
+@property (strong, nonatomic) NSOrderedSet *records;
 
 
 @end
