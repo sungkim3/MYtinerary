@@ -17,6 +17,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+@property (weak, nonatomic) IBOutlet UITextField *commentsTextField;
+
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
 @property (strong, nonatomic) NSMutableArray *recordImages;
@@ -26,6 +29,10 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 @property (strong, nonatomic)UIImageView *currentImageView;
 @property (strong, nonatomic)UIImageView *nextImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
+
+@property (strong, nonatomic)Record *currentRecord;
+
+
 
 @end
 
@@ -139,7 +146,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 }
 
 -(void)displayNextImage {
-    
+    self.currentRecord = [self.records objectAtIndex:self.index];
+    self.commentsTextField.text = self.currentRecord.comments;
+
     self.currentImageView.image = [self.recordImages objectAtIndex:self.index];
     self.index = (self.index + 1) % self.recordImages.count;
     self.nextImageView.image = [self.recordImages objectAtIndex:self.index];
