@@ -60,20 +60,18 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     [super viewWillAppear:animated];
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self.mapView removeOverlays:self.mapView.overlays];
-    self.toolbarButtons = [self.toolbarItems mutableCopy];
     if (self.itinerary) {
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
         }
         [self setRegion];
         self.playButtonOutlet.hidden = NO;
-        [self setToolbarItems:self.toolbarButtons animated:YES];
+        self.detailButtonOutlet.enabled = YES;
+        [self.detailButtonOutlet setTintColor:nil];
     } else {
         self.playButtonOutlet.hidden = YES;
-        [self.toolbarButtons removeObject:self.detailButtonOutlet];
-        [self setToolbarItems:self.toolbarButtons animated:YES];
-        
-        
+        self.detailButtonOutlet.enabled = NO;
+        [self.detailButtonOutlet setTintColor:[UIColor clearColor]];
     }
     [self sortRecordsByDate];
     [self addPolylineToMap];
