@@ -18,7 +18,8 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
-@property (strong, nonatomic) UISwipeGestureRecognizer *swipeGesture;
+@property (strong, nonatomic) UISwipeGestureRecognizer *leftSwipeGesture;
+@property (strong, nonatomic) UISwipeGestureRecognizer *rightSwipeGesture;
 
 @property (strong, nonatomic) NSMutableArray *recordImages;
 @property (strong, nonatomic) NSTimer *timer;
@@ -44,9 +45,14 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.view addGestureRecognizer:self.tapGesture];
     
-    self.swipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
-    [self.view addGestureRecognizer:self.swipeGesture];
+    self.leftSwipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
+    [self.leftSwipeGesture setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [self.view addGestureRecognizer:self.leftSwipeGesture];
 
+    self.rightSwipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
+    [self.rightSwipeGesture setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [self.view addGestureRecognizer:self.leftSwipeGesture];
+    
     [self prefersStatusBarHidden];
 }
 
@@ -77,7 +83,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 }
 
 -(void)handleSwipe:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"user swiped"); // works for left to right only
+    NSLog(@"user swiped %lu", (unsigned long)sender.direction);
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
