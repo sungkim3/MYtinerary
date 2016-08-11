@@ -89,10 +89,22 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 -(void)handleLeftSwipe:(UISwipeGestureRecognizer *)sender {
     NSLog(@"user swiped left");
+
+    self.index += 1;
+//    [self.timer invalidate];
+//    self.timer = nil;
+    
+    [self setRecordImagesArray:self.recordImages index:self.index];
 }
 
 -(void)handleRightSwipe:(UISwipeGestureRecognizer *)sender {
     NSLog(@"user swiped right");
+
+    self.index -= 1;
+//    [self.timer invalidate];
+//    self.timer = nil;
+    
+    [self setRecordImagesArray:self.recordImages index:self.index];
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
