@@ -78,7 +78,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 }
 
 -(void)handleSwipe:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"user swiped");
+    NSLog(@"user swiped"); // works for left to right only
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
