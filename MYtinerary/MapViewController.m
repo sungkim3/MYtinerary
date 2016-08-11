@@ -29,6 +29,8 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButtonOutlet;
+
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
@@ -72,6 +74,22 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
     [self.navigationItem.rightBarButtonItem setTintColor: nil];
     [self.playButtonOutlet.layer setCornerRadius:5.0];
+    self.navigationController.toolbar.layer.opacity = 0.5;
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    if (!self.itinerary) {
+        self.playButtonOutlet.hidden = YES;
+        self.playButtonOutlet.enabled = NO;
+        self.editButtonOutlet.enabled = NO;
+        [self.editButtonOutlet setTintColor:[UIColor clearColor]];
+
+    } else {
+        self.playButtonOutlet.hidden = NO;
+        self.playButtonOutlet.enabled = YES;
+        self.editButtonOutlet.enabled = YES;
+        [self.editButtonOutlet setTintColor:nil];
+
+    }
 }
 
 -(void)setRegion {
@@ -255,10 +273,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     [self performSegueWithIdentifier:editSegueIdentifier sender:self];
 }
 
-- (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender {
-    
-}
-
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender {
     [self logout];
 }
@@ -294,7 +308,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             }
         }
     }
-    
 }
 
 - (IBAction)playButtonPressed:(UIButton *)sender {
