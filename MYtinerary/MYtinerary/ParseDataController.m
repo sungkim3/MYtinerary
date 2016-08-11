@@ -88,7 +88,39 @@
         {
             NSLog(@"!!!Error saving Record to Parse");
         }
+        else {
+            for (PFObject *object in objects) {
+                self.date = object[@"date"];
+                    NSLog(@"From parse: %@", self.date);
+                self.itineraryTitle = object[@"title"];
+                    NSLog(@"From Parse: %@", self.title);
+            }
+        }
+
     }];
 }
+
+//- (void)saveRecords:(NSString *)itineraryTitle localImageURL:(NSString *)localImageURL parseImageURL:(NSString *)parseImageURL parseThumbnailURL:(NSString *)parseThumbnailURL latitude:(NSNumber *)latitude longitude:(NSNumber *)longitude date:(NSDate *)date title:(NSString *)title comments:(NSString *)comments {
+//
+//    PFObject *records = [PFObject objectWithClassName:@"Record"];
+//    records[@"comments"] = comments; //likely from details view controller
+//    records[@"date"] =  date; //photo picker view controller metadata asset
+//    records[@"latitude"] =  latitude; //same
+//    records[@"longitude"] = longitude; //same
+//    records[@"localImageURL"] = localImageURL; //same
+//    records[@"parseImageURL"] =  parseImageURL; //TBD
+//    records[@"parseThumbnailURL"] = parseThumbnailURL; //TBD
+//    records[@"title "] = title; //detail vc
+//    
+//    [records saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+//        if (succeeded)
+//        {
+//            NSLog(@"Object has been saved");
+//        } else
+//        {
+//            NSLog(@"Handle error");
+//        }
+//    }];
+//}
 
 @end
