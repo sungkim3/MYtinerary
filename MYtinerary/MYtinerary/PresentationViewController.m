@@ -17,6 +17,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+@property (weak, nonatomic) IBOutlet UITextField *commentsTextField;
+
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UISwipeGestureRecognizer *leftSwipeGesture;
 @property (strong, nonatomic) UISwipeGestureRecognizer *rightSwipeGesture;
@@ -28,6 +31,10 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 @property (strong, nonatomic)UIImageView *currentImageView;
 @property (strong, nonatomic)UIImageView *nextImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView2;
+
+@property (strong, nonatomic)Record *currentRecord;
+
+
 
 @end
 
@@ -58,7 +65,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     self.navigationController.navigationBarHidden = YES;
     self.navigationController.toolbarHidden = YES;
 }
@@ -77,7 +83,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.timer = nil;
     self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
     self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
-    
     NSLog(@"Image clicked index: %d", self.index);
     
 }
@@ -89,15 +94,12 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
     self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
     self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
-    
-    
     [self setRecordImagesArray:self.recordImages index:0];
 }
 
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender {
     self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
     self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
-    
     
     [self setRecordImagesArray:self.recordImages index:self.index];
     
@@ -158,7 +160,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 }
 
 -(void)displayNextImage {
-    
+    self.currentRecord = [self.records objectAtIndex:self.index];
+    self.commentsTextField.text = self.currentRecord.comments;
+
     self.currentImageView.image = [self.recordImages objectAtIndex:self.index];
     self.index = (self.index + 1) % self.recordImages.count;
     self.nextImageView.image = [self.recordImages objectAtIndex:self.index];

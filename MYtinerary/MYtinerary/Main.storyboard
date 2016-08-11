@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ArB-SF-7lf">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ArB-SF-7lf">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -86,15 +86,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <gestureRecognizers/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SXS-ry-QlT">
-                                <rect key="frame" x="90" y="82" width="420" height="20"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Comments" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9OQ-Gh-tMR">
-                                <rect key="frame" x="90" y="518" width="420" height="20"/>
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Comments" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9OQ-Gh-tMR">
+                                <rect key="frame" x="256.5" y="518" width="87" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -106,8 +99,6 @@
                         <constraints>
                             <constraint firstItem="oA8-VZ-uki" firstAttribute="trailing" secondItem="s0W-Gn-CRs" secondAttribute="trailing" id="0Ej-xp-Ig4"/>
                             <constraint firstItem="9OQ-Gh-tMR" firstAttribute="centerX" secondItem="s0W-Gn-CRs" secondAttribute="centerX" id="ArK-Je-BU5"/>
-                            <constraint firstItem="s0W-Gn-CRs" firstAttribute="top" secondItem="SXS-ry-QlT" secondAttribute="bottom" constant="-102" id="FwK-pM-31J"/>
-                            <constraint firstItem="SXS-ry-QlT" firstAttribute="width" secondItem="9OQ-Gh-tMR" secondAttribute="width" id="GXs-kw-mhc"/>
                             <constraint firstItem="oA8-VZ-uki" firstAttribute="leading" secondItem="s0W-Gn-CRs" secondAttribute="leading" id="Lof-sI-lWq"/>
                             <constraint firstItem="s0W-Gn-CRs" firstAttribute="leading" secondItem="tiL-It-ai3" secondAttribute="leading" id="Q95-Uh-vcR"/>
                             <constraint firstItem="oA8-VZ-uki" firstAttribute="top" secondItem="s0W-Gn-CRs" secondAttribute="top" id="Qmw-df-x2T"/>
@@ -115,8 +106,6 @@
                             <constraint firstItem="s0W-Gn-CRs" firstAttribute="top" secondItem="tiL-It-ai3" secondAttribute="top" id="WH8-Rt-px8"/>
                             <constraint firstItem="oA8-VZ-uki" firstAttribute="bottom" secondItem="s0W-Gn-CRs" secondAttribute="bottom" id="Wzn-8L-PNf"/>
                             <constraint firstAttribute="bottom" secondItem="s0W-Gn-CRs" secondAttribute="bottom" id="Za4-IV-2xy"/>
-                            <constraint firstItem="SXS-ry-QlT" firstAttribute="width" secondItem="s0W-Gn-CRs" secondAttribute="width" multiplier="0.7" id="wX7-6n-ITz"/>
-                            <constraint firstItem="SXS-ry-QlT" firstAttribute="centerX" secondItem="s0W-Gn-CRs" secondAttribute="centerX" id="zdA-TL-HBL"/>
                             <constraint firstAttribute="trailing" secondItem="s0W-Gn-CRs" secondAttribute="trailing" id="zvr-Ds-jpg"/>
                         </constraints>
                     </view>
@@ -136,6 +125,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="q0z-gQ-K43"/>
                     </toolbarItems>
                     <connections>
+                        <outlet property="commentsTextField" destination="9OQ-Gh-tMR" id="1yr-d9-VOE"/>
                         <outlet property="imageView" destination="s0W-Gn-CRs" id="4vb-IN-yg7"/>
                         <outlet property="imageView2" destination="oA8-VZ-uki" id="riY-eI-BSV"/>
                     </connections>
@@ -156,7 +146,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="99" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4us-zs-Lp4">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="99" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4us-zs-Lp4">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -308,8 +298,8 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="editButtonOutlet" destination="1DI-ql-z86" id="FTh-GT-UaL"/>
                         <outlet property="detailButtonOutlet" destination="3O5-ih-0LG" id="lkQ-dY-zhO"/>
+                        <outlet property="editButtonOutlet" destination="1DI-ql-z86" id="FTh-GT-UaL"/>
                         <outlet property="mapView" destination="DId-xg-s2j" id="TkQ-cQ-aAp"/>
                         <outlet property="playButtonOutlet" destination="zsj-kA-mTR" id="2XS-8N-D08"/>
                         <segue destination="7wg-cm-Bhh" kind="show" identifier="EditItinerary" id="AVw-NC-swc"/>

@@ -36,11 +36,11 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
-@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 - (IBAction)playButtonPressed:(UIButton *)sender;
 - (IBAction)detailButtonPressed:(UIBarButtonItem *)sender;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *detailButtonOutlet;
 
+@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *detailButtonOutlet;
 @property (strong, nonatomic) NSMutableArray *toolbarButtons;
 
 
@@ -60,6 +60,21 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self setupAppearance];
+    
+    [self sortRecordsByDate];
+    [self addPolylineToMap];
+}
+
+-(void)setupView {
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setTintColor: nil];
+    [self.playButtonOutlet.layer setCornerRadius:5.0];
+    self.navigationController.toolbar.layer.opacity = 0.5;
+    self.view.backgroundColor = [UIColor whiteColor];
+}
+
+-(void)setupAppearance {
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self.mapView removeOverlays:self.mapView.overlays];
     if (self.itinerary) {
@@ -72,32 +87,23 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         [self.detailButtonOutlet setTintColor:nil];
     } else {
         self.playButtonOutlet.hidden = YES;
+        [self.toolbarButtons removeObject:self.detailButtonOutlet];
+        [self setToolbarItems:self.toolbarButtons animated:YES];
         self.detailButtonOutlet.enabled = NO;
         [self.detailButtonOutlet setTintColor:[UIColor clearColor]];
     }
-    [self sortRecordsByDate];
-    [self addPolylineToMap];
-}
-
--(void)setupView {
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    [self.navigationItem.rightBarButtonItem setTintColor: nil];
-    [self.playButtonOutlet.layer setCornerRadius:5.0];
-    self.navigationController.toolbar.layer.opacity = 0.5;
-    self.view.backgroundColor = [UIColor whiteColor];
     
     if (!self.itinerary) {
         self.playButtonOutlet.hidden = YES;
         self.playButtonOutlet.enabled = NO;
         self.editButtonOutlet.enabled = NO;
         [self.editButtonOutlet setTintColor:[UIColor clearColor]];
-
+        
     } else {
         self.playButtonOutlet.hidden = NO;
         self.playButtonOutlet.enabled = YES;
         self.editButtonOutlet.enabled = YES;
         [self.editButtonOutlet setTintColor:nil];
-
     }
 }
 
@@ -108,7 +114,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     for (Record *record in self.records) {
         [latitudes addObject:record.latitude];
         [longitudes addObject:record.longitude];
-
     }
     
     [latitudes sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
@@ -318,11 +323,11 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             photoPickerVC.itinerary = self.itinerary;
         }
     } else if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
-            if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
-                PresentationViewController *presentationVC = (PresentationViewController *)segue.destinationViewController;
-                presentationVC.records = self.records;
-            }
+        if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
+            PresentationViewController *presentationVC = (PresentationViewController *)segue.destinationViewController;
+            presentationVC.records = self.records;
         }
+    }
     else {
         if ([segue.identifier isEqualToString:@"detailViewSegue"]) {
             if ([segue.destinationViewController isKindOfClass:[RecordsViewController class]]) {
