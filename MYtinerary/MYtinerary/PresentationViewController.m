@@ -157,22 +157,13 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.index = (self.index + 1) % self.recordImages.count;
     self.nextImageView.image = [self.recordImages objectAtIndex:self.index];
     
-    
-    [UIView animateWithDuration:4.0 delay:0.0 options: UIViewAnimationOptionAllowUserInteraction  animations:^{
-        self.currentImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    [UIView animateWithDuration:7.0 animations:^{
+        self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
         self.currentImageView.alpha = 0.0;
         self.nextImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
         self.nextImageView.alpha = 1.0;
-    } completion:nil];
-    
-    [self displayNextImage];
-    
-    [UIView animateWithDuration:3.0 delay:0.0 options: UIViewAnimationOptionAllowUserInteraction animations:^{
-                self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-                self.currentImageView.alpha = 1.0;
-                self.nextImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-                self.nextImageView.alpha = 0.0;
-    } completion:nil];
+        
+    }];
     
     UIImageView *tempView = self.currentImageView;
     self.currentImageView = self.nextImageView;
@@ -183,5 +174,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     [self.timer invalidate];
     self.timer = nil;
 }
+
 
 @end
