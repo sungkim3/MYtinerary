@@ -134,8 +134,17 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             //pass data to MapVC
             MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
             mapVC.records = self.records;
+            mapVC.itinerary = self.itinerary;
+            if (!mapVC.assets) {
+                mapVC.assets = [[NSMutableArray alloc]init];
+            }
             NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
-            [updatedAssets addObjectsFromArray:self.selectedAssets];
+            
+            for (PHAsset *asset in self.selectedAssets) {
+                if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                    [updatedAssets addObject:asset];
+                }
+            }
             mapVC.assets = updatedAssets;
             
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -170,7 +179,15 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         
         mapVC.itinerary = self.itinerary;
         mapVC.records = self.records;
-        mapVC.assets = self.selectedAssets;
+        if (!mapVC.assets) {
+            mapVC.assets = [[NSMutableArray alloc]init];
+        }
+        for (PHAsset *asset in self.selectedAssets) {
+            if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                [mapVC.assets addObject:asset];
+            }
+        }
+        //mapVC.assets = self.selectedAssets;
         
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
@@ -184,9 +201,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     
     for (PHAsset * asset in assets) {
         if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
-
-        Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
-        
+            
+            Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
+            
             record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
             record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
             record.date = asset.creationDate;
