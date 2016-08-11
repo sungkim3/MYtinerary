@@ -14,6 +14,7 @@
 #import "CustomLoginViewController.h"
 #import "PhotoPickerViewController.h"
 #import "PresentationViewController.h"
+#import "RecordsViewController.h"
 #include <math.h>
 
 @import Photos;
@@ -36,6 +37,9 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 - (IBAction)playButtonPressed:(UIButton *)sender;
+- (IBAction)searchButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)detailButtonPressed:(UIBarButtonItem *)sender;
+
 
 
 
@@ -278,6 +282,14 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     
 }
 
+- (IBAction)searchButtonPressed:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"recordsViewController" sender:self];
+}
+
+- (IBAction)detailButtonPressed:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"detailViewSegue" sender:self];
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:editSegueIdentifier] || [segue.identifier isEqualToString:createSegueIdentifier]) {
         if ([segue.destinationViewController isKindOfClass:[PhotoPickerViewController class]]) {
@@ -286,13 +298,21 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             photoPickerVC.selectedAssets = self.assets;
             photoPickerVC.itinerary = self.itinerary;
         }
-    } else {
-        if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
+    } else if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
             if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
                 PresentationViewController *presentationVC = (PresentationViewController *)segue.destinationViewController;
                 presentationVC.records = self.records;
             }
         }
+    else {
+        if ([segue.identifier isEqualToString:@"detailViewSegue"]) {
+            if ([segue.destinationViewController isKindOfClass:[RecordsViewController class]]) {
+                
+                RecordsViewController *recordsViewController = (RecordsViewController *)segue.destinationViewController;
+                recordsViewController.records = self.records;
+            }
+        }
+        
     }
     
 }

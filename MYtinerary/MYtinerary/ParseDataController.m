@@ -7,6 +7,8 @@
 //
 
 #import "ParseDataController.h"
+#import "PhotoPickerViewController.h"
+#import <Parse/Parse.h>
 @import Parse;
 
 @interface ParseDataController ()
