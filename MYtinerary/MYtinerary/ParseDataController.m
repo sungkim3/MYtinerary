@@ -88,14 +88,14 @@
         {
             NSLog(@"!!!Error saving Record to Parse");
         }
-        else {
-            for (PFObject *object in objects) {
-                self.date = object[@"date"];
-                    NSLog(@"From parse: %@", self.date);
-                self.itineraryTitle = object[@"title"];
-                    NSLog(@"From Parse: %@", self.title);
-            }
-        }
+//        else {
+//            for (PFObject *object in objects) {
+//                self.date = object[@"date"];
+//                    NSLog(@"From parse: %@", self.date);
+//                self.itineraryTitle = object[@"title"];
+//                    NSLog(@"From Parse: %@", self.title);
+//            }
+//        }
 
     }];
 }
