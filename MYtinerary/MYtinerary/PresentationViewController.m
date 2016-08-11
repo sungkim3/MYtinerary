@@ -31,6 +31,8 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.hidesBackButton = YES;
+    UIBarButtonItem *backButton = self.navigationItem.backBarButtonItem;
+    [backButton setAction:@selector(backBarButtonItem)];
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed:)];
     self.navigationItem.leftBarButtonItem = newBackButton;
     [self getImagesWith:^(NSArray *images) {
@@ -76,22 +78,22 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     
     for (PHAsset *asset in assets) {
-        [manager requestImageForAsset:asset
-                           targetSize:PHImageManagerMaximumSize
-                          contentMode:PHImageContentModeDefault
-                              options:imageRequestOptions
+        [manager requestImageForAsset: asset
+                           targetSize: PHImageManagerMaximumSize
+                          contentMode: PHImageContentModeDefault
+                              options: imageRequestOptions
                         resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                             if (result) {
                                 [self.recordImages addObject:result];
                             }
-                            if (self.recordImages.count == assets.count) {
+                            if (self.recordImages.count >= assets.count/5) {
                                 [[NSOperationQueue mainQueue]addOperationWithBlock:^{
                                     completion(self.recordImages);
                                 }];
                             }
                         }];
     }
-
+    
     NSLog(@"Images: %@", self.recordImages);
 }
 
@@ -106,7 +108,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 //                                           selector:@selector(onTimer)
 //                                           userInfo:nil
 //                                            repeats:YES];
-//    
+//
 //    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 //    [self.timer fire];
 //
@@ -125,11 +127,14 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     [self.timer invalidate];
     self.index = index;
     self.image = [recordImagesArray objectAtIndex:self.index];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1
-                                                  target:self
-                                                selector:@selector(displayNextImage)
+    [UIView animateWithDuration:7.0 animations:^{
+            [self onTimer];
+    }];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:7.0
+                                                target:self
+                                                selector:@selector(onTimer)
                                                 userInfo:nil
-                                                 repeats:YES];
+                                                repeats:YES];
     
 }
 
@@ -146,6 +151,19 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)onTimer {
+    [self displayNextImage];
+    
+    [UIView animateWithDuration:5.0 animations:^{
+        self.imageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+        self.imageView.alpha = 0.5;
+    }];
+    
+    [UIView animateWithDuration:2.0 animations:^{
+        self.imageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        self.imageView.alpha = 1.0;
+    }];
+}
 
 
 
