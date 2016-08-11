@@ -87,6 +87,8 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         [self.detailButtonOutlet setTintColor:nil];
     } else {
         self.playButtonOutlet.hidden = YES;
+        [self.toolbarButtons removeObject:self.detailButtonOutlet];
+        [self setToolbarItems:self.toolbarButtons animated:YES];
         self.detailButtonOutlet.enabled = NO;
         [self.detailButtonOutlet setTintColor:[UIColor clearColor]];
     }
