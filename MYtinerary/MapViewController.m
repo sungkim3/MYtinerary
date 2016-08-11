@@ -31,16 +31,15 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender;
-- (IBAction)libraryButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 - (IBAction)playButtonPressed:(UIButton *)sender;
-- (IBAction)searchButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)detailButtonPressed:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *detailButtonOutlet;
 
-
+@property (strong, nonatomic) NSMutableArray *toolbarButtons;
 
 
 @end
@@ -61,11 +60,19 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     [super viewWillAppear:animated];
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self.mapView removeOverlays:self.mapView.overlays];
+    self.toolbarButtons = [self.toolbarItems mutableCopy];
     if (self.itinerary) {
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
         }
         [self setRegion];
+        self.playButtonOutlet.hidden = NO;
+        [self setToolbarItems:self.toolbarButtons animated:YES];
+    } else {
+        self.playButtonOutlet.hidden = YES;
+        [self.toolbarButtons removeObject:self.detailButtonOutlet];
+        [self setToolbarItems:self.toolbarButtons animated:YES];
+        
         
     }
     [self sortRecordsByDate];
