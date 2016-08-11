@@ -95,15 +95,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         self.editButtonOutlet.enabled = NO;
         [self.editButtonOutlet setTintColor:[UIColor clearColor]];
     }
-    
-//    if (!self.itinerary) {
-//        self.playButtonOutlet.hidden = YES;
-//        self.playButtonOutlet.enabled = NO;
-//           } else {
-//        self.playButtonOutlet.hidden = NO;
-//        self.playButtonOutlet.enabled = YES;
-//
-//    }
 }
 
 -(void)setRegion {
