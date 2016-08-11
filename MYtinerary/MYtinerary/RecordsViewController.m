@@ -26,8 +26,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property(strong, nonatomic)NSMutableArray *recordImages;
-//@property(strong, nonatomic)NSArray *coreRecords;
-//@property(strong, nonatomic)Record *record;
 
 @end
 

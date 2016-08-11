@@ -48,7 +48,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     self.navigationController.navigationBarHidden = YES;
     self.navigationController.toolbarHidden = YES;
 }
@@ -67,7 +66,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.timer = nil;
     self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
     self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
-    
     NSLog(@"Image clicked index: %d", self.index);
     
 }
@@ -75,15 +73,12 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
     self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
     self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
-    
-    
     [self setRecordImagesArray:self.recordImages index:0];
 }
 
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender {
     self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
     self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
-    
     
     [self setRecordImagesArray:self.recordImages index:self.index];
     
