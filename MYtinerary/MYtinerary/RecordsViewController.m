@@ -15,18 +15,19 @@
 #import "Record.h"
 #import "Itinerary.h"
 #import "PresentationViewController.h"
+#import "DetailTableViewCell.h"
 
 @import Photos;
 
 typedef void(^imageConversionCompletion)(NSArray *images);
 
 
-@interface RecordsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface RecordsViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property(strong, nonatomic)NSMutableArray *recordImages;
 //@property(strong, nonatomic)NSArray *coreRecords;
-@property(strong, nonatomic)Record *record;
+//@property(strong, nonatomic)Record *record;
 
 @end
 
@@ -113,74 +114,17 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell" forIndexPath:indexPath];
+    DetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell" forIndexPath:indexPath];
     Record *record = [self.records objectAtIndex:indexPath.row];
-    self.record = record;
     
-//    UIImage *testImage = [UIImage imageWithContentsOfFile:self.recordImages[indexPath.row]];
-//    UIImageView *testImageView = [[UIImageView alloc]initWithImage:testImage];
-    
-//    [cell addSubview:testImageView];
-    cell.textLabel.text = @"Place Holder";
-    
-    //    cell.imageView.image = testImage;
+    cell.image = [self.recordImages objectAtIndex:indexPath.row];
+    cell.date = record.date;
+    cell.title = record.title;
+    cell.comments = record.comments;
     
     return cell;
 }
-    
-//    NSMutableOrderedSet *recordImages = [[NSMutableOrderedSet alloc]init];
-//    NSMutableArray *assetIds = [[NSMutableArray alloc]init];
-//    NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]initWithOrderedSet:recordImages];
-//    
-//    for (Record *record in self.records) {
-//        [mutableRecords addObject:record];
-//        [assetIds addObject:record.localImageURL];
-//    }
-//    self.records = (NSArray *)mutableRecords;
-//    self.assets = [[NSMutableArray alloc]init];
-//    
-//    
-////    PHImageManager *manager = [PHImageManager defaultManager];
-//    PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc]init];
-//    allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-//    
-////    PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:assetIds options:allPhotosOptions];
-////    self.assets = [[NSMutableArray alloc]init];
-//    
-////    assert(assets.count == 1);
-//    
-//    PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc]init];
-//    imageRequestOptions.synchronous = YES;
-//    PHImageManager *manager = [PHImageManager defaultManager];
-//    PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:assetIds options:allPhotosOptions];
-//    
-//
-//    for (PHAsset *asset in assets) {
-//        [manager requestImageForAsset:asset
-//                           targetSize:PHImageManagerMaximumSize
-//                          contentMode:PHImageContentModeDefault
-//                              options:imageRequestOptions
-//                        resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-//                            [recordImages addObject:result];
-//                        }];
-//    }
-//    
-//
-//    
-//    UIImageView *testImageView = [[self setupTableImage]initWithImage:recordImages[0]];
-//    
-//    [cell addSubview:testImageView];
-// 
-//    cell.textLabel.text = @"LABELLLLLL";
-//    return cell;
-//}
-//
 
-//
-//#pragma mark - UITableViewDelegate
-//
-//
-//    
 @end
 
      

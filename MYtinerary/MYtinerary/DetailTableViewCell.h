@@ -10,4 +10,9 @@
 
 @interface DetailTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *comments;
+
 @end

@@ -196,14 +196,14 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         record.localImageURL = asset.localIdentifier;
         [mutableRecords addObject:record];
         
-        [[ParseDataController shared]saveRecords:@"foo"
-                                        latitude:record.latitude
-                                       longitude:record.longitude
-                                            date:record.date
-                                           title:@"title placeholder"
-                                        comments:@"comment placeholder"
-                                   localImageURL:asset.localIdentifier
-                                      localImage:asset];
+//        [[ParseDataController shared]saveRecords:@"foo"
+//                                        latitude:record.latitude
+//                                       longitude:record.longitude
+//                                            date:record.date
+//                                           title:@"title placeholder"
+//                                        comments:@"comment placeholder"
+//                                   localImageURL:asset.localIdentifier
+//                                      localImage:asset];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             completion(mutableRecords);
@@ -234,9 +234,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseID forIndexPath:indexPath];
-    //if ([self.selectedIndexPaths containsObject:indexPath]) {
-    //cell.backgroundColor = [UIColor blueColor];
-    //}
+
     if ([self.selectedAssets containsObject:self.assets[indexPath.row]]) {
         cell.backgroundColor = [UIColor blueColor];
     }
