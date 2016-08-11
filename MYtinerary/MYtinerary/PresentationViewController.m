@@ -18,6 +18,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
+@property (strong, nonatomic) UISwipeGestureRecognizer *swipeGesture;
 
 @property (strong, nonatomic) NSMutableArray *recordImages;
 @property (strong, nonatomic) NSTimer *timer;
@@ -43,6 +44,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.view addGestureRecognizer:self.tapGesture];
     
+    self.swipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
+    [self.view addGestureRecognizer:self.swipeGesture];
+
     [self prefersStatusBarHidden];
 }
 
@@ -70,6 +74,10 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     NSLog(@"Image clicked index: %d", self.index);
     
+}
+
+-(void)handleSwipe:(UISwipeGestureRecognizer *)sender {
+    NSLog(@"user swiped"); // works for left to right only
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
@@ -149,13 +157,12 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.index = (self.index + 1) % self.recordImages.count;
     self.nextImageView.image = [self.recordImages objectAtIndex:self.index];
     
-    [UIView animateWithDuration:7.0 animations:^{
-        self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        self.currentImageView.alpha = 0.0;
-        self.nextImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
-        self.nextImageView.alpha = 1.0;
-        
-    }];
+    [UIView animateWithDuration:7.0 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+                self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                self.currentImageView.alpha = 0.0;
+                self.nextImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+                self.nextImageView.alpha = 1.0;
+    } completion:nil];
     
     UIImageView *tempView = self.currentImageView;
     self.currentImageView = self.nextImageView;
