@@ -47,7 +47,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
 }
 
-
 -(void)getImagesWith:(imageConversionCompletion)completion {
     
     NSMutableArray *assetIds = [[NSMutableArray alloc]init];
@@ -60,7 +59,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     }
     
     PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc]init];
-    allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    //allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
     PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:assetIds options:allPhotosOptions];
     
@@ -69,19 +68,43 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     imageRequestOptions.deliveryMode = PHImageRequestOptionsResizeModeFast;
     imageRequestOptions.resizeMode = PHImageRequestOptionsDeliveryModeFastFormat;
 
-    
-    for (PHAsset *asset in assets) {
-        [manager requestImageForAsset:asset
-                           targetSize:CGSizeMake(500.0, 500.0)
-                          contentMode:PHImageContentModeDefault
-                              options:imageRequestOptions
-                        resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                            [self.recordImages addObject:result];
-                            [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-                                completion(self.recordImages);
+    [assets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[PHAsset class]]) {
+            [manager requestImageForAsset:obj
+                               targetSize:CGSizeMake(500.0, 500.0)
+                              contentMode:PHImageContentModeAspectFit
+                                  options:imageRequestOptions
+                            resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                if (result) {
+                                    [self.recordImages addObject:result];
+                                }
+                                if (idx == assets.count-1) {
+                                    [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+                                        completion(self.recordImages);
+                                    }];
+                                }
                             }];
-                        }];
-    }
+        };
+    }];
+    
+    
+    
+//    for (PHAsset *asset in assets) {
+//        [manager requestImageForAsset:asset
+//                           targetSize:CGSizeMake(500.0, 500.0)
+//                          contentMode:PHImageContentModeAspectFit
+//                              options:imageRequestOptions
+//                        resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+//                            if (result) {
+//                                [self.recordImages addObject:result];
+//                            }
+//                            if (self.recordImages.count == assets.count) {
+//                                [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+//                                    completion(self.recordImages);
+//                                }];
+//                            }
+//                        }];
+//    }
 }
 
 - (void)setupTableImages:(NSArray *)images

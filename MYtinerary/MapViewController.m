@@ -151,9 +151,9 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
     self.records = [[self.records sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
     
-    NSSortDescriptor *assetDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
-    NSArray *assetSortDescriptors = [NSArray arrayWithObject:assetDateDescriptor];
-    self.assets = [[self.assets sortedArrayUsingDescriptors:assetSortDescriptors] mutableCopy];
+    //NSSortDescriptor *assetDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
+    //NSArray *assetSortDescriptors = [NSArray arrayWithObject:assetDateDescriptor];
+    //self.assets = [[self.assets sortedArrayUsingDescriptors:assetSortDescriptors] mutableCopy];
     
 }
 
@@ -328,8 +328,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
             PresentationViewController *presentationVC = (PresentationViewController *)segue.destinationViewController;
             presentationVC.records = self.records;
-            presentationVC.title = _itinerary.title;
-         
+            presentationVC.title = self.itinerary.title;
         }
     } else if ([segue.identifier isEqualToString:@"ShowItineraries"]) {
         if ([segue.destinationViewController isKindOfClass:[ItinerariesViewController class]]) {
@@ -342,8 +341,9 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             if ([segue.destinationViewController isKindOfClass:[RecordsViewController class]]) {
                 RecordsViewController *recordsViewController = (RecordsViewController *)segue.destinationViewController;
                 recordsViewController.records = self.records;
-                recordsViewController.title = _itinerary.title;
+                recordsViewController.title = self.itinerary.title;
                 recordsViewController.delegate = self;
+                recordsViewController.itinerary = self.itinerary;
             }
         }
     }
@@ -360,47 +360,47 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 #pragma mark - RecordsViewControllerDelegate
 
 -(void)recordDeleted:(Record *)record date:(NSDate *)creationDate itinerary:(Itinerary *)itinerary {
-    if ([self.records containsObject:record]) {
-        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
-        [mutableRecords removeObject:record];
-        self.records = mutableRecords;
-        NSMutableArray *array = [[NSMutableArray alloc]init];
-        for (PHAsset *asset in self.assets) {
-            if ([asset.creationDate compare:creationDate] == NSOrderedSame) {
-                NSLog(@"Found it!");
-            } else {
-                [array addObject:asset];
-            }
-        }
-        self.assets = array;
-    } else {
-        NSLog(@"Record is not in self.records");
-    }
-    
-    if (self.records.count == 0) {
-        self.itinerary = nil;
-        
-        NSManagedObjectContext *context = [NSManagedObject managedContext];
-        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Itinerary"];
-        [request setPredicate:[NSPredicate predicateWithFormat:@"title == %@", itinerary.title]];
-        NSError *error;
-        
-        NSArray *objects = [context executeFetchRequest:request error:&error];
-        [context deleteObject:objects[0]];
-        
-        if (error) {
-            NSLog(@"Error fetching context");
-        } else {
-            NSError *saveError;
-            [context save:&saveError];
-            if (saveError) {
-                NSLog(@"Error saving to context");
-            } else {
-                NSLog(@"Success saving to context");
-            }
-        }
-        
-    }
+//    if ([self.records containsObject:record]) {
+//        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
+//        [mutableRecords removeObject:record];
+//        self.records = mutableRecords;
+//        NSMutableArray *array = [[NSMutableArray alloc]init];
+//        for (PHAsset *asset in self.assets) {
+//            if ([asset.creationDate compare:creationDate] == NSOrderedSame) {
+//                NSLog(@"Found it!");
+//            } else {
+//                [array addObject:asset];
+//            }
+//        }
+//        self.assets = array;
+//    } else {
+//        NSLog(@"Record is not in self.records");
+//    }
+//    
+//    if (self.records.count == 0) {
+//        self.itinerary = nil;
+//        
+//        NSManagedObjectContext *context = [NSManagedObject managedContext];
+//        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Itinerary"];
+//        [request setPredicate:[NSPredicate predicateWithFormat:@"title == %@", itinerary.title]];
+//        NSError *error;
+//        
+//        NSArray *objects = [context executeFetchRequest:request error:&error];
+//        [context deleteObject:objects[0]];
+//        
+//        if (error) {
+//            NSLog(@"Error fetching context");
+//        } else {
+//            NSError *saveError;
+//            [context save:&saveError];
+//            if (saveError) {
+//                NSLog(@"Error saving to context");
+//            } else {
+//                NSLog(@"Success saving to context");
+//            }
+//        }
+//        
+//    }
 }
 
 @end
