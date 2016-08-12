@@ -10,9 +10,18 @@
 #import "Itinerary.h"
 #import "Record.h"
 
+@protocol RecordsViewControllerDelegate <NSObject>
+
+@required
+-(void)recordDeleted:(Record *)record date:(NSDate *)creationDate itinerary:(Itinerary *)itinerary;
+
+@end
+
 @interface RecordsViewController : UIViewController
 
 @property (strong, nonatomic) NSOrderedSet *records;
+@property (strong, nonatomic) Itinerary *itinerary;
+@property (weak, nonatomic) id <RecordsViewControllerDelegate> delegate;
 
 
 @end

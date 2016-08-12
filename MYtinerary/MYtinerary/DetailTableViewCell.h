@@ -15,6 +15,6 @@
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *comments;
-@property (strong, nonatomic)Record *record;
+@property (strong, nonatomic) Record *record;
 
 @end

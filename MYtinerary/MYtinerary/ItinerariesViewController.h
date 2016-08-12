@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Itinerary.h"
+
+@protocol ItinerariesViewControllerDelegate <NSObject>
+
+@required
+-(void)itineraryDeleted:(Itinerary *)itinerary;
+
+@end
 
 @interface ItinerariesViewController : UIViewController
+
+@property (weak, nonatomic) id <ItinerariesViewControllerDelegate> delegate;
 
 @end

@@ -8,16 +8,11 @@
 
 #import "DetailTableViewCell.h"
 #import "NSManagedObject+ManagedContext.h"
-#import "Record.h"
-#import "AppDelegate.h"
 
 @interface DetailTableViewCell ()
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
-
 
 @end
 
@@ -32,7 +27,7 @@
 }
 
 -(void)setImage:(UIImage *)image {
-    self.imageView.image = image;
+    self.imgView.image = image;
 }
 
 -(void)setDate:(NSDate *)date {
@@ -45,12 +40,6 @@
     self.dateLabel.text = stringedDate;
 }
 
--(void)setTitle:(NSString *)title {
-    if (title) {
-        self.titleLabel.text = title;
-    }
-}
-
 -(void)setComments:(NSString *)comments {
     _comments = comments;
     self.commentTextField.text = comments;
@@ -59,15 +48,9 @@
     [overlayButton addTarget:self action:@selector(saveContext:) forControlEvents:UIControlEventTouchUpInside];
     self.commentTextField.rightView = overlayButton;
     self.commentTextField.rightViewMode = UITextFieldViewModeAlways;
-    
-    
-
-
+  
 }
 
-//- (void)textFieldDidEndEditing:(UITextField *)textField {
-  //  if ([self.titleLabel.text length] > 0) {
-    //    self.comments = self.titleLabel.text;
 - (void)setCommentTextField:(UITextField *)commentTextField
 {
     _commentTextField = commentTextField;
@@ -77,17 +60,14 @@
 - (void)saveContext:(UIButton *)sender
 {
     NSLog(@"Save button pressed");
-    
+
     if ([self.commentTextField.text length] > 0) {
         NSString *comment = self.commentTextField.text;
-//        UILabel *textField = [[UILabel alloc]init];
-//        self.commentTextField = textField;
-//        textField.text = comment;
         
         NSLog(@"%@", comment);
-    
+        
         [self.record setValue:comment forKey:@"comments"];
-
+        
         NSError *saveError;
         BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
         if(isSaved) {
@@ -97,8 +77,5 @@
         }
     }
 }
-//retreive
-
-
 
 @end

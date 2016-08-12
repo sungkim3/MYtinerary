@@ -34,8 +34,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 @property (strong, nonatomic)Record *currentRecord;
 
-
-
 @end
 
 @implementation PresentationViewController
@@ -72,6 +70,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self backButtonPressed];
+    self.recordImages = nil;
 }
 
 -(BOOL)prefersStatusBarHidden {
@@ -136,12 +135,12 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc]init];
     imageRequestOptions.synchronous = YES;
     imageRequestOptions.networkAccessAllowed = YES;
-    imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
-    imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    //imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    //imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     
     for (PHAsset *asset in assets) {
         [manager requestImageForAsset: asset
-                           targetSize: PHImageManagerMaximumSize
+                           targetSize: CGSizeMake(1000.0, 1000.0) //PHImageManagerMaximumSize
                           contentMode: PHImageContentModeDefault
                               options: imageRequestOptions
                         resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
@@ -174,17 +173,17 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 -(void)displayNextImage {
     self.currentRecord = [self.records objectAtIndex:self.index];
     self.commentsTextField.text = self.currentRecord.comments;
-
+    
     self.currentImageView.image = [self.recordImages objectAtIndex:self.index];
     self.index = (self.index + 1) % self.recordImages.count;
     NSLog(@"Current index: %d", self.index);
     self.nextImageView.image = [self.recordImages objectAtIndex:self.index];
     
     [UIView animateWithDuration:7.0 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-                self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-                self.currentImageView.alpha = 0.0;
-                self.nextImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
-                self.nextImageView.alpha = 1.0;
+        self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        self.currentImageView.alpha = 0.0;
+        self.nextImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+        self.nextImageView.alpha = 1.0;
     } completion:nil];
     
     UIImageView *tempView = self.currentImageView;
@@ -196,6 +195,5 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     [self.timer invalidate];
     self.timer = nil;
 }
-
 
 @end
