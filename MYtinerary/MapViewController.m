@@ -85,6 +85,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             [self createAnnotationForRecord:asset];
         }
         [self setRegion];
+        self.title = self.itinerary.title;
         self.playButtonOutlet.hidden = NO;
         self.detailButtonOutlet.enabled = YES;
         [self.detailButtonOutlet setTintColor:nil];
@@ -320,11 +321,15 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             photoPickerVC.records = self.records;
             photoPickerVC.selectedAssets = self.assets;
             photoPickerVC.itinerary = self.itinerary;
+            photoPickerVC.title = self.itinerary.title;
+
         }
     } else if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
         if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
             PresentationViewController *presentationVC = (PresentationViewController *)segue.destinationViewController;
             presentationVC.records = self.records;
+            presentationVC.title = _itinerary.title;
+         
         }
     } else if ([segue.identifier isEqualToString:@"ShowItineraries"]) {
         if ([segue.destinationViewController isKindOfClass:[ItinerariesViewController class]]) {
@@ -337,7 +342,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             if ([segue.destinationViewController isKindOfClass:[RecordsViewController class]]) {
                 RecordsViewController *recordsViewController = (RecordsViewController *)segue.destinationViewController;
                 recordsViewController.records = self.records;
-                recordsViewController.itinerary = self.itinerary;
+                recordsViewController.title = _itinerary.title;
                 recordsViewController.delegate = self;
             }
         }
@@ -371,6 +376,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     } else {
         NSLog(@"Record is not in self.records");
     }
+    
     if (self.records.count == 0) {
         self.itinerary = nil;
         

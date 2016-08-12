@@ -17,6 +17,7 @@
 
 typedef void(^urlCompletion)(NSURL *url);
 typedef void(^recordCompletion)(NSOrderedSet *records);
+typedef void(^updateRecordCompletion)(NSOrderedSet *records);
 
 NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
@@ -49,6 +50,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     [super viewWillAppear:animated];
     CGFloat side = (MIN(self.view.frame.size.height , self.view.frame.size.width) / 3);
     self.cellWidth = side;
+    if (self.itinerary) {
+        self.titleTextField.hidden = YES;
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -110,70 +114,69 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     } else {
         //update existing itinerary
         
-        [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
-            NSMutableArray *updatedRecords = [NSMutableArray new];
-  
-            for (Record *record in records) {
-                [updatedRecords addObject:record];
-            }
-            self.records = [records mutableCopy];
+        [self updateRecordsWithCompletion:^(NSOrderedSet *records) {
+            //update Core Data Objects
+            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
+            [request setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)",self.itinerary.title]];
             
-        }];
-        
-        
-        
-        //update Core Data Objects
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
-        [request setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)",self.itinerary.title]];
-        
-        NSError *error;
-        NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
-        assert(results.count == 1);
-        
-        [((Itinerary *)results[0]) setValue:[NSOrderedSet orderedSetWithArray:(NSArray *)self.records] forKey:@"records"];
-        
-        //((Itinerary *)results[0]).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
-        for (Record *record in [((Itinerary *)results[0]) valueForKey:@"records"]) {
-            [[NSManagedObject managedContext] refreshObject:record mergeChanges:YES];
-            NSLog(@"Record: %@", record);
+            NSError *error;
+            NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
+            assert(results.count == 1);
             
-        }
-        
-        
-        //save context
-        NSError *saveError;
-        BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
-        if(isSaved) {
-            NSLog(@"Itinerary with records successfully updated and saved");
-        } else {
-            NSLog(@"Unsuccessful saving Itinerary when updating records: %@", saveError.localizedDescription);
-        }
-        //pass data to MapVC
-        MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
-        mapVC.records = self.records;
-        mapVC.itinerary = self.itinerary;
-        if (!mapVC.assets) {
-            mapVC.assets = [[NSMutableArray alloc]init];
-        }
-        NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
-        
-        for (PHAsset *asset in self.selectedAssets) {
-            if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
-                [updatedAssets addObject:asset];
+            [((Itinerary *)results[0]) setValue:[NSOrderedSet orderedSetWithArray:(NSArray *)records] forKey:@"records"];
+            
+            //((Itinerary *)results[0]).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
+            for (Record *record in [((Itinerary *)results[0]) valueForKey:@"records"]) {
+                [[NSManagedObject managedContext] refreshObject:record mergeChanges:YES];
+                NSLog(@"Record: %@", record);
             }
-        }
-        mapVC.assets = updatedAssets;
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
+            
+            //save context
+            NSError *saveError;
+            BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
+            if(isSaved) {
+                NSLog(@"Itinerary with records successfully updated and saved");
+            } else {
+                NSLog(@"Unsuccessful saving Itinerary when updating records: %@", saveError.localizedDescription);
+            }
+            //pass data to MapVC
+            MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
+            mapVC.records = records;
+            mapVC.itinerary = self.itinerary;
+            if (!mapVC.assets) {
+                mapVC.assets = [[NSMutableArray alloc]init];
+            }
+            NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
+            
+            for (PHAsset *asset in self.selectedAssets) {
+                if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                    [updatedAssets addObject:asset];
+                }
+            }
+            mapVC.assets = updatedAssets;
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } ];
     }
+}
+
+-(void)updateRecordsWithCompletion:(updateRecordCompletion)completion {
+    [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
+        NSMutableArray *updatedRecords = [NSMutableArray new];//[self.records mutableCopy];
+        
+        for (Record *record in records) {
+            [updatedRecords addObject:record];
+        }
+        self.records = (NSOrderedSet *)updatedRecords;
+    }];
 }
 
 -(void)createItinerary {
     Itinerary *itinerary = [NSEntityDescription insertNewObjectForEntityForName:@"Itinerary" inManagedObjectContext:[NSManagedObject managedContext]];
-
-        NSSortDescriptor *assetDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
-        NSArray *assetSortDescriptors = [NSArray arrayWithObject:assetDateDescriptor];
-        self.selectedAssets = [[self.selectedAssets sortedArrayUsingDescriptors:assetSortDescriptors] mutableCopy];
+    
+    NSSortDescriptor *assetDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
+    NSArray *assetSortDescriptors = [NSArray arrayWithObject:assetDateDescriptor];
+    self.selectedAssets = [[self.selectedAssets sortedArrayUsingDescriptors:assetSortDescriptors] mutableCopy];
     
     [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
         itinerary.records = records;
@@ -190,8 +193,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         } else {
             NSLog(@"Unsuccessful saving Itinerary with records: %@", saveError.localizedDescription);
         }
-        
-        
         
         //pass data to MapVC
         MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
@@ -229,15 +230,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             record.localImageURL = asset.localIdentifier;
             [mutableRecords addObject:record];
             
-            //        [[ParseDataController shared]saveRecords:@"foo"
-            //                                        latitude:record.latitude
-            //                                       longitude:record.longitude
-            //                                            date:record.date
-            //                                           title:@"title placeholder"
-            //                                        comments:@"comment placeholder"
-            //                                   localImageURL:asset.localIdentifier
-            //                                      localImage:asset];
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion(mutableRecords);
             });
@@ -252,6 +244,10 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     }];
 }
 
+- (void)updateTextFieldFromEditSegue
+{
+    _titleTextField.placeholder = _itinerary.title;
+}
 
 #pragma - CollectionView DataSource Methods
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

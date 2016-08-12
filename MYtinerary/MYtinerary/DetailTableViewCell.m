@@ -7,12 +7,12 @@
 //
 
 #import "DetailTableViewCell.h"
+#import "NSManagedObject+ManagedContext.h"
 
 @interface DetailTableViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
+@property (weak, nonatomic) IBOutlet UITextField *commentTextField;
 
 @end
 
@@ -40,15 +40,41 @@
     self.dateLabel.text = stringedDate;
 }
 
--(void)setTitle:(NSString *)title {
-    if (title) {
-        self.titleLabel.text = title;
-    }
+-(void)setComments:(NSString *)comments {
+    _comments = comments;
+    self.commentTextField.text = comments;
+    self.commentTextField.clearsOnBeginEditing = NO;
+    UIButton *overlayButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    [overlayButton addTarget:self action:@selector(saveContext:) forControlEvents:UIControlEventTouchUpInside];
+    self.commentTextField.rightView = overlayButton;
+    self.commentTextField.rightViewMode = UITextFieldViewModeAlways;
+  
 }
 
--(void)setComments:(NSString *)comments {
-    if (comments) {
-        self.commentsLabel.text = comments;
+- (void)setCommentTextField:(UITextField *)commentTextField
+{
+    _commentTextField = commentTextField;
+    _commentTextField.text = self.record.comments;
+}
+
+- (void)saveContext:(UIButton *)sender
+{
+    NSLog(@"Save button pressed");
+
+    if ([self.commentTextField.text length] > 0) {
+        NSString *comment = self.commentTextField.text;
+        
+        NSLog(@"%@", comment);
+        
+        [self.record setValue:comment forKey:@"comments"];
+        
+        NSError *saveError;
+        BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
+        if(isSaved) {
+            NSLog(@"Comment saved successfully. Comment it: %@", self.record.comments);
+        } else {
+            NSLog(@"Unsuccessful save of comment: %@", saveError.localizedDescription);
+        }
     }
 }
 

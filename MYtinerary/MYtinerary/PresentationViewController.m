@@ -14,15 +14,25 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 @interface PresentationViewController ()
 
-- (IBAction)tapGestureRecognized:(UITapGestureRecognizer *)sender;
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+@property (weak, nonatomic) IBOutlet UITextField *commentsTextField;
+
+@property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
+@property (strong, nonatomic) UISwipeGestureRecognizer *leftSwipeGesture;
+@property (strong, nonatomic) UISwipeGestureRecognizer *rightSwipeGesture;
 
 @property (strong, nonatomic) NSMutableArray *recordImages;
 @property (strong, nonatomic) NSTimer *timer;
 @property (nonatomic) int index;
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic)UIImageView *currentImageView;
+@property (strong, nonatomic)UIImageView *nextImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView2;
+
+@property (strong, nonatomic)Record *currentRecord;
 
 @end
 
@@ -30,25 +40,78 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.hidesBackButton = YES;
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed:)];
-    self.navigationItem.leftBarButtonItem = newBackButton;
+    [self.view setBackgroundColor:[UIColor clearColor]];
+    self.currentImageView = self.imageView;
+    self.nextImageView = self.imageView2;
+    
     [self getImagesWith:^(NSArray *images) {
         [self setRecordImagesArray:images index:0];
     }];
+    self.tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
+    [self.view addGestureRecognizer:self.tapGesture];
+    
+    self.leftSwipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleLeftSwipe:)];
+    [self.leftSwipeGesture setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [self.view addGestureRecognizer:self.leftSwipeGesture];
+
+    self.rightSwipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleRightSwipe:)];
+    [self.rightSwipeGesture setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    [self.view addGestureRecognizer:self.rightSwipeGesture];
+    
+    [self prefersStatusBarHidden];
 }
 
-- (IBAction)tapGestureRecognized:(UITapGestureRecognizer *)sender {
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.toolbarHidden = YES;
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self backButtonPressed];
+    self.recordImages = nil;
+}
+
+-(BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
+-(void)handleTap:(UITapGestureRecognizer *)sender {
     [self.timer invalidate];
     self.timer = nil;
+    self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
+    self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
     NSLog(@"Image clicked index: %d", self.index);
+    
+}
+
+-(void)handleLeftSwipe:(UISwipeGestureRecognizer *)sender {
+    [self displayNextImage];
+}
+
+-(void)handleRightSwipe:(UISwipeGestureRecognizer *)sender {
+    NSLog(@"%d", self.index);
+    
+    if (self.index == 0) {
+        
+    } else if (self.index == 1) {
+        [self setRecordImagesArray:self.recordImages index: self.index - 1];
+    } else {
+        [self setRecordImagesArray:self.recordImages index: self.index - 2];
+    }
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
+    self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
+    self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
     [self setRecordImagesArray:self.recordImages index:0];
 }
 
 - (IBAction)playButtonPressed:(UIBarButtonItem *)sender {
+    self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
+    self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
+    
     [self setRecordImagesArray:self.recordImages index:self.index];
     
 }
@@ -76,56 +139,30 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     //imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     
     for (PHAsset *asset in assets) {
-        [manager requestImageForAsset:asset
-                           targetSize:PHImageManagerMaximumSize
-                          contentMode:PHImageContentModeDefault
-                              options:imageRequestOptions
+        [manager requestImageForAsset: asset
+                           targetSize: CGSizeMake(1000.0, 1000.0) //PHImageManagerMaximumSize
+                          contentMode: PHImageContentModeDefault
+                              options: imageRequestOptions
                         resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                             if (result) {
                                 [self.recordImages addObject:result];
                             }
-                            if (self.recordImages.count == assets.count) {
+                            if (self.recordImages.count >= assets.count/5) {
                                 [[NSOperationQueue mainQueue]addOperationWithBlock:^{
                                     completion(self.recordImages);
                                 }];
                             }
                         }];
     }
-
     NSLog(@"Images: %@", self.recordImages);
 }
-
-//-(void)setupPresentation:(NSArray *)images {
-//    self.imageView.animationImages = images;
-//    self.imageView.animationDuration = (5.0*images.count);
-//    self.imageView.animationRepeatCount = 0 ;
-//    [self.imageView startAnimating];
-//
-//    self.timer = [NSTimer timerWithTimeInterval:5.0
-//                                             target:self
-//                                           selector:@selector(onTimer)
-//                                           userInfo:nil
-//                                            repeats:YES];
-//    
-//    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
-//    [self.timer fire];
-//
-//}
-
-//-(void)onTimer {
-//    [UIView animateWithDuration:4.0 animations:^{
-//        self.imageView.alpha = 0.0;
-//    }];
-//    [UIView animateWithDuration:1.0 animations:^{
-//        self.imageView.alpha = 1.0;
-//    }];
-//}
 
 -(void)setRecordImagesArray:(NSArray *)recordImagesArray index:(int)index {
     [self.timer invalidate];
     self.index = index;
-    self.image = [recordImagesArray objectAtIndex:self.index];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1
+    
+    [self displayNextImage];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:7.0
                                                   target:self
                                                 selector:@selector(displayNextImage)
                                                 userInfo:nil
@@ -134,19 +171,29 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 }
 
 -(void)displayNextImage {
-    self.imageView.image = self.image;
+    self.currentRecord = [self.records objectAtIndex:self.index];
+    self.commentsTextField.text = self.currentRecord.comments;
+    
+    self.currentImageView.image = [self.recordImages objectAtIndex:self.index];
     self.index = (self.index + 1) % self.recordImages.count;
-    NSLog(@"Current Image Index %d", self.index);
-    self.image = [self.recordImages objectAtIndex:self.index];
+    NSLog(@"Current index: %d", self.index);
+    self.nextImageView.image = [self.recordImages objectAtIndex:self.index];
+    
+    [UIView animateWithDuration:7.0 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        self.currentImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        self.currentImageView.alpha = 0.0;
+        self.nextImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+        self.nextImageView.alpha = 1.0;
+    } completion:nil];
+    
+    UIImageView *tempView = self.currentImageView;
+    self.currentImageView = self.nextImageView;
+    self.nextImageView = tempView;
 }
 
--(void)backButtonPressed:(UIBarButtonItem *)sender {
+-(void)backButtonPressed {
     [self.timer invalidate];
     self.timer = nil;
-    [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
 
 @end

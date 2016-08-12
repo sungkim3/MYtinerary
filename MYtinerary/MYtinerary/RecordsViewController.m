@@ -16,6 +16,7 @@
 #import "PresentationViewController.h"
 #import "DetailTableViewCell.h"
 #import "AppDelegate.h"
+#import "DetailTableViewCell.h"
 
 @import Photos;
 
@@ -94,6 +95,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 {
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStyleDone];
+    self.title = self.itinerary.title;
 }
 
 #pragma mark - UITableViewDataSource
@@ -109,7 +111,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     cell.image = [self.recordImages objectAtIndex:indexPath.row];
     cell.date = record.date;
-    cell.title = record.title;
+//    cell.title = record.itinerary.title;
     cell.comments = record.comments;
     cell.record = record;
     
@@ -151,6 +153,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
     }
 }
+
 
 @end
 
