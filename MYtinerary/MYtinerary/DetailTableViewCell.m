@@ -9,7 +9,7 @@
 #import "DetailTableViewCell.h"
 
 @interface DetailTableViewCell ()
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
@@ -27,7 +27,7 @@
 }
 
 -(void)setImage:(UIImage *)image {
-    self.imageView.image = image;
+    self.imgView.image = image;
 }
 
 -(void)setDate:(NSDate *)date {

@@ -188,6 +188,7 @@
                                             <outlet property="commentsLabel" destination="BUI-YA-XAU" id="TPD-AW-EXC"/>
                                             <outlet property="dateLabel" destination="Wfu-f0-Wzp" id="6yY-UZ-CCu"/>
                                             <outlet property="imageView" destination="SDz-XC-oHL" id="IzU-hr-v7G"/>
+                                            <outlet property="imgView" destination="SDz-XC-oHL" id="lZz-qn-h3K"/>
                                             <outlet property="titleLabel" destination="PaU-AO-Nmq" id="pVy-Gw-Tps"/>
                                         </connections>
                                     </tableViewCell>
