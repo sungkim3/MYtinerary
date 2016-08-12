@@ -154,12 +154,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     }
 }
 
-#pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    Record *record = [self.records objectAtIndex:indexPath.row];
-    
-}
 
 @end
 

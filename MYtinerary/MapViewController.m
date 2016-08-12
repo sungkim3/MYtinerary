@@ -85,6 +85,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             [self createAnnotationForRecord:asset];
         }
         [self setRegion];
+        self.title = self.itinerary.title;
         self.playButtonOutlet.hidden = NO;
         self.detailButtonOutlet.enabled = YES;
         [self.detailButtonOutlet setTintColor:nil];

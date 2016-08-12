@@ -49,6 +49,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     [super viewWillAppear:animated];
     CGFloat side = (MIN(self.view.frame.size.height , self.view.frame.size.width) / 3);
     self.cellWidth = side;
+    if (self.itinerary) {
+        self.titleTextField.hidden = YES;
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -229,15 +232,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             record.itinerary = self.itinerary;
             record.localImageURL = asset.localIdentifier;
             [mutableRecords addObject:record];
-            
-            //        [[ParseDataController shared]saveRecords:@"foo"
-            //                                        latitude:record.latitude
-            //                                       longitude:record.longitude
-            //                                            date:record.date
-            //                                           title:@"title placeholder"
-            //                                        comments:@"comment placeholder"
-            //                                   localImageURL:asset.localIdentifier
-            //                                      localImage:asset];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion(mutableRecords);
