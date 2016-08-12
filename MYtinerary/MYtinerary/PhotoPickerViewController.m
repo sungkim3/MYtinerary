@@ -195,8 +195,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             NSLog(@"Unsuccessful saving Itinerary with records: %@", saveError.localizedDescription);
         }
         
-        
-        
         //pass data to MapVC
         MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
         mapVC.itinerary = self.itinerary;
