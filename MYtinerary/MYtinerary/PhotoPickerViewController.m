@@ -119,15 +119,24 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             self.records = (NSOrderedSet *)updatedRecords;
             self.titleTextField.placeholder = self.itinerary.title;
             
-            //update Core Data Objects
-            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
-            [request setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)",self.itinerary.title]];
-            
-            
-            NSError *error;
-            NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
-            assert(results.count == 1);
-            ((Itinerary *)results.firstObject).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
+        }];
+        
+        
+        
+        //update Core Data Objects
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)",self.itinerary.title]];
+        
+        NSError *error;
+        NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
+        assert(results.count == 1);
+        
+        [((Itinerary *)results[0]) setValue:[NSOrderedSet orderedSetWithArray:(NSArray *)self.records] forKey:@"records"];
+        
+        //((Itinerary *)results[0]).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
+        for (Record *record in [((Itinerary *)results[0]) valueForKey:@"records"]) {
+            [[NSManagedObject managedContext] refreshObject:record mergeChanges:YES];
+            NSLog(@"Record: %@", record);
             
         }
         
