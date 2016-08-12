@@ -17,6 +17,7 @@
 
 typedef void(^urlCompletion)(NSURL *url);
 typedef void(^recordCompletion)(NSOrderedSet *records);
+typedef void(^updateRecordCompletion)(NSOrderedSet *records);
 
 NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
