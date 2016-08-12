@@ -67,7 +67,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Itinerary *itinerary = [self.itineraries objectAtIndex:indexPath.row];
     self.itinerary = itinerary;
-
+    
     NSMutableArray *assetIds = [[NSMutableArray alloc]init];
     NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]initWithOrderedSet:self.records];
     for (Record *record in itinerary.records) {
@@ -82,13 +82,15 @@
     allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     
     PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:assetIds options:allPhotosOptions];
-    
+    __weak typeof(self)weakSelf = self;
     [assets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        __strong typeof(self)strongSelf = weakSelf;
+        
         if ([obj isKindOfClass:[PHAsset class]]) {
-            [self.assets addObject:(PHAsset *)obj];
+            [strongSelf.assets addObject:(PHAsset *)obj];
         }
         if (idx == assets.count - 1) {
-            [self performSegueWithIdentifier:@"displayItineraryOnMapVC" sender:self];
+            [strongSelf performSegueWithIdentifier:@"displayItineraryOnMapVC" sender:self];
         }
     }];
 }
@@ -118,7 +120,7 @@
             } else {
                 [self.itineraries removeObjectAtIndex:indexPath.row];
                 [self.tableView reloadData];
-            
+                
                 [self.delegate itineraryDeleted:itinerary];
             }
         }

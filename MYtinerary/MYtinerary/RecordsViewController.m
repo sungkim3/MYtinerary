@@ -41,11 +41,15 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     [self setUpView];
     [self getImagesWith:^(NSArray *images) {
-        [self setupTableImages:images];
+        //[self setupTableImages:images];
     }];
     
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //self.recordImages = nil;
+}
 
 -(void)getImagesWith:(imageConversionCompletion)completion {
     
@@ -59,34 +63,43 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     }
     
     PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc]init];
-    allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    //allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
     PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:assetIds options:allPhotosOptions];
     
     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc]init];
     imageRequestOptions.synchronous = YES;
+    imageRequestOptions.networkAccessAllowed = YES;
     imageRequestOptions.deliveryMode = PHImageRequestOptionsResizeModeFast;
     imageRequestOptions.resizeMode = PHImageRequestOptionsDeliveryModeFastFormat;
-
+    __weak typeof(self)weakSelf = self;
     
-    for (PHAsset *asset in assets) {
-        [manager requestImageForAsset:asset
-                           targetSize:CGSizeMake(500.0, 500.0)
-                          contentMode:PHImageContentModeDefault
-                              options:imageRequestOptions
-                        resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                            [self.recordImages addObject:result];
-                            [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-                                completion(self.recordImages);
+    [assets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        __strong typeof(self)strongSelf = weakSelf;
+        
+        if ([obj isKindOfClass:[PHAsset class]]) {
+            [manager requestImageForAsset:obj
+                               targetSize:CGSizeMake(500.0, 500.0)
+                              contentMode:PHImageContentModeAspectFit
+                                  options:imageRequestOptions
+                            resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                if (result) {
+                                    [strongSelf.recordImages addObject:result];
+                                }
+                                if (idx == assets.count-1) {
+                                    [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+                                        completion(strongSelf.recordImages);
+                                    }];
+                                }
                             }];
-                        }];
-    }
+        };
+    }];
 }
 
 - (void)setupTableImages:(NSArray *)images
 {
-    UIImageView *tableViewImage = [[UIImageView alloc]initWithFrame:CGRectMake(0.0, 0.0, 150.0, 100.0)];
-    tableViewImage.layer.cornerRadius = 30.0;
+//    UIImageView *tableViewImage = [[UIImageView alloc]initWithFrame:CGRectMake(0.0, 0.0, 150.0, 100.0)];
+//    tableViewImage.layer.cornerRadius = 30.0;
 }
 
 
@@ -110,7 +123,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     cell.image = [self.recordImages objectAtIndex:indexPath.row];
     cell.date = record.date;
-//    cell.title = record.itinerary.title;
+    //    cell.title = record.itinerary.title;
     cell.comments = record.comments;
     cell.record = record;
     
@@ -156,4 +169,4 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 @end
 
-     
+

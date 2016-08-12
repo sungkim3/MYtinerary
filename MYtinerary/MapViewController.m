@@ -29,7 +29,7 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
 NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
-@interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, ItinerariesViewControllerDelegate, RecordsViewControllerDelegate>
+@interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, ItinerariesViewControllerDelegate,RecordsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButtonOutlet;
 
@@ -57,8 +57,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     
     self.mapView.delegate = self;
     [self.navigationController setToolbarHidden:NO animated:NO];
-    
-    //[self login];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -67,6 +65,11 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     
     [self sortRecordsByDate];
     [self addPolylineToMap];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillAppear:animated];    
+    [self sortRecordsByDate];
 }
 
 -(void)setupView {
@@ -112,7 +115,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     for (Record *record in self.records) {
         [latitudes addObject:record.latitude];
         [longitudes addObject:record.longitude];
-        
     }
     
     [latitudes sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
@@ -133,9 +135,9 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         return NSOrderedSame;
     }];
     
-    
-    NSLog(@"Sorted latitudes: %@", latitudes);
-    NSLog(@"Sorted longitudes: %@", longitudes);
+//    
+//    NSLog(@"Sorted latitudes: %@", latitudes);
+//    NSLog(@"Sorted longitudes: %@", longitudes);
     
     double longitudeDifference = [longitudes.lastObject doubleValue] - [longitudes.firstObject doubleValue];
     double latitudeDifference = [latitudes.lastObject doubleValue] - [latitudes.firstObject doubleValue];
@@ -343,14 +345,13 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             photoPickerVC.selectedAssets = self.assets;
             photoPickerVC.itinerary = self.itinerary;
             photoPickerVC.title = self.itinerary.title;
-
+            
         }
     } else if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
         if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
             PresentationViewController *presentationVC = (PresentationViewController *)segue.destinationViewController;
             presentationVC.records = self.records;
-            presentationVC.title = _itinerary.title;
-         
+            presentationVC.title = self.itinerary.title;
         }
     } else if ([segue.identifier isEqualToString:@"ShowItineraries"]) {
         if ([segue.destinationViewController isKindOfClass:[ItinerariesViewController class]]) {
@@ -363,8 +364,9 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             if ([segue.destinationViewController isKindOfClass:[RecordsViewController class]]) {
                 RecordsViewController *recordsViewController = (RecordsViewController *)segue.destinationViewController;
                 recordsViewController.records = self.records;
-                recordsViewController.title = _itinerary.title;
+                recordsViewController.title = self.itinerary.title;
                 recordsViewController.delegate = self;
+                recordsViewController.itinerary = self.itinerary;
             }
         }
     }
@@ -381,22 +383,22 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 #pragma mark - RecordsViewControllerDelegate
 
 -(void)recordDeleted:(Record *)record date:(NSDate *)creationDate itinerary:(Itinerary *)itinerary {
-    if ([self.records containsObject:record]) {
-        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
-        [mutableRecords removeObject:record];
-        self.records = mutableRecords;
-        NSMutableArray *array = [[NSMutableArray alloc]init];
-        for (PHAsset *asset in self.assets) {
-            if ([asset.creationDate compare:creationDate] == NSOrderedSame) {
-                NSLog(@"Found it!");
-            } else {
-                [array addObject:asset];
+        if ([self.records containsObject:record]) {
+            NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
+            [mutableRecords removeObject:record];
+            self.records = mutableRecords;
+            NSMutableArray *array = [[NSMutableArray alloc]init];
+            for (PHAsset *asset in self.assets) {
+                if ([asset.creationDate compare:creationDate] == NSOrderedSame) {
+                    NSLog(@"Found it!");
+                } else {
+                    [array addObject:asset];
+                }
             }
+            self.assets = array;
+        } else {
+            NSLog(@"Record is not in self.records");
         }
-        self.assets = array;
-    } else {
-        NSLog(@"Record is not in self.records");
-    }
     
     if (self.records.count == 0) {
         NSManagedObjectContext *context = [NSManagedObject managedContext];
@@ -419,8 +421,15 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             if (saveError) {
                 NSLog(@"Error saving to context");
             } else {
-                NSLog(@"Success saving to context");
+                NSError *saveError;
+                [context save:&saveError];
+                if (saveError) {
+                    NSLog(@"Error saving to context");
+                } else {
+                    NSLog(@"Success saving to context");
+                }
             }
+            
         }
         self.itinerary = nil;
         self.title = nil;

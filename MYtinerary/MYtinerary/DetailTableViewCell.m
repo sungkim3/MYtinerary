@@ -9,7 +9,7 @@
 #import "DetailTableViewCell.h"
 #import "NSManagedObject+ManagedContext.h"
 
-@interface DetailTableViewCell ()
+@interface DetailTableViewCell () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
@@ -20,6 +20,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.commentTextField.delegate = self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -27,13 +28,14 @@
 }
 
 -(void)setImage:(UIImage *)image {
+    _image = image;
     self.imgView.image = image;
 }
 
 -(void)setDate:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
-    [dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss z"];
+    [dateFormatter setDateFormat:@"EEE, d MMM yyyy"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSString *stringedDate = [dateFormatter stringFromDate:date];
     
@@ -48,7 +50,6 @@
     [overlayButton addTarget:self action:@selector(saveContext:) forControlEvents:UIControlEventTouchUpInside];
     self.commentTextField.rightView = overlayButton;
     self.commentTextField.rightViewMode = UITextFieldViewModeAlways;
-  
 }
 
 - (void)setCommentTextField:(UITextField *)commentTextField
@@ -60,7 +61,7 @@
 - (void)saveContext:(UIButton *)sender
 {
     NSLog(@"Save button pressed");
-
+    
     if ([self.commentTextField.text length] > 0) {
         NSString *comment = self.commentTextField.text;
         
@@ -76,6 +77,11 @@
             NSLog(@"Unsuccessful save of comment: %@", saveError.localizedDescription);
         }
     }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end
