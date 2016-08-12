@@ -29,7 +29,7 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
 NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
-@interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, ItinerariesViewControllerDelegate, RecordsViewControllerDelegate>
+@interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, ItinerariesViewControllerDelegate,RecordsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButtonOutlet;
 
@@ -55,8 +55,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     
     self.mapView.delegate = self;
     [self.navigationController setToolbarHidden:NO animated:NO];
-    
-    //[self login];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -65,6 +63,11 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     
     [self sortRecordsByDate];
     [self addPolylineToMap];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillAppear:animated];    
+    [self sortRecordsByDate];
 }
 
 -(void)setupView {
@@ -108,7 +111,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     for (Record *record in self.records) {
         [latitudes addObject:record.latitude];
         [longitudes addObject:record.longitude];
-        
     }
     
     [latitudes sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
@@ -129,9 +131,9 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         return NSOrderedSame;
     }];
     
-    
-    NSLog(@"Sorted latitudes: %@", latitudes);
-    NSLog(@"Sorted longitudes: %@", longitudes);
+//    
+//    NSLog(@"Sorted latitudes: %@", latitudes);
+//    NSLog(@"Sorted longitudes: %@", longitudes);
     
     double longitudeDifference = [longitudes.lastObject doubleValue] - [longitudes.firstObject doubleValue];
     double latitudeDifference = [latitudes.lastObject doubleValue] - [latitudes.firstObject doubleValue];
@@ -151,9 +153,9 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
     self.records = [[self.records sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
     
-    //NSSortDescriptor *assetDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
-    //NSArray *assetSortDescriptors = [NSArray arrayWithObject:assetDateDescriptor];
-    //self.assets = [[self.assets sortedArrayUsingDescriptors:assetSortDescriptors] mutableCopy];
+    NSSortDescriptor *assetDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
+    NSArray *assetSortDescriptors = [NSArray arrayWithObject:assetDateDescriptor];
+    self.assets = [[self.assets sortedArrayUsingDescriptors:assetSortDescriptors] mutableCopy];
     
 }
 
@@ -322,7 +324,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             photoPickerVC.selectedAssets = self.assets;
             photoPickerVC.itinerary = self.itinerary;
             photoPickerVC.title = self.itinerary.title;
-
+            
         }
     } else if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
         if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
@@ -360,47 +362,47 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 #pragma mark - RecordsViewControllerDelegate
 
 -(void)recordDeleted:(Record *)record date:(NSDate *)creationDate itinerary:(Itinerary *)itinerary {
-//    if ([self.records containsObject:record]) {
-//        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
-//        [mutableRecords removeObject:record];
-//        self.records = mutableRecords;
-//        NSMutableArray *array = [[NSMutableArray alloc]init];
-//        for (PHAsset *asset in self.assets) {
-//            if ([asset.creationDate compare:creationDate] == NSOrderedSame) {
-//                NSLog(@"Found it!");
-//            } else {
-//                [array addObject:asset];
-//            }
-//        }
-//        self.assets = array;
-//    } else {
-//        NSLog(@"Record is not in self.records");
-//    }
-//    
-//    if (self.records.count == 0) {
-//        self.itinerary = nil;
-//        
-//        NSManagedObjectContext *context = [NSManagedObject managedContext];
-//        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Itinerary"];
-//        [request setPredicate:[NSPredicate predicateWithFormat:@"title == %@", itinerary.title]];
-//        NSError *error;
-//        
-//        NSArray *objects = [context executeFetchRequest:request error:&error];
-//        [context deleteObject:objects[0]];
-//        
-//        if (error) {
-//            NSLog(@"Error fetching context");
-//        } else {
-//            NSError *saveError;
-//            [context save:&saveError];
-//            if (saveError) {
-//                NSLog(@"Error saving to context");
-//            } else {
-//                NSLog(@"Success saving to context");
-//            }
-//        }
-//        
-//    }
+        if ([self.records containsObject:record]) {
+            NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
+            [mutableRecords removeObject:record];
+            self.records = mutableRecords;
+            NSMutableArray *array = [[NSMutableArray alloc]init];
+            for (PHAsset *asset in self.assets) {
+                if ([asset.creationDate compare:creationDate] == NSOrderedSame) {
+                    NSLog(@"Found it!");
+                } else {
+                    [array addObject:asset];
+                }
+            }
+            self.assets = array;
+        } else {
+            NSLog(@"Record is not in self.records");
+        }
+    
+        if (self.records.count == 0) {
+            self.itinerary = nil;
+    
+            NSManagedObjectContext *context = [NSManagedObject managedContext];
+            NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Itinerary"];
+            [request setPredicate:[NSPredicate predicateWithFormat:@"title == %@", itinerary.title]];
+            NSError *error;
+    
+            NSArray *objects = [context executeFetchRequest:request error:&error];
+            [context deleteObject:objects[0]];
+    
+            if (error) {
+                NSLog(@"Error fetching context");
+            } else {
+                NSError *saveError;
+                [context save:&saveError];
+                if (saveError) {
+                    NSLog(@"Error saving to context");
+                } else {
+                    NSLog(@"Success saving to context");
+                }
+            }
+            
+        }
 }
 
 @end

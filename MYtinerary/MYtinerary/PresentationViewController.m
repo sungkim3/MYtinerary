@@ -82,8 +82,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.timer = nil;
     self.navigationController.navigationBarHidden = !self.navigationController.navigationBarHidden;
     self.navigationController.toolbarHidden = !self.navigationController.toolbarHidden;
-    NSLog(@"Image clicked index: %d", self.index);
-    
+    //NSLog(@"Image clicked index: %d", self.index);
 }
 
 -(void)handleLeftSwipe:(UISwipeGestureRecognizer *)sender {
@@ -138,18 +137,21 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     //imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
     //imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     
+    __weak typeof(self)weakSelf = self;
     for (PHAsset *asset in assets) {
+        __strong typeof(self)strongSelf = weakSelf;
+
         [manager requestImageForAsset: asset
                            targetSize: CGSizeMake(1000.0, 1000.0) //PHImageManagerMaximumSize
                           contentMode: PHImageContentModeDefault
                               options: imageRequestOptions
                         resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                             if (result) {
-                                [self.recordImages addObject:result];
+                                [strongSelf.recordImages addObject:result];
                             }
-                            if (self.recordImages.count >= assets.count/5) {
+                            if (strongSelf.recordImages.count >= assets.count/5) {
                                 [[NSOperationQueue mainQueue]addOperationWithBlock:^{
-                                    completion(self.recordImages);
+                                    completion(strongSelf.recordImages);
                                 }];
                             }
                         }];
