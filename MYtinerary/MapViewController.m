@@ -377,6 +377,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 -(void)itineraryDeleted:(Itinerary *)itinerary {
     if (self.itinerary == itinerary) {
         self.itinerary = nil;
+        self.title = nil;
     }
 }
 

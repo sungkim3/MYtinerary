@@ -45,7 +45,8 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.nextImageView = self.imageView2;
     
     [self getImagesWith:^(NSArray *images) {
-        [self setRecordImagesArray:images index:0];
+
+        [self setRecordImagesArray:[self reversedArray:images] index:0];
     }];
     self.tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.view addGestureRecognizer:self.tapGesture];
@@ -135,7 +136,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     imageRequestOptions.synchronous = YES;
     imageRequestOptions.networkAccessAllowed = YES;
     //imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
-    //imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
     
     __weak typeof(self)weakSelf = self;
     for (PHAsset *asset in assets) {
@@ -157,6 +158,15 @@ typedef void(^imageConversionCompletion)(NSArray *images);
                         }];
     }
     NSLog(@"Images: %@", self.recordImages);
+}
+
+- (NSArray *)reversedArray:(NSArray*)arrayToSort {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:[arrayToSort count]];
+    NSEnumerator *enumerator = [arrayToSort reverseObjectEnumerator];
+    for (id element in enumerator) {
+        [array addObject:element];
+    }
+    return array;
 }
 
 -(void)setRecordImagesArray:(NSArray *)recordImagesArray index:(int)index {

@@ -137,7 +137,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 //        
 //        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
 //        [mutableRecords removeObject:deleteRecord];
-//        self.records = mutableRecords;
+//        self.records = muta1  `bleRecords;
 //        
 //        NSManagedObjectContext *context = [NSManagedObject managedContext];
 //        
