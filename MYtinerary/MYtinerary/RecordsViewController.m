@@ -130,43 +130,58 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Record *deleteRecord = [self.records objectAtIndex:indexPath.row];
-        NSDate *creationDate = deleteRecord.date;
-        
-        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
-        [mutableRecords removeObject:deleteRecord];
-        self.records = mutableRecords;
-        
-        NSManagedObjectContext *context = [NSManagedObject managedContext];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Record"];
-        [request setPredicate:[NSPredicate predicateWithFormat:@"date == %@", deleteRecord.date]];
-        NSError *error;
-        NSArray *objects = [context executeFetchRequest:request error:&error];
-        
-        [context deleteObject:objects[0]];
-
-        if (error) {
-            NSLog(@"error fetching from context");
-        } else {
-            NSError *saveError;
-            [context save:&saveError];
-            
-            if (saveError) {
-                NSLog(@"error saving context");
-            } else {
-                NSLog(@"successfully saved to context");
-
-                [self.delegate recordDeleted:deleteRecord date:creationDate itinerary:self.itinerary];
-            }
-        }
-        [self.tableView reloadData];
-    }
-}
-
+//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        Record *deleteRecord = [self.records objectAtIndex:indexPath.row];
+//        NSDate *creationDate = deleteRecord.date;
+//        
+//        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
+//        [mutableRecords removeObject:deleteRecord];
+//        self.records = mutableRecords;
+//        
+//        NSManagedObjectContext *context = [NSManagedObject managedContext];
+//        
+//        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Record"];
+//        [request setPredicate:[NSPredicate predicateWithFormat:@"date == %@", deleteRecord.date]];
+//        NSError *error;
+//        NSArray *objects = [context executeFetchRequest:request error:&error];
+//        
+//        [context deleteObject:objects[0]];
+//        
+//        if (error) {
+//            NSLog(@"error fetching from context");
+//        } else {
+//            NSError *saveError;
+//            [context save:&saveError];
+//            
+//            if (saveError) {
+//                NSLog(@"error saving context");
+//            } else {
+//                NSLog(@"successfully saved to context");
+//                [self.tableView reloadData];
+//                [self.delegate recordDeleted:deleteRecord date:creationDate itinerary:self.itinerary];
+//            }
+//        }
+//        
+//    }
+//}
+//
+//        if (error) {
+//            NSLog(@"error fetching from context");
+//        } else {
+//            NSError *saveError;
+//            [context save:&saveError];
+//            
+//            if (saveError) {
+//                NSLog(@"error saving context");
+//            } else {
+//                NSLog(@"successfully saved to context");
+//
+//                [self.delegate recordDeleted:deleteRecord date:creationDate itinerary:self.itinerary];
+//            }
+//        }
+//        [self.tableView reloadData];
+//    }
+//}
 
 @end
-
-
