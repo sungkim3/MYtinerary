@@ -27,11 +27,11 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NCm-bF-eRP" id="bq9-kf-28r">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zJs-E5-XV3">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -143,7 +143,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dkc-HI-nxa" id="ZMX-vl-cp4">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="98.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="98"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SDz-XC-oHL">
@@ -159,37 +159,27 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUI-YA-XAU">
-                                                    <rect key="frame" x="106" y="73" width="84" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PaU-AO-Nmq">
-                                                    <rect key="frame" x="106" y="38" width="34" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Comments" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VLU-EH-Wgc">
+                                                    <rect key="frame" x="106" y="33" width="486" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="SDz-XC-oHL" firstAttribute="leading" secondItem="ZMX-vl-cp4" secondAttribute="leading" constant="8" id="2h3-8Z-KP9"/>
-                                                <constraint firstItem="PaU-AO-Nmq" firstAttribute="leading" secondItem="SDz-XC-oHL" secondAttribute="trailing" constant="8" id="6tG-0M-Rqa"/>
+                                                <constraint firstItem="VLU-EH-Wgc" firstAttribute="leading" secondItem="SDz-XC-oHL" secondAttribute="trailing" constant="8" id="9eY-Y8-8g3"/>
                                                 <constraint firstAttribute="bottom" secondItem="SDz-XC-oHL" secondAttribute="bottom" constant="4" id="Ee5-Ns-2rB"/>
                                                 <constraint firstItem="Wfu-f0-Wzp" firstAttribute="top" secondItem="ZMX-vl-cp4" secondAttribute="top" constant="4" id="IVJ-dR-wJN"/>
                                                 <constraint firstItem="SDz-XC-oHL" firstAttribute="top" secondItem="ZMX-vl-cp4" secondAttribute="top" constant="4" id="Uh4-ey-bJo"/>
-                                                <constraint firstItem="BUI-YA-XAU" firstAttribute="leading" secondItem="SDz-XC-oHL" secondAttribute="trailing" constant="8" id="bUZ-AD-IZh"/>
-                                                <constraint firstItem="BUI-YA-XAU" firstAttribute="top" secondItem="PaU-AO-Nmq" secondAttribute="bottom" constant="14" id="d5Z-tM-M6w"/>
-                                                <constraint firstItem="PaU-AO-Nmq" firstAttribute="top" secondItem="Wfu-f0-Wzp" secondAttribute="bottom" constant="13" id="nLY-8y-nnS"/>
+                                                <constraint firstAttribute="bottom" secondItem="VLU-EH-Wgc" secondAttribute="bottom" constant="35" id="fdi-xd-r1U"/>
                                                 <constraint firstItem="Wfu-f0-Wzp" firstAttribute="leading" secondItem="SDz-XC-oHL" secondAttribute="trailing" constant="8" id="vSx-FQ-bp0"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="commentsLabel" destination="BUI-YA-XAU" id="TPD-AW-EXC"/>
+                                            <outlet property="commentTextField" destination="VLU-EH-Wgc" id="93d-IQ-ZPD"/>
                                             <outlet property="dateLabel" destination="Wfu-f0-Wzp" id="6yY-UZ-CCu"/>
                                             <outlet property="imageView" destination="SDz-XC-oHL" id="IzU-hr-v7G"/>
                                             <outlet property="imgView" destination="SDz-XC-oHL" id="lZz-qn-h3K"/>
-                                            <outlet property="titleLabel" destination="PaU-AO-Nmq" id="pVy-Gw-Tps"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
