@@ -9,12 +9,13 @@
 #import "RecordsViewController.h"
 #import "NSManagedObject+ManagedContext.h"
 #import "ParseDataController.h"
-#import "AppDelegate.h"
 #import "MapViewController.h"
 #import "Record+CoreDataProperties.h"
 #import "Record.h"
 #import "Itinerary.h"
 #import "PresentationViewController.h"
+#import "DetailTableViewCell.h"
+#import "AppDelegate.h"
 #import "DetailTableViewCell.h"
 
 @import Photos;
@@ -26,9 +27,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property(strong, nonatomic)NSMutableArray *recordImages;
-@property (strong, nonatomic)NSMutableArray *recordComments;
-//@property(strong, nonatomic)NSArray *coreRecords;
-//@property(strong, nonatomic)Record *record;
 
 @end
 
@@ -39,9 +37,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 {
     [super viewDidLoad];
     
-    
     [self setUpView];
-//    [self fetchRecordsFromCoreData];
     [self getImagesWith:^(NSArray *images) {
         [self setupTableImages:images];
     }];
@@ -61,7 +57,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     }
     
     PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc]init];
-    allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
     PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:assetIds options:allPhotosOptions];
     
@@ -86,9 +82,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 {
     UIImageView *tableViewImage = [[UIImageView alloc]initWithFrame:CGRectMake(0.0, 0.0, 150.0, 100.0)];
     tableViewImage.layer.cornerRadius = 30.0;
-
-    
-
 }
 
 
@@ -97,15 +90,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStyleDone];
 }
-
-//- (void)fetchRecordsFromCoreData {
-//    AppDelegate *delegate = [[UIApplication sharedApplication]delegate];
-//    NSManagedObjectContext *context = delegate.managedObjectContext;
-//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Record"];
-//    NSError *error;
-//    self.coreRecords = [context executeFetchRequest:request error:&error];
-//    NSLog(@"Number of itineraries in Core Data: %lu", (unsigned long)self.records.count);
-//}
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -122,16 +106,53 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     cell.date = record.date;
     cell.title = record.title;
     cell.comments = record.comments;
-    cell.record = record;
     
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Record *deleteRecord = [self.records objectAtIndex:indexPath.row];
+        NSDate *creationDate = deleteRecord.date;
+        
+        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
+        [mutableRecords removeObject:deleteRecord];
+        self.records = mutableRecords;
+        
+        NSManagedObjectContext *context = [NSManagedObject managedContext];
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Record"];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"date == %@", deleteRecord.date]];
+        NSError *error;
+        NSArray *objects = [context executeFetchRequest:request error:&error];
+        
+        [context deleteObject:objects[0]];
+
+        if (error) {
+            NSLog(@"error fetching from context");
+        } else {
+            NSError *saveError;
+            [context save:&saveError];
+            
+            if (saveError) {
+                NSLog(@"error saving context");
+            } else {
+                NSLog(@"successfully saved to context");
+                [self.tableView reloadData];
+                [self.delegate recordDeleted:deleteRecord date:creationDate itinerary:self.itinerary];
+            }
+        }
+
+    }
+}
+
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     Record *record = [self.records objectAtIndex:indexPath.row];
     
 }
+
 @end
 
      

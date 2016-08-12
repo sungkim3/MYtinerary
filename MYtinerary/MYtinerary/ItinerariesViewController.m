@@ -7,10 +7,10 @@
 //
 
 #import "ItinerariesViewController.h"
-#import "AppDelegate.h"
 #import "Itinerary.h"
 #import "Record.h"
 #import "MapViewController.h"
+#import "NSManagedObject+ManagedContext.h"
 @import Photos;
 
 @interface ItinerariesViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -38,8 +38,7 @@
 }
 
 - (void)fetchItinerariesFromCoreData {
-    AppDelegate *delegate = [[UIApplication sharedApplication]delegate];
-    NSManagedObjectContext *context = delegate.managedObjectContext;
+    NSManagedObjectContext *context = [NSManagedObject managedContext];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Itinerary"];
     NSError *error;
     self.itineraries = [[NSMutableArray alloc]initWithArray:[context executeFetchRequest:request error:&error]];
@@ -63,17 +62,20 @@
 
 #pragma mark - UITableViewDelegate
 
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Itinerary *itinerary = [self.itineraries objectAtIndex:indexPath.row];
     self.itinerary = itinerary;
 
     NSMutableArray *assetIds = [[NSMutableArray alloc]init];
-    NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]initWithOrderedSet:self.records]; //[self.records mutableCopy];
+    NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]initWithOrderedSet:self.records];
     for (Record *record in itinerary.records) {
         [mutableRecords addObject:record];
         [assetIds addObject:record.localImageURL];
     }
     self.records = (NSOrderedSet *)mutableRecords;
+    
     self.assets = [[NSMutableArray alloc]init];
     
     PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc]init];
@@ -94,19 +96,19 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Itinerary *itinerary = [self.itineraries objectAtIndex:indexPath.row];
-        AppDelegate *delegate = [[UIApplication sharedApplication]delegate];
-        NSManagedObjectContext *context = delegate.managedObjectContext;
+        
+        NSManagedObjectContext *context = [NSManagedObject managedContext];
         NSFetchRequest *fetch = [[NSFetchRequest alloc]init];
         NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Itinerary" inManagedObjectContext:context];
         [fetch setEntity:entityDescription];
         [fetch setPredicate:[NSPredicate predicateWithFormat:@"ANY title CONTAINS %@", itinerary.title]];
         NSError *error;
-        NSArray *object = [context executeFetchRequest:fetch error:&error];
+        NSArray *objects = [context executeFetchRequest:fetch error:&error];
         
         if (error) {
             NSLog(@"Error fetching managed object");
         } else {
-            [context deleteObject:object[0]];
+            [context deleteObject:objects[0]];
             
             NSError *saveError;
             [context save:&saveError];
@@ -114,14 +116,12 @@
             if (saveError) {
                 NSLog(@"Error saving context: %@", saveError.localizedDescription);
             } else {
-                MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
-                mapVC.itinerary = nil;
                 [self.itineraries removeObjectAtIndex:indexPath.row];
                 [self.tableView reloadData];
-                
+            
+                [self.delegate itineraryDeleted:itinerary];
             }
         }
-        
     }
 }
 

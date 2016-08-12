@@ -15,6 +15,7 @@
 #import "PhotoPickerViewController.h"
 #import "PresentationViewController.h"
 #import "RecordsViewController.h"
+#import "ItinerariesViewController.h"
 #include <math.h>
 
 @import Photos;
@@ -28,21 +29,16 @@ NSString  * const _Nonnull editSegueIdentifier = @"EditItinerary";
 NSString  * const _Nonnull createSegueIdentifier = @"CreateItinerary";
 NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
-@interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButtonOutlet;
+@interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, ItinerariesViewControllerDelegate, RecordsViewControllerDelegate>
 
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 - (IBAction)playButtonPressed:(UIButton *)sender;
 - (IBAction)detailButtonPressed:(UIBarButtonItem *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *detailButtonOutlet;
-@property (strong, nonatomic) NSMutableArray *toolbarButtons;
-
 
 @end
 
@@ -60,24 +56,11 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self setupAppearance];
-    
-    [self sortRecordsByDate];
-    [self addPolylineToMap];
-}
-
--(void)setupView {
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    [self.navigationItem.rightBarButtonItem setTintColor: nil];
-    [self.playButtonOutlet.layer setCornerRadius:5.0];
-    self.navigationController.toolbar.layer.opacity = 0.5;
-    self.view.backgroundColor = [UIColor whiteColor];
-}
-
--(void)setupAppearance {
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self.mapView removeOverlays:self.mapView.overlays];
+    
     if (self.itinerary) {
+        [self sortRecordsByDate];
         for (PHAsset *asset in self.assets) {
             [self createAnnotationForRecord:asset];
         }
@@ -85,16 +68,18 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         self.playButtonOutlet.hidden = NO;
         self.detailButtonOutlet.enabled = YES;
         [self.detailButtonOutlet setTintColor:nil];
-        self.editButtonOutlet.enabled = YES;
-        [self.editButtonOutlet setTintColor:nil];
-        
+        [self addPolylineToMap];
     } else {
         self.playButtonOutlet.hidden = YES;
         self.detailButtonOutlet.enabled = NO;
         [self.detailButtonOutlet setTintColor:[UIColor clearColor]];
-        self.editButtonOutlet.enabled = NO;
-        [self.editButtonOutlet setTintColor:[UIColor clearColor]];
     }
+}
+
+-(void)setupView {
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setTintColor: nil];
+    [self.playButtonOutlet.layer setCornerRadius:5.0];
 }
 
 -(void)setRegion {
@@ -104,6 +89,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     for (Record *record in self.records) {
         [latitudes addObject:record.latitude];
         [longitudes addObject:record.longitude];
+        
     }
     
     [latitudes sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
@@ -145,6 +131,11 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
     NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
     self.records = [[self.records sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+    
+    NSSortDescriptor *assetDateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES];
+    NSArray *assetSortDescriptors = [NSArray arrayWithObject:assetDateDescriptor];
+    self.assets = [[self.assets sortedArrayUsingDescriptors:assetSortDescriptors] mutableCopy];
+    
 }
 
 -(void)convertToImageFrom:(PHAsset *)asset withCompletion:(imageCompletion)completion {
@@ -296,12 +287,12 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     
 }
 
-- (IBAction)searchButtonPressed:(UIBarButtonItem *)sender {
-    [self performSegueWithIdentifier:@"recordsViewController" sender:self];
-}
-
 - (IBAction)detailButtonPressed:(UIBarButtonItem *)sender {
     [self performSegueWithIdentifier:@"detailViewSegue" sender:self];
+}
+
+- (IBAction)playButtonPressed:(UIButton *)sender {
+    [self performSegueWithIdentifier:presentstionSegueIdentifier sender:self];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -321,21 +312,74 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             presentationVC.title = _itinerary.title;
          
         }
+    } else if ([segue.identifier isEqualToString:@"ShowItineraries"]) {
+        if ([segue.destinationViewController isKindOfClass:[ItinerariesViewController class]]) {
+            ItinerariesViewController *itinerariesVC = (ItinerariesViewController *)segue.destinationViewController;
+            itinerariesVC.delegate = self;
+        }
     }
     else {
         if ([segue.identifier isEqualToString:@"detailViewSegue"]) {
             if ([segue.destinationViewController isKindOfClass:[RecordsViewController class]]) {
-                
                 RecordsViewController *recordsViewController = (RecordsViewController *)segue.destinationViewController;
                 recordsViewController.records = self.records;
                 recordsViewController.title = _itinerary.title;
+            }
+        }
+    }
+}
+
+#pragma mark - ItinerariesViewControllerDelegate
+
+-(void)itineraryDeleted:(Itinerary *)itinerary {
+    if (self.itinerary == itinerary) {
+        self.itinerary = nil;
+    }
+}
+
+#pragma mark - RecordsViewControllerDelegate
+
+-(void)recordDeleted:(Record *)record date:(NSDate *)creationDate itinerary:(Itinerary *)itinerary {
+    if ([self.records containsObject:record]) {
+        NSMutableOrderedSet *mutableRecords = [self.records mutableCopy];
+        [mutableRecords removeObject:record];
+        self.records = mutableRecords;
+        NSMutableArray *array = [[NSMutableArray alloc]init];
+        for (PHAsset *asset in self.assets) {
+            if ([asset.creationDate compare:creationDate] == NSOrderedSame) {
+                NSLog(@"Found it!");
+            } else {
+                [array addObject:asset];
+            }
+        }
+        self.assets = array;
+    } else {
+        NSLog(@"Record is not in self.records");
+    }
+    if (self.records.count == 0) {
+        self.itinerary = nil;
+        
+        NSManagedObjectContext *context = [NSManagedObject managedContext];
+        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Itinerary"];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"title == %@", itinerary.title]];
+        NSError *error;
+        
+        NSArray *objects = [context executeFetchRequest:request error:&error];
+        [context deleteObject:objects[0]];
+        
+        if (error) {
+            NSLog(@"Error fetching context");
+        } else {
+            NSError *saveError;
+            [context save:&saveError];
+            if (saveError) {
+                NSLog(@"Error saving to context");
+            } else {
+                NSLog(@"Success saving to context");
             }
         }
         
     }
 }
 
-- (IBAction)playButtonPressed:(UIButton *)sender {
-    [self performSegueWithIdentifier:presentstionSegueIdentifier sender:self];
-}
 @end

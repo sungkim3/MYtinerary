@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Record.h"
 
 @interface DetailTableViewCell : UITableViewCell
 
@@ -15,6 +14,5 @@
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *comments;
-@property (strong, nonatomic)Record *record;
 
 @end
