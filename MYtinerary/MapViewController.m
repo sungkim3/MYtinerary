@@ -343,6 +343,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
                 RecordsViewController *recordsViewController = (RecordsViewController *)segue.destinationViewController;
                 recordsViewController.records = self.records;
                 recordsViewController.title = _itinerary.title;
+                recordsViewController.delegate = self;
             }
         }
     }
@@ -375,6 +376,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     } else {
         NSLog(@"Record is not in self.records");
     }
+    
     if (self.records.count == 0) {
         self.itinerary = nil;
         
