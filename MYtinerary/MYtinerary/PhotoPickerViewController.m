@@ -11,7 +11,7 @@
 #import "MapViewController.h"
 #import "Itinerary.h"
 #import "NSManagedObject+ManagedContext.h"
-#import "ParseDataController.h"
+//#import "ParseDataController.h"
 @import Photos;
 @import UIKit;
 

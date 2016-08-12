@@ -37,10 +37,12 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
-- (IBAction)playButtonPressed:(UIButton *)sender;
+//- (IBAction)playButtonPressed:(UIButton *)sender;
 - (IBAction)detailButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)playButtonPressed:(UIBarButtonItem *)sender;
 
-@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *playButtonOutlet;
+//@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *detailButtonOutlet;
 @property (strong, nonatomic) NSMutableArray *toolbarButtons;
 
@@ -70,7 +72,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 -(void)setupView {
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
     [self.navigationItem.rightBarButtonItem setTintColor: nil];
-    [self.playButtonOutlet.layer setCornerRadius:5.0];
+//    [self.playButtonOutlet.layer setCornerRadius:5.0];
     self.navigationController.toolbar.layer.opacity = 0.5;
     self.view.backgroundColor = [UIColor whiteColor];
 }
@@ -86,14 +88,16 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         }
         [self setRegion];
         self.title = self.itinerary.title;
-        self.playButtonOutlet.hidden = NO;
+        self.playButtonOutlet.enabled = YES;
+        [self.playButtonOutlet setTintColor:nil];
         self.detailButtonOutlet.enabled = YES;
         [self.detailButtonOutlet setTintColor:nil];
         self.editButtonOutlet.enabled = YES;
         [self.editButtonOutlet setTintColor:nil];
         
     } else {
-        self.playButtonOutlet.hidden = YES;
+        self.playButtonOutlet.enabled = NO;
+        [self.playButtonOutlet setTintColor:[UIColor clearColor]];
         self.detailButtonOutlet.enabled = NO;
         [self.detailButtonOutlet setTintColor:[UIColor clearColor]];
         self.editButtonOutlet.enabled = NO;
@@ -310,9 +314,13 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     [self performSegueWithIdentifier:@"detailViewSegue" sender:self];
 }
 
-- (IBAction)playButtonPressed:(UIButton *)sender {
+- (IBAction)playButtonPressed:(UIBarButtonItem *)sender {
     [self performSegueWithIdentifier:presentstionSegueIdentifier sender:self];
+
 }
+
+//- (IBAction)playButtonPressed:(UIButton *)sender {
+//}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:editSegueIdentifier] || [segue.identifier isEqualToString:createSegueIdentifier]) {
@@ -378,28 +386,31 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     }
     
     if (self.records.count == 0) {
-        self.itinerary = nil;
-        
         NSManagedObjectContext *context = [NSManagedObject managedContext];
-        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Itinerary"];
-        [request setPredicate:[NSPredicate predicateWithFormat:@"title == %@", itinerary.title]];
+        NSFetchRequest *fetch = [[NSFetchRequest alloc]init];
+        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Itinerary" inManagedObjectContext:context];
+        [fetch setEntity:entityDescription];
+        [fetch setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)", self.itinerary.title]];
         NSError *error;
-        
-        NSArray *objects = [context executeFetchRequest:request error:&error];
-        [context deleteObject:objects[0]];
+        NSArray *objects = [context executeFetchRequest:fetch error:&error];
         
         if (error) {
             NSLog(@"Error fetching context");
         } else {
+            [context deleteObject:objects[0]];
+
+
             NSError *saveError;
             [context save:&saveError];
+            
             if (saveError) {
                 NSLog(@"Error saving to context");
             } else {
                 NSLog(@"Success saving to context");
             }
         }
-        
+        self.itinerary = nil;
+        self.title = nil;
     }
 }
 

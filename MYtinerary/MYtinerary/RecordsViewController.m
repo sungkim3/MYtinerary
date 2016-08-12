@@ -8,7 +8,7 @@
 
 #import "RecordsViewController.h"
 #import "NSManagedObject+ManagedContext.h"
-#import "ParseDataController.h"
+//#import "ParseDataController.h"
 #import "MapViewController.h"
 #import "Record+CoreDataProperties.h"
 #import "Record.h"
@@ -16,7 +16,6 @@
 #import "PresentationViewController.h"
 #import "DetailTableViewCell.h"
 #import "AppDelegate.h"
-#import "DetailTableViewCell.h"
 
 @import Photos;
 
@@ -146,11 +145,11 @@ typedef void(^imageConversionCompletion)(NSArray *images);
                 NSLog(@"error saving context");
             } else {
                 NSLog(@"successfully saved to context");
-                [self.tableView reloadData];
+
                 [self.delegate recordDeleted:deleteRecord date:creationDate itinerary:self.itinerary];
             }
         }
-
+        [self.tableView reloadData];
     }
 }
 

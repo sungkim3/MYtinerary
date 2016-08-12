@@ -101,7 +101,7 @@
         NSFetchRequest *fetch = [[NSFetchRequest alloc]init];
         NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Itinerary" inManagedObjectContext:context];
         [fetch setEntity:entityDescription];
-        [fetch setPredicate:[NSPredicate predicateWithFormat:@"ANY title CONTAINS %@", itinerary.title]];
+        [fetch setPredicate:[NSPredicate predicateWithFormat:@"title = %@", itinerary.title]];
         NSError *error;
         NSArray *objects = [context executeFetchRequest:fetch error:&error];
         

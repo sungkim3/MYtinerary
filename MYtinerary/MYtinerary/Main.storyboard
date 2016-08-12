@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Itineraries View Controller-->
@@ -237,37 +236,24 @@
                                     <outlet property="delegate" destination="bc2-2s-IlQ" id="3SG-Ge-mHr"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsj-kA-mTR">
-                                <rect key="frame" x="180" y="518" width="240" height="30"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Play">
-                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="playButtonPressed:" destination="bc2-2s-IlQ" eventType="touchUpInside" id="3hu-Ld-fEj"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="DId-xg-s2j" firstAttribute="top" secondItem="940-VT-3V1" secondAttribute="top" id="1ds-gP-5AN"/>
-                            <constraint firstItem="zsj-kA-mTR" firstAttribute="centerX" secondItem="DId-xg-s2j" secondAttribute="centerX" id="3x0-zY-lBh"/>
                             <constraint firstItem="DId-xg-s2j" firstAttribute="bottom" secondItem="eqo-g6-FTV" secondAttribute="top" id="6eE-RV-oBe"/>
-                            <constraint firstItem="zsj-kA-mTR" firstAttribute="width" secondItem="DId-xg-s2j" secondAttribute="width" multiplier="0.4" id="6rZ-u4-CMc"/>
                             <constraint firstItem="DId-xg-s2j" firstAttribute="leading" secondItem="940-VT-3V1" secondAttribute="leading" id="DYy-lU-bhb"/>
-                            <constraint firstItem="eqo-g6-FTV" firstAttribute="top" secondItem="zsj-kA-mTR" secondAttribute="bottom" constant="8" symbolic="YES" id="ZPP-cB-Tc9"/>
                             <constraint firstAttribute="trailing" secondItem="DId-xg-s2j" secondAttribute="trailing" id="oUM-5W-Pw0"/>
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem systemItem="edit" id="1DI-ql-z86">
-                            <connections>
-                                <action selector="editButtonPressed:" destination="bc2-2s-IlQ" id="rg3-dE-qcf"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Cun-9i-bQC"/>
                         <barButtonItem title="Details" id="3O5-ih-0LG">
                             <connections>
                                 <action selector="detailButtonPressed:" destination="bc2-2s-IlQ" id="Mkr-sy-zlC"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Cun-9i-bQC"/>
+                        <barButtonItem systemItem="play" id="0gd-rj-Kmq">
+                            <connections>
+                                <action selector="playButtonPressed:" destination="bc2-2s-IlQ" id="XNH-YS-hr9"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="FGl-b8-Zer"/>
@@ -278,9 +264,9 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="rDx-6x-jHh">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="kkr-ae-NI2">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="1DI-ql-z86">
                             <connections>
-                                <action selector="logoutButtonSelected:" destination="bc2-2s-IlQ" id="1tj-hp-Vxg"/>
+                                <action selector="editButtonPressed:" destination="bc2-2s-IlQ" id="rg3-dE-qcf"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="4wC-o1-PtL">
@@ -294,7 +280,7 @@
                         <outlet property="detailButtonOutlet" destination="3O5-ih-0LG" id="lkQ-dY-zhO"/>
                         <outlet property="editButtonOutlet" destination="1DI-ql-z86" id="N1g-19-5zA"/>
                         <outlet property="mapView" destination="DId-xg-s2j" id="TkQ-cQ-aAp"/>
-                        <outlet property="playButtonOutlet" destination="zsj-kA-mTR" id="2XS-8N-D08"/>
+                        <outlet property="playButtonOutlet" destination="0gd-rj-Kmq" id="1q6-jV-QL4"/>
                         <segue destination="7wg-cm-Bhh" kind="show" identifier="EditItinerary" id="AVw-NC-swc"/>
                         <segue destination="7wg-cm-Bhh" kind="show" identifier="CreateItinerary" id="nw0-QJ-8if"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="ShowItineraries" id="MZm-Bp-2If"/>
