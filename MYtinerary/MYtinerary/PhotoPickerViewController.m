@@ -58,6 +58,8 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     }];
 }
 
+
+
 -(void)fetchPhotosFromPhotoLibrary {
     
     self.assets = [[NSMutableArray alloc]init];
@@ -103,6 +105,8 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         
     } else {
         //update existing itinerary
+        
+        
         [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
             NSMutableArray *updatedRecords = [NSMutableArray new];//[self.records mutableCopy];
             
@@ -120,8 +124,14 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             NSError *error;
             NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
             assert(results.count == 1);
-            ((Itinerary *)results.firstObject).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
-            
+            for (Record *record in ((Itinerary *)results.firstObject).records) {
+                [[NSManagedObject managedContext] deleteObject:record];
+            }
+            if (!((Itinerary *)results.firstObject).records) {
+                
+            }  else {
+                ((Itinerary *)results.firstObject).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
+            }
             //save context
             NSError *saveError;
             BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
@@ -278,7 +288,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = (PhotoCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor blueColor];
     
     if (!self.selectedAssets) {
         self.selectedAssets = [[NSMutableArray alloc]init];
@@ -286,9 +295,11 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     if (!self.selectedIndexPaths) {
         self.selectedIndexPaths = [[NSMutableArray alloc]init];
     }
-    [self.selectedIndexPaths addObject:indexPath];
-    [self.selectedAssets addObject:self.assets[indexPath.row]];
-    
+    if ((self.selectedAssets.count + self.currNumberOfItems) < 20) {
+        [self.selectedIndexPaths addObject:indexPath];
+        [self.selectedAssets addObject:self.assets[indexPath.row]];
+        cell.backgroundColor = [UIColor blueColor];
+    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
