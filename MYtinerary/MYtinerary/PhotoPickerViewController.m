@@ -116,7 +116,8 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             for (Record *record in records) {
                 [updatedRecords addObject:record];
             }
-            self.records = [records mutableCopy];
+            self.records = (NSOrderedSet *)updatedRecords;
+            self.titleTextField.placeholder = self.itinerary.title;
             
         }];
         
@@ -252,6 +253,10 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     }];
 }
 
+- (void)updateTextFieldFromEditSegue
+{
+    _titleTextField.placeholder = _itinerary.title;
+}
 
 #pragma - CollectionView DataSource Methods
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

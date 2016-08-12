@@ -29,6 +29,7 @@
     [super viewDidLoad];
     [self setupView];
     [self fetchItinerariesFromCoreData];
+    self.title = @"My Itineraries";
 }
 
 -(void)setupView {
@@ -43,6 +44,7 @@
     self.itineraries = [[NSMutableArray alloc]initWithArray:[context executeFetchRequest:request error:&error]];
     NSLog(@"Number of itineraries in Core Data: %lu", (unsigned long)self.itineraries.count);
 }
+
 
 #pragma mark - UITableViewDataSource
 
@@ -59,6 +61,8 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Itinerary *itinerary = [self.itineraries objectAtIndex:indexPath.row];
