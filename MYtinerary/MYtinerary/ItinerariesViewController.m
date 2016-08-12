@@ -46,6 +46,7 @@
     NSLog(@"Number of itineraries in Core Data: %lu", (unsigned long)self.itineraries.count);
 }
 
+
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
