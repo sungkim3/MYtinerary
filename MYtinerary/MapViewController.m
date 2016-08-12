@@ -45,7 +45,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 //@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *detailButtonOutlet;
 @property (strong, nonatomic) NSMutableArray *toolbarButtons;
-
+@property (strong, nonatomic)UITapGestureRecognizer *tapGesture;
 
 @end
 
@@ -210,6 +210,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     //newPoint.title = record.title;
     if (asset) {
         newPoint.image = [self createThumbnailFrom:asset toRect:CGRectMake(0.0, 0.0, kThumbnailSize, kThumbnailSize)];
+        
     }
     else {
         //newPoint.image = [self createThumbnailFrom:record.parseImageURL toRect:CGRectMake(0.0, 0.0, kThumbnailSize, kThumbnailSize)];
@@ -244,8 +245,20 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
     
     annotationView.canShowCallout = NO;
     annotationView.image = [(CustomPointAnnotation *)annotation image];
+    annotationView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGesture:)];
+//    [tapGesture setDelegate:annotationView.image];
+    [annotationView addGestureRecognizer:tapGesture];
+    NSLog(@"Photo tapped");
+    
     return annotationView;
 }
+
+-(void)tapGesture:(UITapGestureRecognizer *)sender {
+    [self performSegueWithIdentifier:presentstionSegueIdentifier sender:self];
+
+}
+
 
 -(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     MKPolylineRenderer *polylineRenderer = [[MKPolylineRenderer alloc]initWithOverlay:overlay];
