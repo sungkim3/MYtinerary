@@ -22,6 +22,6 @@
 @property (strong, nonatomic) NSOrderedSet *records;
 @property (strong, nonatomic) Itinerary *itinerary;
 @property (weak, nonatomic) id <RecordsViewControllerDelegate> delegate;
-
+@property (strong, nonatomic) UIImage *thisImage;
 
 @end
