@@ -311,7 +311,6 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             photoPickerVC.records = self.records;
             photoPickerVC.selectedAssets = self.assets;
             photoPickerVC.itinerary = self.itinerary;
-            photoPickerVC.currNumberOfItems = self.records.count;
         }
     } else if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
         if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {

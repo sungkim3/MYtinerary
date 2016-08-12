@@ -33,8 +33,6 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 
 @property (strong, nonatomic)Record *currentRecord;
 
-
-
 @end
 
 @implementation PresentationViewController
