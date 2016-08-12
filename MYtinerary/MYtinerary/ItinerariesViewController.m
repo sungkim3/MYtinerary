@@ -60,6 +60,8 @@
 
 #pragma mark - UITableViewDelegate
 
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Itinerary *itinerary = [self.itineraries objectAtIndex:indexPath.row];
     self.itinerary = itinerary;

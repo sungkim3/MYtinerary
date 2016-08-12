@@ -16,6 +16,7 @@
 #import "PresentationViewController.h"
 #import "DetailTableViewCell.h"
 #import "AppDelegate.h"
+#import "DetailTableViewCell.h"
 
 @import Photos;
 
@@ -143,6 +144,26 @@ typedef void(^imageConversionCompletion)(NSArray *images);
         }
 
     }
+}
+
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 150.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIImage *newImage = DetailTableViewCell.setImage;
+    UIImage *headerImage = [UIImage imageNamed:newImage];
+    UIImageView *headerView = [[UIImageView alloc]initWithImage:headerImage];
+    
+    headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 150.0);
+    headerView.contentMode = UIViewContentModeScaleAspectFill;
+    headerView.clipsToBounds = YES;
+    
+    return headerView;
+    
 }
 
 @end
