@@ -21,7 +21,8 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 @property (weak, nonatomic) IBOutlet UITextField *commentsTextField;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
-@property (strong, nonatomic) UISwipeGestureRecognizer *swipeGesture;
+@property (strong, nonatomic) UISwipeGestureRecognizer *leftSwipeGesture;
+@property (strong, nonatomic) UISwipeGestureRecognizer *rightSwipeGesture;
 
 @property (strong, nonatomic) NSMutableArray *recordImages;
 @property (strong, nonatomic) NSTimer *timer;
@@ -49,8 +50,13 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     self.tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.view addGestureRecognizer:self.tapGesture];
     
-    self.swipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
-    [self.view addGestureRecognizer:self.swipeGesture];
+    self.leftSwipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleLeftSwipe:)];
+    [self.leftSwipeGesture setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [self.view addGestureRecognizer:self.leftSwipeGesture];
+
+    self.rightSwipeGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleRightSwipe:)];
+    [self.rightSwipeGesture setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    [self.view addGestureRecognizer:self.rightSwipeGesture];
     
     [self prefersStatusBarHidden];
 }
@@ -80,8 +86,20 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
 }
 
--(void)handleSwipe:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"user swiped"); // works for left to right only
+-(void)handleLeftSwipe:(UISwipeGestureRecognizer *)sender {
+    [self displayNextImage];
+}
+
+-(void)handleRightSwipe:(UISwipeGestureRecognizer *)sender {
+    NSLog(@"%d", self.index);
+    
+    if (self.index == 0) {
+        
+    } else if (self.index == 1) {
+        [self setRecordImagesArray:self.recordImages index: self.index - 1];
+    } else {
+        [self setRecordImagesArray:self.recordImages index: self.index - 2];
+    }
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
@@ -158,6 +176,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     self.currentImageView.image = [self.recordImages objectAtIndex:self.index];
     self.index = (self.index + 1) % self.recordImages.count;
+    NSLog(@"Current index: %d", self.index);
     self.nextImageView.image = [self.recordImages objectAtIndex:self.index];
     
     [UIView animateWithDuration:7.0 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
