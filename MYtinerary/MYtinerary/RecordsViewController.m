@@ -62,10 +62,13 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc]init];
     imageRequestOptions.synchronous = YES;
+    imageRequestOptions.deliveryMode = PHImageRequestOptionsResizeModeFast;
+    imageRequestOptions.resizeMode = PHImageRequestOptionsDeliveryModeFastFormat;
+
     
     for (PHAsset *asset in assets) {
         [manager requestImageForAsset:asset
-                           targetSize:PHImageManagerMaximumSize
+                           targetSize:CGSizeMake(500.0, 500.0)
                           contentMode:PHImageContentModeDefault
                               options:imageRequestOptions
                         resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {

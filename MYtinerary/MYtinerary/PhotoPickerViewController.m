@@ -30,7 +30,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 @property (strong, nonatomic) NSMutableArray *assets; //all photos on device
 @property (strong, nonatomic) NSMutableArray *selectedIndexPaths;
-@property (strong, nonatomic) NSMutableArray *selectedAssetsForEditing;
+//@property (strong, nonatomic) NSMutableArray *selectedAssetsForEditing;
 
 
 @property (nonatomic) CGFloat cellWidth;
@@ -56,6 +56,13 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         [self fetchPhotosFromPhotoLibrary];
     }];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.selectedAssets = nil;
+    self.records = nil;
+    self.itinerary = nil;
 }
 
 -(void)fetchPhotosFromPhotoLibrary {
@@ -101,9 +108,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         [self createItinerary];
         
         
-        
     } else {
         //update existing itinerary
+        
         [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
             NSMutableArray *updatedRecords = [NSMutableArray new];
   
@@ -259,7 +266,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = (PhotoCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor blueColor];
     
     if (!self.selectedAssets) {
         self.selectedAssets = [[NSMutableArray alloc]init];
@@ -267,9 +273,11 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     if (!self.selectedIndexPaths) {
         self.selectedIndexPaths = [[NSMutableArray alloc]init];
     }
-    [self.selectedIndexPaths addObject:indexPath];
-    [self.selectedAssets addObject:self.assets[indexPath.row]];
-    
+    if ((self.selectedAssets.count + self.currNumberOfItems) < 20) {
+        [self.selectedIndexPaths addObject:indexPath];
+        [self.selectedAssets addObject:self.assets[indexPath.row]];
+        cell.backgroundColor = [UIColor blueColor];
+    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
