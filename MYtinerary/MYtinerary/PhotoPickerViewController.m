@@ -93,7 +93,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             
             [alert addAction:ok];
             
-            
             [self presentViewController:alert animated:YES completion:Nil];
             return;
             
@@ -137,8 +136,17 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             //pass data to MapVC
             MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
             mapVC.records = self.records;
+            mapVC.itinerary = self.itinerary;
+            if (!mapVC.assets) {
+                mapVC.assets = [[NSMutableArray alloc]init];
+            }
             NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
-            [updatedAssets addObjectsFromArray:self.selectedAssets];
+            
+            for (PHAsset *asset in self.selectedAssets) {
+                if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                    [updatedAssets addObject:asset];
+                }
+            }
             mapVC.assets = updatedAssets;
             
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -148,9 +156,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(void)createItinerary {
     Itinerary *itinerary = [NSEntityDescription insertNewObjectForEntityForName:@"Itinerary" inManagedObjectContext:[NSManagedObject managedContext]];
-    
-    
-    
     
     [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
         itinerary.records = records;
@@ -176,7 +181,15 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         
         mapVC.itinerary = self.itinerary;
         mapVC.records = self.records;
-        mapVC.assets = self.selectedAssets;
+        if (!mapVC.assets) {
+            mapVC.assets = [[NSMutableArray alloc]init];
+        }
+        for (PHAsset *asset in self.selectedAssets) {
+            if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                [mapVC.assets addObject:asset];
+            }
+        }
+        //mapVC.assets = self.selectedAssets;
         
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
@@ -241,7 +254,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseID forIndexPath:indexPath];
-
+    
     if ([self.selectedAssets containsObject:self.assets[indexPath.row]]) {
         cell.backgroundColor = [UIColor blueColor];
     }
