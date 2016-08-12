@@ -7,27 +7,31 @@
 //
 
 #import "CustomLoginViewController.h"
+#import <Parse/Parse.h>
+
 
 @implementation CustomLoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    self.view.backgroundColor = [UIColor lightGrayColor];
+//    UIImageView *image = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon"]];
+//    self.logInView.logo = image;
     [self setupLoginUI];
     [self setupSignUpUI];
 }
 
 - (void)setupLoginUI {
+    
     UIImage *logoImage = [UIImage imageNamed:@"icon"];
     UIImageView *logoView = [[UIImageView alloc]initWithImage:logoImage];
     
-    logoView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 500.0);
+    logoView.frame = CGRectMake(0.0, 0.0, 500.0, 100.0);
     logoView.contentMode = UIViewContentModeScaleToFill;
-    logoView.clipsToBounds = YES;
+
     
     self.logInView.logo = logoView;
-//    NSLayoutConstraint *logoHeight = [NSLayoutConstraint constraintWithItem:self.logInView.logo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.logInView.logo attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
-
     
 }
 

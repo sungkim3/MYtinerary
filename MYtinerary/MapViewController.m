@@ -320,11 +320,15 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
             photoPickerVC.records = self.records;
             photoPickerVC.selectedAssets = self.assets;
             photoPickerVC.itinerary = self.itinerary;
+            photoPickerVC.title = self.itinerary.title;
+
         }
     } else if ([segue.identifier isEqualToString:presentstionSegueIdentifier]) {
         if ([segue.destinationViewController isKindOfClass:[PresentationViewController class]]) {
             PresentationViewController *presentationVC = (PresentationViewController *)segue.destinationViewController;
             presentationVC.records = self.records;
+            presentationVC.title = _itinerary.title;
+         
         }
     }
     else {
@@ -333,6 +337,7 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
                 
                 RecordsViewController *recordsViewController = (RecordsViewController *)segue.destinationViewController;
                 recordsViewController.records = self.records;
+                recordsViewController.title = _itinerary.title;
             }
         }
         

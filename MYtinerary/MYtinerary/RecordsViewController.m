@@ -130,6 +130,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Record *record = [self.records objectAtIndex:indexPath.row];
+    
 }
 @end
 

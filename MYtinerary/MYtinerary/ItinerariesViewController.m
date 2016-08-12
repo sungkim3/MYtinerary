@@ -29,6 +29,7 @@
     [super viewDidLoad];
     [self setupView];
     [self fetchItinerariesFromCoreData];
+    self.title = @"My Itineraries";
 }
 
 -(void)setupView {

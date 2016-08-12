@@ -113,10 +113,12 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
                 [updatedRecords addObject:record];
             }
             self.records = (NSOrderedSet *)updatedRecords;
+            self.titleTextField.placeholder = self.itinerary.title;
             
             //update Core Data Objects
             NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
             [request setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)",self.itinerary.title]];
+            
             
             NSError *error;
             NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
@@ -196,6 +198,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         record.localImageURL = asset.localIdentifier;
         [mutableRecords addObject:record];
         
+        
 //        [[ParseDataController shared]saveRecords:@"foo"
 //                                        latitude:record.latitude
 //                                       longitude:record.longitude
@@ -226,6 +229,10 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     }];
 }
 
+- (void)updateTextFieldFromEditSegue
+{
+    _titleTextField.placeholder = _itinerary.title;
+}
 
 #pragma - CollectionView DataSource Methods
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
