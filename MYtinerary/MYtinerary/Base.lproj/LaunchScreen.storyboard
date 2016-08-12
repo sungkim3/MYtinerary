@@ -16,7 +16,27 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="dWd-Y2-Paf">
+                                <rect key="frame" x="72" y="91" width="456" height="254"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MYtinerary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLI-4u-xoa">
+                                <rect key="frame" x="258" y="459" width="84" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="FLI-4u-xoa" secondAttribute="trailing" constant="258" id="15m-kZ-iuZ"/>
+                            <constraint firstItem="dWd-Y2-Paf" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="72" id="Dgd-G2-1aX"/>
+                            <constraint firstAttribute="trailing" secondItem="dWd-Y2-Paf" secondAttribute="trailing" constant="72" id="Jxa-nw-PO3"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="FLI-4u-xoa" secondAttribute="bottom" constant="120" id="eo4-0I-lCI"/>
+                            <constraint firstItem="FLI-4u-xoa" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="258" id="hXe-EU-d61"/>
+                            <constraint firstItem="dWd-Y2-Paf" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="71" id="n57-OE-KJC"/>
+                            <constraint firstItem="FLI-4u-xoa" firstAttribute="top" secondItem="dWd-Y2-Paf" secondAttribute="bottom" constant="114" id="pvo-Cb-E5A"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +44,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon" width="500" height="470"/>
+    </resources>
 </document>
