@@ -72,8 +72,8 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc]init];
     imageRequestOptions.synchronous = YES;
     imageRequestOptions.networkAccessAllowed = YES;
-    imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
-    imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    //imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    //imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     
     for (PHAsset *asset in assets) {
         [manager requestImageForAsset:asset

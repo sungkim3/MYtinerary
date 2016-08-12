@@ -30,7 +30,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 @property (strong, nonatomic) NSMutableArray *assets; //all photos on device
 @property (strong, nonatomic) NSMutableArray *selectedIndexPaths;
-@property (strong, nonatomic) NSMutableArray *selectedAssetsForEditing;
+//@property (strong, nonatomic) NSMutableArray *selectedAssetsForEditing;
 
 
 @property (nonatomic) CGFloat cellWidth;
@@ -56,6 +56,13 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         [self fetchPhotosFromPhotoLibrary];
     }];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.selectedAssets = nil;
+    self.records = nil;
+    self.itinerary = nil;
 }
 
 -(void)fetchPhotosFromPhotoLibrary {
@@ -93,7 +100,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             
             [alert addAction:ok];
             
-            
             [self presentViewController:alert animated:YES completion:Nil];
             return;
             
@@ -101,9 +107,9 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         [self createItinerary];
         
         
-        
     } else {
         //update existing itinerary
+        
         [self recordsFrom:self.selectedAssets withCompletion:^(NSOrderedSet *records) {
             NSMutableArray *updatedRecords = [NSMutableArray new];
   
@@ -123,24 +129,34 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             assert(results.count == 1);
             ((Itinerary *)results.firstObject).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
             
-            //save context
-            NSError *saveError;
-            BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
-            if(isSaved) {
-                NSLog(@"Itinerary with records successfully updated and saved");
-            } else {
-                NSLog(@"Unsuccessful saving Itinerary when updating records: %@", saveError.localizedDescription);
+        }
+        
+        
+        //save context
+        NSError *saveError;
+        BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
+        if(isSaved) {
+            NSLog(@"Itinerary with records successfully updated and saved");
+        } else {
+            NSLog(@"Unsuccessful saving Itinerary when updating records: %@", saveError.localizedDescription);
+        }
+        //pass data to MapVC
+        MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
+        mapVC.records = self.records;
+        mapVC.itinerary = self.itinerary;
+        if (!mapVC.assets) {
+            mapVC.assets = [[NSMutableArray alloc]init];
+        }
+        NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
+        
+        for (PHAsset *asset in self.selectedAssets) {
+            if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                [updatedAssets addObject:asset];
             }
-            
-            //pass data to MapVC
-            MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
-            mapVC.records = self.records;
-            NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
-            [updatedAssets addObjectsFromArray:self.selectedAssets];
-            mapVC.assets = updatedAssets;
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }];
+        }
+        mapVC.assets = updatedAssets;
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 
@@ -173,40 +189,51 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
         mapVC.itinerary = self.itinerary;
         mapVC.records = self.records;
-        mapVC.assets = self.selectedAssets;
+        if (!mapVC.assets) {
+            mapVC.assets = [[NSMutableArray alloc]init];
+        }
+        for (PHAsset *asset in self.selectedAssets) {
+            if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                [mapVC.assets addObject:asset];
+            }
+        }
+        //mapVC.assets = self.selectedAssets;
         
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
     
-//    [[ParseDataController shared]saveItinerary: self.titleTextField.text];
+    //[[ParseDataController shared]saveItinerary: self.titleTextField.text];
     
 }
 
 -(void)recordsFrom:(NSArray *)assets withCompletion:(recordCompletion)completion {
     NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]init];
     
-    for (PHAsset *asset in assets) {
-        Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
-        
-        record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
-        record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
-        record.date = asset.creationDate;
-        record.itinerary = self.itinerary;
-        record.localImageURL = asset.localIdentifier;
-        [mutableRecords addObject:record];
-        
-//        [[ParseDataController shared]saveRecords:@"foo"
-//                                        latitude:record.latitude
-//                                       longitude:record.longitude
-//                                            date:record.date
-//                                           title:@"title placeholder"
-//                                        comments:@"comment placeholder"
-//                                   localImageURL:asset.localIdentifier
-//                                      localImage:asset];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(mutableRecords);
-        });
+    for (PHAsset * asset in assets) {
+        if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+            
+            Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
+            
+            record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
+            record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
+            record.date = asset.creationDate;
+            record.itinerary = self.itinerary;
+            record.localImageURL = asset.localIdentifier;
+            [mutableRecords addObject:record];
+            
+            //        [[ParseDataController shared]saveRecords:@"foo"
+            //                                        latitude:record.latitude
+            //                                       longitude:record.longitude
+            //                                            date:record.date
+            //                                           title:@"title placeholder"
+            //                                        comments:@"comment placeholder"
+            //                                   localImageURL:asset.localIdentifier
+            //                                      localImage:asset];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(mutableRecords);
+            });
+        }
     }
 }
 
@@ -229,7 +256,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseID forIndexPath:indexPath];
-
+    
     if ([self.selectedAssets containsObject:self.assets[indexPath.row]]) {
         cell.backgroundColor = [UIColor blueColor];
     }
@@ -265,7 +292,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = (PhotoCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor blueColor];
     
     if (!self.selectedAssets) {
         self.selectedAssets = [[NSMutableArray alloc]init];
@@ -273,9 +299,11 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
     if (!self.selectedIndexPaths) {
         self.selectedIndexPaths = [[NSMutableArray alloc]init];
     }
-    [self.selectedIndexPaths addObject:indexPath];
-    [self.selectedAssets addObject:self.assets[indexPath.row]];
-    
+    if ((self.selectedAssets.count + self.currNumberOfItems) < 20) {
+        [self.selectedIndexPaths addObject:indexPath];
+        [self.selectedAssets addObject:self.assets[indexPath.row]];
+        cell.backgroundColor = [UIColor blueColor];
+    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {

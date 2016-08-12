@@ -16,6 +16,7 @@
 @property (strong, nonatomic) Itinerary *itinerary;
 @property (strong, nonatomic) NSOrderedSet *records;
 @property (strong, nonatomic) NSMutableArray *selectedAssets;
+@property (nonatomic) int currNumberOfItems;
 
 
 @end

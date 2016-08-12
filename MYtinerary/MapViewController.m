@@ -31,14 +31,19 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
 @interface MapViewController () <MKMapViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, ItinerariesViewControllerDelegate, RecordsViewControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButtonOutlet;
+
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)logoutButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)composeButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)bookmarkButtonPressed:(UIBarButtonItem *)sender;
-@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 - (IBAction)playButtonPressed:(UIButton *)sender;
 - (IBAction)detailButtonPressed:(UIBarButtonItem *)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *playButtonOutlet;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *detailButtonOutlet;
+@property (strong, nonatomic) NSMutableArray *toolbarButtons;
+
 
 @end
 
@@ -56,6 +61,21 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self setupAppearance];
+    
+    [self sortRecordsByDate];
+    [self addPolylineToMap];
+}
+
+-(void)setupView {
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setTintColor: nil];
+    [self.playButtonOutlet.layer setCornerRadius:5.0];
+    self.navigationController.toolbar.layer.opacity = 0.5;
+    self.view.backgroundColor = [UIColor whiteColor];
+}
+
+-(void)setupAppearance {
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self.mapView removeOverlays:self.mapView.overlays];
     
@@ -68,18 +88,16 @@ NSString  * const _Nonnull presentstionSegueIdentifier = @"ShowPresentation";
         self.playButtonOutlet.hidden = NO;
         self.detailButtonOutlet.enabled = YES;
         [self.detailButtonOutlet setTintColor:nil];
-        [self addPolylineToMap];
+        self.editButtonOutlet.enabled = YES;
+        [self.editButtonOutlet setTintColor:nil];
+        
     } else {
         self.playButtonOutlet.hidden = YES;
         self.detailButtonOutlet.enabled = NO;
         [self.detailButtonOutlet setTintColor:[UIColor clearColor]];
+        self.editButtonOutlet.enabled = NO;
+        [self.editButtonOutlet setTintColor:[UIColor clearColor]];
     }
-}
-
--(void)setupView {
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    [self.navigationItem.rightBarButtonItem setTintColor: nil];
-    [self.playButtonOutlet.layer setCornerRadius:5.0];
 }
 
 -(void)setRegion {

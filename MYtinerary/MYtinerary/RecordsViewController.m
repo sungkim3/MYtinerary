@@ -27,6 +27,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property(strong, nonatomic)NSMutableArray *recordImages;
+@property (strong, nonatomic)NSMutableArray *recordComments;
+//@property(strong, nonatomic)NSArray *coreRecords;
+//@property(strong, nonatomic)Record *record;
 
 @end
 
@@ -63,10 +66,13 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc]init];
     imageRequestOptions.synchronous = YES;
+    imageRequestOptions.deliveryMode = PHImageRequestOptionsResizeModeFast;
+    imageRequestOptions.resizeMode = PHImageRequestOptionsDeliveryModeFastFormat;
+
     
     for (PHAsset *asset in assets) {
         [manager requestImageForAsset:asset
-                           targetSize:PHImageManagerMaximumSize
+                           targetSize:CGSizeMake(500.0, 500.0)
                           contentMode:PHImageContentModeDefault
                               options:imageRequestOptions
                         resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
@@ -89,6 +95,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 {
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStyleDone];
+    self.title = self.itinerary.title;
 }
 
 #pragma mark - UITableViewDataSource
@@ -104,8 +111,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     
     cell.image = [self.recordImages objectAtIndex:indexPath.row];
     cell.date = record.date;
-    cell.title = record.title;
+//    cell.title = record.itinerary.title;
     cell.comments = record.comments;
+    cell.record = record;
     
     return cell;
 }
