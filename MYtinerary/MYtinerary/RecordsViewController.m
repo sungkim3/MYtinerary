@@ -26,6 +26,9 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property(strong, nonatomic)NSMutableArray *recordImages;
+@property (strong, nonatomic)NSMutableArray *recordComments;
+//@property(strong, nonatomic)NSArray *coreRecords;
+//@property(strong, nonatomic)Record *record;
 
 @end
 
@@ -108,6 +111,7 @@ typedef void(^imageConversionCompletion)(NSArray *images);
     cell.date = record.date;
     cell.title = record.title;
     cell.comments = record.comments;
+    cell.record = record;
     
     return cell;
 }

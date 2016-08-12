@@ -100,7 +100,6 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             
             [alert addAction:ok];
             
-            
             [self presentViewController:alert animated:YES completion:Nil];
             return;
             
@@ -119,33 +118,53 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
             }
             self.records = [records mutableCopy];
             
-            //update Core Data Objects
-            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
-            [request setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)",self.itinerary.title]];
-            
-            NSError *error;
-            NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
-            assert(results.count == 1);
-            ((Itinerary *)results.firstObject).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
-            
-            //save context
-            NSError *saveError;
-            BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
-            if(isSaved) {
-                NSLog(@"Itinerary with records successfully updated and saved");
-            } else {
-                NSLog(@"Unsuccessful saving Itinerary when updating records: %@", saveError.localizedDescription);
-            }
-            
-            //pass data to MapVC
-            MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
-            mapVC.records = self.records;
-            NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
-            [updatedAssets addObjectsFromArray:self.selectedAssets];
-            mapVC.assets = updatedAssets;
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
         }];
+        
+        
+        
+        //update Core Data Objects
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName: @"Itinerary"];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"(title==%@)",self.itinerary.title]];
+        
+        NSError *error;
+        NSArray *results = [[NSManagedObject managedContext] executeFetchRequest: request error:&error];
+        assert(results.count == 1);
+        
+        [((Itinerary *)results[0]) setValue:[NSOrderedSet orderedSetWithArray:(NSArray *)self.records] forKey:@"records"];
+        
+        //((Itinerary *)results[0]).records = [NSOrderedSet orderedSetWithArray:(NSArray *)self.records];
+        for (Record *record in [((Itinerary *)results[0]) valueForKey:@"records"]) {
+            [[NSManagedObject managedContext] refreshObject:record mergeChanges:YES];
+            NSLog(@"Record: %@", record);
+            
+        }
+        
+        
+        //save context
+        NSError *saveError;
+        BOOL isSaved = [[NSManagedObject managedContext] save:&saveError];
+        if(isSaved) {
+            NSLog(@"Itinerary with records successfully updated and saved");
+        } else {
+            NSLog(@"Unsuccessful saving Itinerary when updating records: %@", saveError.localizedDescription);
+        }
+        //pass data to MapVC
+        MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
+        mapVC.records = self.records;
+        mapVC.itinerary = self.itinerary;
+        if (!mapVC.assets) {
+            mapVC.assets = [[NSMutableArray alloc]init];
+        }
+        NSMutableArray *updatedAssets = [mapVC.assets mutableCopy];
+        
+        for (PHAsset *asset in self.selectedAssets) {
+            if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                [updatedAssets addObject:asset];
+            }
+        }
+        mapVC.assets = updatedAssets;
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 
@@ -178,40 +197,51 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
         MapViewController *mapVC = (MapViewController *)self.navigationController.viewControllers.firstObject;
         mapVC.itinerary = self.itinerary;
         mapVC.records = self.records;
-        mapVC.assets = self.selectedAssets;
+        if (!mapVC.assets) {
+            mapVC.assets = [[NSMutableArray alloc]init];
+        }
+        for (PHAsset *asset in self.selectedAssets) {
+            if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+                [mapVC.assets addObject:asset];
+            }
+        }
+        //mapVC.assets = self.selectedAssets;
         
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
     
-//    [[ParseDataController shared]saveItinerary: self.titleTextField.text];
+    //[[ParseDataController shared]saveItinerary: self.titleTextField.text];
     
 }
 
 -(void)recordsFrom:(NSArray *)assets withCompletion:(recordCompletion)completion {
     NSMutableOrderedSet *mutableRecords = [[NSMutableOrderedSet alloc]init];
     
-    for (PHAsset *asset in assets) {
-        Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
-        
-        record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
-        record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
-        record.date = asset.creationDate;
-        record.itinerary = self.itinerary;
-        record.localImageURL = asset.localIdentifier;
-        [mutableRecords addObject:record];
-        
-//        [[ParseDataController shared]saveRecords:@"foo"
-//                                        latitude:record.latitude
-//                                       longitude:record.longitude
-//                                            date:record.date
-//                                           title:@"title placeholder"
-//                                        comments:@"comment placeholder"
-//                                   localImageURL:asset.localIdentifier
-//                                      localImage:asset];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(mutableRecords);
-        });
+    for (PHAsset * asset in assets) {
+        if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+            
+            Record *record = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:[NSManagedObject managedContext]];
+            
+            record.latitude = [NSNumber numberWithDouble:asset.location.coordinate.latitude];
+            record.longitude = [NSNumber numberWithDouble:asset.location.coordinate.longitude];
+            record.date = asset.creationDate;
+            record.itinerary = self.itinerary;
+            record.localImageURL = asset.localIdentifier;
+            [mutableRecords addObject:record];
+            
+            //        [[ParseDataController shared]saveRecords:@"foo"
+            //                                        latitude:record.latitude
+            //                                       longitude:record.longitude
+            //                                            date:record.date
+            //                                           title:@"title placeholder"
+            //                                        comments:@"comment placeholder"
+            //                                   localImageURL:asset.localIdentifier
+            //                                      localImage:asset];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(mutableRecords);
+            });
+        }
     }
 }
 
@@ -230,7 +260,7 @@ NSString  * const _Nonnull cellReuseID = @"CollectionViewCell";
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseID forIndexPath:indexPath];
-
+    
     if ([self.selectedAssets containsObject:self.assets[indexPath.row]]) {
         cell.backgroundColor = [UIColor blueColor];
     }
