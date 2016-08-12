@@ -88,23 +88,20 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 }
 
 -(void)handleLeftSwipe:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"user swiped left");
-
-    self.index += 1;
-//    [self.timer invalidate];
-//    self.timer = nil;
-    
-    [self setRecordImagesArray:self.recordImages index:self.index];
+    [self displayNextImage];
 }
 
 -(void)handleRightSwipe:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"user swiped right");
-
-    self.index -= 1;
-//    [self.timer invalidate];
-//    self.timer = nil;
+    NSLog(@"%d", self.index);
     
-    [self setRecordImagesArray:self.recordImages index:self.index];
+    if (self.index == 0) {
+        NSLog(@"at zero");
+//        self.index == 0;
+//        [self displayPreviousImage];
+    } else {
+        
+        [self displayPreviousImage];
+    }
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender {
@@ -189,6 +186,21 @@ typedef void(^imageConversionCompletion)(NSArray *images);
                 self.nextImageView.transform = CGAffineTransformMakeScale(0.8, 0.8);
                 self.nextImageView.alpha = 1.0;
     } completion:nil];
+    
+    UIImageView *tempView = self.currentImageView;
+    self.currentImageView = self.nextImageView;
+    self.nextImageView = tempView;
+}
+
+-(void)displayPreviousImage {
+    NSLog(@"displayPrev");
+    self.index = (self.index - 1) % self.recordImages.count;
+
+    self.currentRecord = [self.records objectAtIndex:self.index];
+    self.commentsTextField.text = self.currentRecord.comments;
+    
+    self.currentImageView.image = [self.recordImages objectAtIndex:self.index];
+    self.nextImageView.image = [self.recordImages objectAtIndex:self.index];
     
     UIImageView *tempView = self.currentImageView;
     self.currentImageView = self.nextImageView;
