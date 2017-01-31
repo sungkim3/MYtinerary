@@ -111,6 +111,30 @@ typedef void(^imageConversionCompletion)(NSArray *images);
 }
 
 #pragma mark - UITableViewDataSource
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    
+    return 150.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+//    Record *thisImage = [self.recordImages objectAtIndex:0];
+    
+//    UIImage *firstImage = [[UIImage alloc]init];
+//    firstImage = thisImage.localImageURL;
+    UIImageView *headerView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon"]];
+    headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 150.0);
+    headerView.contentMode = UIViewContentModeScaleAspectFill;
+    headerView.clipsToBounds = YES;
+    [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    
+    
+    return headerView;
+    
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.records.count;

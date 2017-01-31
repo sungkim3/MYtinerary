@@ -29,12 +29,14 @@
     [super viewDidLoad];
     [self setupView];
     [self fetchItinerariesFromCoreData];
+    [self setupTableView];
     self.title = @"My Itineraries";
 }
 
 -(void)setupView {
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     [self.navigationItem.rightBarButtonItem setTintColor: [UIColor clearColor]];
+    
 }
 
 - (void)fetchItinerariesFromCoreData {
@@ -62,7 +64,33 @@
 
 #pragma mark - UITableViewDelegate
 
+- (void)setupTableView
+{
+//    [self.tableView setBackgroundColor:[UIColor lightGrayColor]];
+//    UIImageView *backgroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon"]];
+//    [backgroundImageView setFrame:self.tableView.frame];
+//    [self.tableView setBackgroundView:backgroundImageView];
 
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    
+    return 150.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIImageView *headerView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon"]];
+    headerView.frame = CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), 150.0);
+    headerView.contentMode = UIViewContentModeScaleAspectFill;
+    headerView.clipsToBounds = YES;
+    [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    
+    
+    return headerView;
+
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Itinerary *itinerary = [self.itineraries objectAtIndex:indexPath.row];
